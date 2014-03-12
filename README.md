@@ -1,7 +1,7 @@
-wp-github
+WP Github
 =========
 
-Display users public GitHub repositories, commits and issues.
+Display users public Github repositories, commits and issues.
 
 ## Usage
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: GitHub
+ * Plugin Name: WP Github
  * Plugin URI: https://github.com/seinoxygen/wp-github
- * Description: Display users public GitHub repositories, commits and issues.
+ * Description: Display users public Github repositories, commits and issues.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
  * Version: 1.0
@@ -26,7 +26,7 @@ function register_git_widgets(){
 class Widget_Repos extends WP_Widget{
 	function Widget_Repos() {
 		$widget_ops = array('description' => __('Displays the repositories from a specific user.'));           
-        $this->WP_Widget(false, __('GitHub Repositories'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Repositories'), $widget_ops, $control_ops);
 	}
 	
 	function form($instance) {
@@ -42,7 +42,7 @@ class Widget_Repos extends WP_Widget{
 					value="<?php echo $title; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('GitHub Username:'); ?> </label>
+				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('Github Username:'); ?> </label>
 					<input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" 
 					name="<?php echo $this->get_field_name('username'); ?>" type="text" 
 					value="<?php echo $username; ?>" />
@@ -90,7 +90,7 @@ class Widget_Repos extends WP_Widget{
 	}
 	
 	private function get_title($instance) {
-		return empty($instance['title']) ? 'My GitHub Projects' : apply_filters('widget_title', $instance['title']);
+		return empty($instance['title']) ? 'My Github Projects' : apply_filters('widget_title', $instance['title']);
 	}
 	
 	private function get_username($instance) {
@@ -107,8 +107,8 @@ class Widget_Repos extends WP_Widget{
  */
 class Widget_Commits extends WP_Widget{
 	function Widget_Commits() {
-		$widget_ops = array('description' => __('Displays latests commits from a GitHub repository.'));           
-        $this->WP_Widget(false, __('GitHub Commits'), $widget_ops, $control_ops);
+		$widget_ops = array('description' => __('Displays latests commits from a Github repository.'));           
+        $this->WP_Widget(false, __('Github Commits'), $widget_ops, $control_ops);
 	}
 	
 	function form($instance) {
@@ -125,13 +125,13 @@ class Widget_Commits extends WP_Widget{
 					value="<?php echo $title; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('GitHub Username:'); ?> </label>
+				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('Github Username:'); ?> </label>
 				<input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" 
 					name="<?php echo $this->get_field_name('username'); ?>" type="text" 
 					value="<?php echo $username; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('GitHub Repository:'); ?> </label>
+				<label for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?> </label>
 					<input class="widefat" id="<?php echo $this->get_field_id('repository'); ?>" 
 					name="<?php echo $this->get_field_name('repository'); ?>" type="text" 
 					value="<?php echo $repository; ?>" />
@@ -180,7 +180,7 @@ class Widget_Commits extends WP_Widget{
 	}
 	
 	private function get_title($instance) {
-		return empty($instance['title']) ? 'My GitHub Commits' : apply_filters('widget_title', $instance['title']);
+		return empty($instance['title']) ? 'My Github Commits' : apply_filters('widget_title', $instance['title']);
 	}
 	
 	private function get_username($instance) {
@@ -201,8 +201,8 @@ class Widget_Commits extends WP_Widget{
  */
 class Widget_Issues extends WP_Widget{
 	function Widget_Issues() {
-		$widget_ops = array('description' => __('Displays latests issues from a GitHub repository.'));           
-        $this->WP_Widget(false, __('GitHub Issues'), $widget_ops, $control_ops);
+		$widget_ops = array('description' => __('Displays latests issues from a Github repository.'));           
+        $this->WP_Widget(false, __('Github Issues'), $widget_ops, $control_ops);
 	}
 	
 	function form($instance) {
@@ -219,13 +219,13 @@ class Widget_Issues extends WP_Widget{
 					value="<?php echo $title; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('GitHub Username:'); ?> </label>
+				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('Github Username:'); ?> </label>
 				<input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" 
 					name="<?php echo $this->get_field_name('username'); ?>" type="text" 
 					value="<?php echo $username; ?>" />
 			</p>
 			<p>
-				<label for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('GitHub Repository:'); ?> </label>
+				<label for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?> </label>
 					<input class="widefat" id="<?php echo $this->get_field_id('repository'); ?>" 
 					name="<?php echo $this->get_field_name('repository'); ?>" type="text" 
 					value="<?php echo $repository; ?>" />
@@ -274,7 +274,7 @@ class Widget_Issues extends WP_Widget{
 	}
 	
 	private function get_title($instance) {
-		return empty($instance['title']) ? 'My GitHub Issues' : apply_filters('widget_title', $instance['title']);
+		return empty($instance['title']) ? 'My Github Issues' : apply_filters('widget_title', $instance['title']);
 	}
 	
 	private function get_username($instance) {
