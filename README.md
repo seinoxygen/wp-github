@@ -41,3 +41,12 @@ repository | `[github-issues username="seinoxygen" repository="wp-github"]` | Li
 limit | `[github-issues username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 issues from the repository wp-github.
 
 For correct listing username and repository **_are_** required.
+
+#### Gists
+```html
+[github-gists]
+```
+Argument | Example | Description
+--- | --- | ---
+username | `[github-gists username="seinoxygen"]` | Lists up to 5 gists from the user seinoxygen.
+limit | `[github-gists username="seinoxygen" limit="10"]` | Lists up to 10 gists from the user seinoxygen.
