@@ -52,6 +52,14 @@ class Github {
 		return null;
 	}
 	
+	public function get_gists(){
+		$contents = $this->get_response('users/' . $this->username . '/gists');
+		if($contents == true) {
+		 	return json_decode($contents);
+		}
+		return null;
+	}
+	
 	public function get_username() {
 		return $this->username;
 	}

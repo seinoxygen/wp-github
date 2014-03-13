@@ -18,6 +18,7 @@ function register_git_widgets(){
 	register_widget('Widget_Repos');
 	register_widget('Widget_Commits');
 	register_widget('Widget_Issues');
+	register_widget('Widget_Gists');
 }
 
 /*
@@ -291,6 +292,88 @@ class Widget_Issues extends WP_Widget{
 }
 
 /*
+ * Gists widget.
+ */
+class Widget_Gists extends WP_Widget{
+	function Widget_Gists() {
+		$widget_ops = array('description' => __('Displays latests gists from a Github user.'));           
+        $this->WP_Widget(false, __('Github Gists'), $widget_ops, $control_ops);
+	}
+	
+	function form($instance) {
+		$title = $this->get_title($instance);
+		$username = $this->get_username($instance);
+		$gists_count = $this->get_gists_count($instance);
+
+		?>
+	    	<p>
+				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> </label>
+					<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" 
+					name="<?php echo $this->get_field_name('title'); ?>" type="text" 
+					value="<?php echo $title; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('Github Username:'); ?> </label>
+				<input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" 
+					name="<?php echo $this->get_field_name('username'); ?>" type="text" 
+					value="<?php echo $username; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('gists_count'); ?>"><?php _e('Number of gists to show:'); ?> </label>
+					<input id="<?php echo $this->get_field_id('gists_count'); ?>" 
+					name="<?php echo $this->get_field_name('gists_count'); ?>" type="text" 
+					value="<?php echo $gists_count; ?>" size="3" />
+			</p>
+	    <?php
+	}
+	
+	function widget($args, $instance) {
+		extract($args);	
+		
+		$title = $this->get_title($instance);
+		$username = $this->get_username($instance);
+		$gists_count = $this->get_gists_count($instance);
+		
+		echo $before_widget;
+		echo $before_title . $title . $after_title;
+		
+		$cache = new Cache();
+		
+		$gists = $cache->get($username . '.gists.json');
+		if($gists == null) {
+			$github = new Github($username);
+			$gists = $github->get_gists();
+			$cache->set($username . '.gists.json', $gists);
+		}
+		
+		if($gists == null || count($gists) == 0) {
+			echo $username . ' does not have any public gists.';
+		} else {
+			$gists = array_slice($gists, 0, $gists_count);
+			echo '<ul>';
+			foreach($gists as $gist){
+		 		echo '<li><a href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
+			}
+			echo '</ul>';
+		}
+		
+		echo $after_widget;
+	}
+	
+	private function get_title($instance) {
+		return empty($instance['title']) ? 'My Github Gists' : apply_filters('widget_title', $instance['title']);
+	}
+	
+	private function get_username($instance) {
+		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+	}
+		
+	private function get_gists_count($instance) {
+		return empty($instance['gists_count']) ? 5 : $instance['gists_count'];
+	}
+}
+
+/*
  * Repositories shortcode.
  */
 function ghrepos_shortcode($atts) {
@@ -381,3 +464,33 @@ function ghissues_shortcode($atts) {
 	return $html;
 }
 add_shortcode('github-issues', 'ghissues_shortcode');
+
+/*
+ * Gists shortcode.
+ */
+function ghgists_shortcode($atts) {
+	extract( shortcode_atts(
+		array(
+			'username' => 'seinoxygen',
+			'limit' => '5'
+		), $atts )
+	);
+	
+	$cache = new Cache();
+		
+	$gists = $cache->get($username . '.gists.json');
+	if($gists == null) {
+		$github = new Github($username, $repository);
+		$gists = $github->get_gists();
+		$cache->set($username . '.gists.json', $gists);
+	}
+	
+	$gists = array_slice($gists, 0, $limit);
+	$html = '<ul>';
+	foreach($gists as $gist){
+		$html .=  '<li><a href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
+	}
+	$html .= '</ul>';
+	return $html;
+}
+add_shortcode('github-gists', 'ghgists_shortcode');
