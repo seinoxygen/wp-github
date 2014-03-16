@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Github
  * Plugin URI: https://github.com/seinoxygen/wp-github
- * Description: Display users public Github repositories, commits and issues.
+ * Description: Display users Github public repositories, commits, issues and gists.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
  * Version: 1.0
