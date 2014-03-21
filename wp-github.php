@@ -5,12 +5,42 @@
  * Description: Display users Github public repositories, commits, issues and gists.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
- * Version: 1.0
+ * Version: 1.1
  *
  * Licensed under the MIT License
  */
 require dirname(__FILE__) . '/lib/cache.php';
 require(dirname(__FILE__) . '/lib/github.php');
+
+add_action('admin_menu','wpgithub_plugin_menu');
+add_action('admin_init', 'wpgithub_register_settings' );
+
+function wpgithub_plugin_menu(){
+    add_options_page('WP Github Options', 'WP Github', 'manage_options', 'wp-github', 'wpgithub_plugin_options');
+}
+
+function wpgithub_register_settings() {
+	//register our settings
+	register_setting('wp-github', 'wpgithub_cache_time', 'wpgithub_validate_int');
+	register_setting('wp-github', 'wpgithub_clear_cache', 'wpgithub_clearcache' );
+} 
+
+function wpgithub_plugin_options(){
+    include('admin/options.php');
+}
+
+function wpgithub_clearcache($input){
+	if($input == 1){
+		foreach(glob(plugin_dir_path( __FILE__ )."cache/*.json") as $file){
+			unlink($file);
+		}
+		add_settings_error('wpgithub_clear_cache',esc_attr('settings_updated'),'Cache has been cleared.','updated');
+	}
+}
+
+function wpgithub_validate_int($input) {
+	return intval($input); // return validated input
+}
 
 add_action('widgets_init', 'register_git_widgets');
 
@@ -67,7 +97,10 @@ class Widget_Repos extends WP_Widget{
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 		
+		// Init the cache system.
 		$cache = new Cache();
+		// Set custom timeout in seconds.
+		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 		$repositories = $cache->get($username . '.repositories.json');
 		if($repositories == null) {
@@ -157,7 +190,10 @@ class Widget_Commits extends WP_Widget{
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 		
+		// Init the cache system.
 		$cache = new Cache();
+		// Set custom timeout in seconds.
+		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 		$commits = $cache->get($username . '.' . $repository . '.commits.json');
 		if($commits == null) {
@@ -251,7 +287,10 @@ class Widget_Issues extends WP_Widget{
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 		
+		// Init the cache system.
 		$cache = new Cache();
+		// Set custom timeout in seconds.
+		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 		$issues = $cache->get($username . '.' . $repository . '.issues.json');
 		if($issues == null) {
@@ -337,7 +376,10 @@ class Widget_Gists extends WP_Widget{
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 		
+		// Init the cache system.
 		$cache = new Cache();
+		// Set custom timeout in seconds.
+		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 		$gists = $cache->get($username . '.gists.json');
 		if($gists == null) {

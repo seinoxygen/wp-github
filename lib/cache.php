@@ -7,7 +7,7 @@
  */
 class Cache {
 	private $path = null;
-	private $timeout = 600;
+	public $timeout = 600;
 	
 	public function Cache(){
 		$this->path = dirname(__FILE__) . "/../cache/";
