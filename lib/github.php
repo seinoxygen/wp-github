@@ -28,6 +28,14 @@ class Github {
 		return $response;
 	}
 	
+	public function get_profile(){
+		$contents = $this->get_response('users/' . $this->username);
+		if($contents == true) {
+		 	return json_decode($contents);
+		}
+		return null;
+	}
+	
 	public function get_repositories(){
 		$contents = $this->get_response('users/' . $this->username . '/repos');
 		if($contents == true) {

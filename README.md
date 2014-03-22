@@ -1,7 +1,7 @@
 WP Github
 =========
 
-Display users public Github repositories, commits and issues.
+Display users public Github profile, repositories, commits and issues.
 
 ## Usage
 
@@ -10,6 +10,14 @@ You can install the widgets in your sidebars from the widgets section in wordpre
 You also can use shortcodes to display github content on your posts and pages.
 
 ## Shortcodes
+
+#### Profile
+```html
+[github-profile]
+```
+Argument | Example | Description
+--- | --- | ---
+username | `[github-profile username="seinoxygen"]` | Displays the profile box for the user seinoxygen.
 
 #### Repositories
 ```html

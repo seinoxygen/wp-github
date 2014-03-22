@@ -12,6 +12,13 @@
 require dirname(__FILE__) . '/lib/cache.php';
 require(dirname(__FILE__) . '/lib/github.php');
 
+// Init General Style
+add_action('wp_enqueue_scripts', 'wpgithub_style');
+function wpgithub_style(){
+	wp_enqueue_style('wp-github', plugin_dir_url( __FILE__ ).'wp-github.css');
+}
+
+// Admin 
 add_action('admin_menu','wpgithub_plugin_menu');
 add_action('admin_init', 'wpgithub_register_settings' );
 
@@ -416,6 +423,38 @@ class Widget_Gists extends WP_Widget{
 }
 
 /*
+ * Profile shortcode.
+ */
+function ghprofile_shortcode($atts) {
+	extract( shortcode_atts(
+		array(
+			'username' => 'seinoxygen'
+		), $atts )
+	);
+	
+	// Init the cache system.
+	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
+		
+	$profile = $cache->get(username . '.json');
+	if($profile == null) {
+		$github = new Github($username);
+		$profile = $github->get_profile();
+		$cache->set($username . '.json', $profile);
+	}
+	
+	$html = '<div class="wpgithub-profile">';
+	$html .=  '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
+	$html .=  '<a class="wpgithub-bblock" href="https://github.com/' . $username . '?tab=repositories"><span class="wpgithub-count">' . $profile->public_repos . '</span><span class="wpgithub-text">Public Repos</span></a>';
+	$html .=  '<a class="wpgithub-bblock" href="https://gist.github.com/' . $username . '"><span class="wpgithub-count">' . $profile->public_gists . '</span><span class="wpgithub-text">Public Gists</span></a>';
+	$html .=  '<a class="wpgithub-bblock" href="https://github.com/' . $username . '/followers"><span class="wpgithub-count">' . $profile->followers . '</span><span class="wpgithub-text">Followers</span></a>';
+	$html .= '</div>';
+	return $html;
+}
+add_shortcode('github-profile', 'ghprofile_shortcode');
+
+/*
  * Repositories shortcode.
  */
 function ghrepos_shortcode($atts) {
@@ -426,7 +465,10 @@ function ghrepos_shortcode($atts) {
 		), $atts )
 	);
 	
+	// Init the cache system.
 	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 	$repositories = $cache->get(username . '.repositories.json');
 	if($repositories == null) {
@@ -457,7 +499,10 @@ function ghcommits_shortcode($atts) {
 		), $atts )
 	);
 	
+	// Init the cache system.
 	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 	$commits = $cache->get($username . '.' . $repository . '.commits.json');
 	if($commits == null) {
@@ -488,7 +533,10 @@ function ghissues_shortcode($atts) {
 		), $atts )
 	);
 	
+	// Init the cache system.
 	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 	$issues = $cache->get($username . '.' . $repository . '.issues.json');
 	if($issues == null) {
@@ -518,7 +566,10 @@ function ghgists_shortcode($atts) {
 		), $atts )
 	);
 	
+	// Init the cache system.
 	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
 	$gists = $cache->get($username . '.gists.json');
 	if($gists == null) {
