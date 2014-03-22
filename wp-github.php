@@ -13,7 +13,7 @@ require dirname(__FILE__) . '/lib/cache.php';
 require(dirname(__FILE__) . '/lib/github.php');
 
 // Init General Style
-add_action('wp_enqueue_scripts', 'wpgithub_style');
+add_action('wp_enqueue_scripts', 'wpgithub_style', 20);
 function wpgithub_style(){
 	wp_enqueue_style('wp-github', plugin_dir_url( __FILE__ ).'wp-github.css');
 }
@@ -52,10 +52,85 @@ function wpgithub_validate_int($input) {
 add_action('widgets_init', 'register_git_widgets');
 
 function register_git_widgets(){
+	register_widget('Widget_Profile');
 	register_widget('Widget_Repos');
 	register_widget('Widget_Commits');
 	register_widget('Widget_Issues');
 	register_widget('Widget_Gists');
+}
+
+/*
+ * Profile widget.
+ */
+class Widget_Profile extends WP_Widget{
+	function Widget_Profile() {
+		$widget_ops = array('description' => __('Displays the Github user profile.'));           
+        $this->WP_Widget(false, __('Github Profile'), $widget_ops, $control_ops);
+	}
+	
+	function form($instance) {
+		$title = $this->get_title($instance);
+		$username = $this->get_username($instance);
+		
+		?>
+	    	<p>
+				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> </label>
+					<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" 
+					name="<?php echo $this->get_field_name('title'); ?>" type="text" 
+					value="<?php echo $title; ?>" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('username'); ?>"><?php _e('Github Username:'); ?> </label>
+					<input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" 
+					name="<?php echo $this->get_field_name('username'); ?>" type="text" 
+					value="<?php echo $username; ?>" />
+			</p>
+	    <?php
+	}
+	
+	function widget($args, $instance) {
+		extract($args);	
+		
+		$title = $this->get_title($instance);
+		$username = $this->get_username($instance);
+
+		echo $before_widget;
+		echo $before_title . $title . $after_title;
+		
+		// Init the cache system.
+		$cache = new Cache();
+		// Set custom timeout in seconds.
+		$cache->timeout = get_option('wpgithub_cache_time', 600);
+			
+		$profile = $cache->get(username . '.json');
+		if($profile == null) {
+			$github = new Github($username);
+			$profile = $github->get_profile();
+			$cache->set($username . '.json', $profile);
+		}
+		
+		echo '<div class="wpgithub-profile">';
+		echo '<div class="wpgithub-user">';
+		echo '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
+		echo '<h3 class="wpgithub-username"><a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github">' . $username . '</a></h3>';
+		echo '<p class="wpgithub-name">' . $profile->name . '</p>';
+		echo '<p class="wpgithub-location">' . $profile->location . '</p>';
+		echo '</div>';
+		echo '<a class="wpgithub-bblock" href="https://github.com/' . $username . '?tab=repositories"><span class="wpgithub-count">' . $profile->public_repos . '</span><span class="wpgithub-text">Public Repos</span></a>';
+		echo '<a class="wpgithub-bblock" href="https://gist.github.com/' . $username . '"><span class="wpgithub-count">' . $profile->public_gists . '</span><span class="wpgithub-text">Public Gists</span></a>';
+		echo '<a class="wpgithub-bblock" href="https://github.com/' . $username . '/followers"><span class="wpgithub-count">' . $profile->followers . '</span><span class="wpgithub-text">Followers</span></a>';
+		echo '</div>';
+		
+		echo $after_widget;
+	}
+	
+	private function get_title($instance) {
+		return empty($instance['title']) ? 'My Github Profile' : apply_filters('widget_title', $instance['title']);
+	}
+	
+	private function get_username($instance) {
+		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+	}
 }
 
 /*
@@ -445,7 +520,12 @@ function ghprofile_shortcode($atts) {
 	}
 	
 	$html = '<div class="wpgithub-profile">';
+	$html .=  '<div class="wpgithub-user">';
 	$html .=  '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
+	$html .=  '<h3 class="wpgithub-username"><a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github">' . $username . '</a></h3>';
+	$html .=  '<p class="wpgithub-name">' . $profile->name . '</p>';
+	$html .=  '<p class="wpgithub-location">' . $profile->location . '</p>';
+	$html .=  '</div>';
 	$html .=  '<a class="wpgithub-bblock" href="https://github.com/' . $username . '?tab=repositories"><span class="wpgithub-count">' . $profile->public_repos . '</span><span class="wpgithub-text">Public Repos</span></a>';
 	$html .=  '<a class="wpgithub-bblock" href="https://gist.github.com/' . $username . '"><span class="wpgithub-count">' . $profile->public_gists . '</span><span class="wpgithub-text">Public Gists</span></a>';
 	$html .=  '<a class="wpgithub-bblock" href="https://github.com/' . $username . '/followers"><span class="wpgithub-count">' . $profile->followers . '</span><span class="wpgithub-text">Followers</span></a>';
