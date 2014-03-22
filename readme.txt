@@ -1,10 +1,10 @@
 === WP Github ===
 Contributors: seinoxygen
 Donate link: http://www.seinoxygen.com/projects/wp-github
-Tags: github, repositories, commits, issues, gists, widget, shortcode
+Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
 Requires at least: 3.0.1
 Tested up to: 3.8.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -16,6 +16,7 @@ WP Github provides three sidebar widgets which can be configured to display publ
 
 Currently the plugin can list:
 
+*   Profile
 *   Repositories
 *   Commits
 *   Issues
@@ -29,9 +30,7 @@ The plugin uses a basic unordered lists to enumerate. In the future will be impl
 
 The plugin caches all the data retrieved from Github every 10 minutes to avoid exceed the limit of api calls.
 
-You can clear the cache manually deleting the files from the folder /wp-content/plugins/wp-github/cache.
-
-In the next releases I'll add a settings panel to do this in a fancy way.
+Since version 1.1 you can clear the cache from the plugin settings page located in the Wordpress settings menu.
 
 ### Support
 
@@ -39,7 +38,7 @@ If you have found a bug/issue or have a feature request please report here: http
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload `wp-github` directory to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Add the widget through the 'Widgets' menu in WordPress or add the desired shortcode in your posts and pages.
 
@@ -47,7 +46,10 @@ If you have found a bug/issue or have a feature request please report here: http
 
 = Which shortcodes are available? =
 
-You can use the following codes to display repositories, commits, issues and gists:
+You can use the following codes to display profile, repositories, commits, issues and gists:
+
+Embeed profile:
+`[github-profile username="seinoxygen"]`
 List last 10 repositories:
 `[github-repos username="seinoxygen" limit="10"]`
 List last 10 commits from a specific repository:
@@ -59,11 +61,17 @@ List last 10 gists from a specific user:
 
 == Screenshots ==
 
-1. Setting up the widget. repos-widget.png
-2. Repositories widget in action! repos-sidebar.png
-3. Repositories embedded in a page. repos-page.png
+1. Setting up the widget.
+2. Repositories widget in action!
+3. Repositories embedded in a page.
+4. Profile shortcode.
+5. Profile widget.
 
 == Changelog ==
+
+= 1.1 =
+* New: Added "clear cache" and "cache time" functionality in settings page.
+* New: Added profile widget and shortcode.
 
 = 1.0 =
 * First release
