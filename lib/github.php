@@ -36,6 +36,14 @@ class Github {
 		return null;
 	}
 	
+	public function get_events(){
+		$contents = $this->get_response('users/' . $this->username . '/events');
+		if($contents == true) {
+		 	return json_decode($contents);
+		}
+		return null;
+	}
+	
 	public function get_repositories(){
 		$contents = $this->get_response('users/' . $this->username . '/repos');
 		if($contents == true) {
