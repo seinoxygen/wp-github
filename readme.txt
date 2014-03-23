@@ -4,15 +4,15 @@ Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
 Requires at least: 3.0.1
 Tested up to: 3.8.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
-Display users Github public repositories, commits, issues and gists.
+Display users Github public profile, repositories, commits, issues and gists.
 
 == Description ==
 
-WP Github provides three sidebar widgets which can be configured to display public repositories, commits, issues and gists from github in the sidebar. You can have as many widgets as you want configured to display different repositories.
+WP Github provides three sidebar widgets which can be configured to display public profile, repositories, commits, issues and gists from github in the sidebar. You can have as many widgets as you want configured to display different repositories.
 
 Currently the plugin can list:
 
@@ -25,6 +25,8 @@ Currently the plugin can list:
 ### Using CSS
 
 The plugin uses a basic unordered lists to enumerate. In the future will be implemented a simple template system to increase the customization.
+
+You can apply a customized style to the plugin simply uploading a file called `custom.css` in the plugin folder. It will allow you to upgrade the plugin without loss your custom style.
 
 ### Caching
 
@@ -68,6 +70,9 @@ List last 10 gists from a specific user:
 5. Profile widget.
 
 == Changelog ==
+
+= 1.2 =
+* New: Custom styles.
 
 = 1.1 =
 * New: Added "clear cache" and "cache time" functionality in settings page.

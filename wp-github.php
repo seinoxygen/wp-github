@@ -15,7 +15,13 @@ require(dirname(__FILE__) . '/lib/github.php');
 // Init General Style
 add_action('wp_enqueue_scripts', 'wpgithub_style', 20);
 function wpgithub_style(){
-	wp_enqueue_style('wp-github', plugin_dir_url( __FILE__ ).'wp-github.css');
+	wp_enqueue_style('wp-github', plugin_dir_url(__FILE__).'wp-github.css');
+	
+	// If custom stylesheet exists load it.
+	$custom = plugin_dir_path( __FILE__ ).'custom.css';
+	if(file_exists($custom)){
+		wp_enqueue_style('wp-github-custom', plugin_dir_url(__FILE__).'custom.css');
+	}
 }
 
 // Admin 
