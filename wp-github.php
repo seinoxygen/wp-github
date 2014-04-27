@@ -15,13 +15,7 @@ require(dirname(__FILE__) . '/lib/github.php');
 // Init General Style
 add_action('wp_enqueue_scripts', 'wpgithub_style', 20);
 function wpgithub_style(){
-	wp_enqueue_style('wp-github', plugin_dir_url(__FILE__).'wp-github.css');
-	
-	// If custom stylesheet exists load it.
-	$custom = plugin_dir_path( __FILE__ ).'custom.css';
-	if(file_exists($custom)){
-		wp_enqueue_style('wp-github-custom', plugin_dir_url(__FILE__).'custom.css');
-	}
+	wp_enqueue_style('wp-github', plugin_dir_url( __FILE__ ).'wp-github.css');
 }
 
 // Admin 
@@ -70,6 +64,12 @@ function register_git_widgets(){
  */
 class Widget_Profile extends WP_Widget{
 	function Widget_Profile() {
+		// Prevent undefined variable $control_ops error
+		if ( $control_ops = null ) {
+			$control_ops = '';
+			return $control_ops;
+		}
+
 		$widget_ops = array('description' => __('Displays the Github user profile.'));           
         $this->WP_Widget(false, __('Github Profile'), $widget_ops, $control_ops);
 	}
@@ -144,6 +144,12 @@ class Widget_Profile extends WP_Widget{
  */
 class Widget_Repos extends WP_Widget{
 	function Widget_Repos() {
+		// Prevent undefined variable $control_ops error
+		if ( $control_ops = null ) {
+			$control_ops = '';
+			return $control_ops;
+		}
+
 		$widget_ops = array('description' => __('Displays the repositories from a specific user.'));           
         $this->WP_Widget(false, __('Github Repositories'), $widget_ops, $control_ops);
 	}
@@ -229,6 +235,12 @@ class Widget_Repos extends WP_Widget{
  */
 class Widget_Commits extends WP_Widget{
 	function Widget_Commits() {
+		// Prevent undefined variable $control_ops error
+		if ( $control_ops = null ) {
+			$control_ops = '';
+			return $control_ops;
+		}
+
 		$widget_ops = array('description' => __('Displays latests commits from a Github repository.'));           
         $this->WP_Widget(false, __('Github Commits'), $widget_ops, $control_ops);
 	}
@@ -326,6 +338,12 @@ class Widget_Commits extends WP_Widget{
  */
 class Widget_Issues extends WP_Widget{
 	function Widget_Issues() {
+		// Prevent undefined variable $control_ops error
+		if ( $control_ops = null ) {
+			$control_ops = '';
+			return $control_ops;
+		}
+
 		$widget_ops = array('description' => __('Displays latests issues from a Github repository.'));           
         $this->WP_Widget(false, __('Github Issues'), $widget_ops, $control_ops);
 	}
@@ -423,6 +441,12 @@ class Widget_Issues extends WP_Widget{
  */
 class Widget_Gists extends WP_Widget{
 	function Widget_Gists() {
+		// Prevent undefined variable $control_ops error
+		if ( $control_ops = null ) {
+			$control_ops = '';
+			return $control_ops;
+		}
+		
 		$widget_ops = array('description' => __('Displays latests gists from a Github user.'));           
         $this->WP_Widget(false, __('Github Gists'), $widget_ops, $control_ops);
 	}
