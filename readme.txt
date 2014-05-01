@@ -3,7 +3,7 @@ Contributors: seinoxygen
 Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
 Requires at least: 3.0.1
-Tested up to: 3.8.1
+Tested up to: 3.9
 Stable tag: 1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -54,8 +54,12 @@ Embeed profile:
 `[github-profile username="seinoxygen"]`
 List last 10 repositories:
 `[github-repos username="seinoxygen" limit="10"]`
+List last 10 commits from all repositories:
+`[github-commits username="seinoxygen" limit="10"]`
 List last 10 commits from a specific repository:
 `[github-commits username="seinoxygen" repository="wp-github" limit="10"]`
+List last 10 issues from all repositories:
+`[github-issues username="seinoxygen" limit="10"]`
 List last 10 issues from a specific repository:
 `[github-issues username="seinoxygen" repository="wp-github" limit="10"]`
 List last 10 gists from a specific user:
@@ -73,6 +77,7 @@ List last 10 gists from a specific user:
 
 = 1.2 =
 * New: Custom styles.
+* New: List all issues and commits from all public repositories
 
 = 1.1 =
 * New: Added "clear cache" and "cache time" functionality in settings page.

@@ -5,7 +5,7 @@
  * Description: Display users Github public repositories, commits, issues and gists.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
- * Version: 1.1
+ * Version: 1.2
  *
  * Licensed under the MIT License
  */
@@ -296,7 +296,7 @@ class Widget_Commits extends WP_Widget{
 			$commits = array_slice($commits, 0, $commit_count);
 			echo '<ul>';
 			foreach($commits as $commit){
-		 		echo '<li><a href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . substr($commit->sha, 0,10) . '</a></li>';
+		 		echo '<li><a href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -313,7 +313,7 @@ class Widget_Commits extends WP_Widget{
 	}
 	
 	private function get_repository($instance) {
-		return empty($instance['repository']) ? 'wp-github' : $instance['repository'];
+		return $instance['repository'];
 	}
 	
 	private function get_commit_count($instance) {
@@ -410,7 +410,7 @@ class Widget_Issues extends WP_Widget{
 	}
 	
 	private function get_repository($instance) {
-		return empty($instance['repository']) ? 'wp-github' : $instance['repository'];
+		return $instance['repository'];
 	}
 	
 	private function get_issue_count($instance) {
@@ -580,7 +580,7 @@ function ghcommits_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
 			'username' => 'seinoxygen',
-			'repository' => 'wp-github',
+			'repository' => '',
 			'limit' => '5'
 		), $atts )
 	);
@@ -600,7 +600,7 @@ function ghcommits_shortcode($atts) {
 	$commits = array_slice($commits, 0, $limit);
 	$html = '<ul>';
 	foreach($commits as $commit){
-		$html .=  '<li><a href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . substr($commit->sha, 0,10) . '</a></li>';
+		$html .=  '<li><a href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
 	}
 	$html .= '</ul>';
 	return $html;
@@ -614,7 +614,7 @@ function ghissues_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
 			'username' => 'seinoxygen',
-			'repository' => 'wp-github',
+			'repository' => '',
 			'limit' => '5'
 		), $atts )
 	);
