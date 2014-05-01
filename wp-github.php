@@ -71,7 +71,7 @@ function register_git_widgets(){
 class Widget_Profile extends WP_Widget{
 	function Widget_Profile() {
 		$widget_ops = array('description' => __('Displays the Github user profile.'));           
-        $this->WP_Widget(false, __('Github Profile'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Profile'), $widget_ops);
 	}
 	
 	function form($instance) {
@@ -108,7 +108,7 @@ class Widget_Profile extends WP_Widget{
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 			
-		$profile = $cache->get(username . '.json');
+		$profile = $cache->get($username . '.json');
 		if($profile == null) {
 			$github = new Github($username);
 			$profile = $github->get_profile();
@@ -145,7 +145,7 @@ class Widget_Profile extends WP_Widget{
 class Widget_Repos extends WP_Widget{
 	function Widget_Repos() {
 		$widget_ops = array('description' => __('Displays the repositories from a specific user.'));           
-        $this->WP_Widget(false, __('Github Repositories'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Repositories'), $widget_ops);
 	}
 	
 	function form($instance) {
@@ -230,7 +230,7 @@ class Widget_Repos extends WP_Widget{
 class Widget_Commits extends WP_Widget{
 	function Widget_Commits() {
 		$widget_ops = array('description' => __('Displays latests commits from a Github repository.'));           
-        $this->WP_Widget(false, __('Github Commits'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Commits'), $widget_ops);
 	}
 	
 	function form($instance) {
@@ -327,7 +327,7 @@ class Widget_Commits extends WP_Widget{
 class Widget_Issues extends WP_Widget{
 	function Widget_Issues() {
 		$widget_ops = array('description' => __('Displays latests issues from a Github repository.'));           
-        $this->WP_Widget(false, __('Github Issues'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Issues'), $widget_ops);
 	}
 	
 	function form($instance) {
@@ -424,7 +424,7 @@ class Widget_Issues extends WP_Widget{
 class Widget_Gists extends WP_Widget{
 	function Widget_Gists() {
 		$widget_ops = array('description' => __('Displays latests gists from a Github user.'));           
-        $this->WP_Widget(false, __('Github Gists'), $widget_ops, $control_ops);
+        $this->WP_Widget(false, __('Github Gists'), $widget_ops);
 	}
 	
 	function form($instance) {
