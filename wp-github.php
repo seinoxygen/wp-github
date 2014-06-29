@@ -117,7 +117,7 @@ class Widget_Profile extends WP_Widget{
 		
 		echo '<div class="wpgithub-profile">';
 		echo '<div class="wpgithub-user">';
-		echo '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
+		echo '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="//gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
 		echo '<h3 class="wpgithub-username"><a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github">' . $username . '</a></h3>';
 		echo '<p class="wpgithub-name">' . $profile->name . '</p>';
 		echo '<p class="wpgithub-location">' . $profile->location . '</p>';
