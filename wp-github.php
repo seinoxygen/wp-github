@@ -188,6 +188,7 @@ class Widget_Repos extends WP_Widget{
 		$title = $this->get_title($instance);
 		$username = $this->get_username($instance);
 		$project_count = $this->get_project_count($instance);
+                $show_parent = $this->get_show_parent($instance);
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
@@ -210,7 +211,23 @@ class Widget_Repos extends WP_Widget{
 			$repositories = array_slice($repositories, 0, $project_count);
 			echo '<ul>';
 			foreach($repositories as $repository){
-		 		echo '<li><a href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a></li>';
+		 		echo '<li><a href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a>';
+                                if ((int) $repository->fork && $show_parent) {
+                                    $parent_repository = $cache->get($username . '.' . $repository->name . '.repositories.json');
+                                    if ($parent_repository == null) {
+                                        if (!isset($github)) {
+                                            $github = new Github($username);
+                                        }
+                                        $parent_repository = $github->get_parent_repository($repository->name);
+                                        $cache->set($username . '.' . $repository->name . '.repositories.json', array($parent_repository));
+                                    }
+                                    if (is_array($parent_repository))
+                                        $parent_repository = end($parent_repository);
+                                    echo '<span class="forked_from">forked from ';
+                                    echo '<a href="' . $parent_repository->html_url . '">' . $parent_repository->full_name . '</a>';
+                                    echo '</span>';
+                                }
+                                echo '</li>';
 			}
 			echo '</ul>';
 		}
