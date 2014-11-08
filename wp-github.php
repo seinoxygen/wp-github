@@ -152,6 +152,7 @@ class Widget_Repos extends WP_Widget{
 		$title = $this->get_title($instance);
 		$username = $this->get_username($instance);
 		$project_count = $this->get_project_count($instance);
+                $show_parent = $this->get_show_parent($instance);
 
 		?>
 	    	<p>
@@ -172,6 +173,12 @@ class Widget_Repos extends WP_Widget{
 					name="<?php echo $this->get_field_name('project_count'); ?>" type="text" 
 					value="<?php echo $project_count; ?>" size="3" />
 			</p>
+                        <p>
+                                <label for="<?php echo $this->get_field_id('show_parent'); ?>"><?php _e('Show repo forked from if exists:'); ?> </label>
+                                        <input id="<?php echo $this->get_field_id('show_parent'); ?>"
+                                        name="<?php echo $this->get_field_name('show_parent'); ?>" type="checkbox"
+                                        <?php if ($show_parent) echo "checked"; ?> />
+                        </p>
 	    <?php
 	}
 	
@@ -222,6 +229,10 @@ class Widget_Repos extends WP_Widget{
 	private function get_project_count($instance) {
 		return empty($instance['project_count']) ? 5 : $instance['project_count'];
 	}
+        
+        private function get_show_parent($instance){
+                return empty($instance['show_parent']) ? false : $instance['show_parent'];
+        }
 }
 
 /*
