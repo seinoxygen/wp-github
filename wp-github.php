@@ -24,6 +24,9 @@ function wpgithub_style(){
 	}
 }
 
+//Awesome Font
+wp_enqueue_style('awesome-font', plugin_dir_url(__FILE__) . 'css/awesome_font.css', 'style');
+
 // Admin 
 add_action('admin_menu','wpgithub_plugin_menu');
 add_action('admin_init', 'wpgithub_register_settings' );

@@ -1,0 +1,307 @@
+/*  Font Awesome
+    the iconic font designed for use with Twitter Bootstrap
+    -------------------------------------------------------
+    The full suite of pictographic icons, examples, and documentation
+    can be found at: http://fortawesome.github.com/Font-Awesome/
+
+    License
+    -------------------------------------------------------
+    The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
+    http://creativecommons.org/licenses/by/3.0/ A mention of
+    'Font Awesome - http://fortawesome.github.com/Font-Awesome' in human-readable
+    source code is considered acceptable attribution (most common on the web).
+    If human readable source code is not available to the end user, a mention in
+    an 'About' or 'Credits' screen is considered acceptable (most common in desktop
+    or mobile software).
+
+    Contact
+    -------------------------------------------------------
+    Email: dave@davegandy.com
+    Twitter: http://twitter.com/fortaweso_me
+    Work: Lead Product Designer @ http://kyruus.com
+
+    */
+@font-face {
+  font-family: "FontAwesome";
+  src: url('../fonts/fontawesome-webfont.eot');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix') format('eot'), url('../fonts/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontawesome-webfont.otf') format('opentype'), url('../fonts/fontawesome-webfont.svg#FontAwesome') format('svg');
+  font-weight: normal;
+  font-style: normal; }
+
+/*  Font Awesome styles
+    ------------------------------------------------------- */
+[class^="wpex-icon-"]:before,
+[class*=" wpex-icon-"]:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;}
+
+a [class^="wpex-icon-"],
+a [class*=" wpex-icon-"] {
+  display: inline-block;
+  text-decoration: inherit; }
+
+/* makes the font 33% larger relative to the icon container */
+.wpex-icon-large:before {
+  vertical-align: middle;
+  font-size: 4/3em; }
+
+.btn [class^="wpex-icon-"],
+.btn [class*=" wpex-icon-"], .nav-tabs [class^="wpex-icon-"], .nav-tabs [class*=" wpex-icon-"] {
+  /* keeps button heights with and without icons the same */
+  line-height: .9em; }
+
+li [class^="wpex-icon-"],
+li [class*=" wpex-icon-"] {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center; }
+li .wpex-icon-large:before,
+li .wpex-icon-large:before {
+  /* 1.5 increased font size for wpex-icon-large * 1.25 width */
+  width: 1.875em; }
+
+ul.icons {
+  list-style-type: none;
+  margin-left: 2em;
+  text-indent: -0.8em; }
+  ul.icons li [class^="wpex-icon-"],
+  ul.icons li [class*=" wpex-icon-"] {
+    width: .8em; }
+  ul.icons li .wpex-icon-large:before,
+  ul.icons li .wpex-icon-large:before {
+    /* 1.5 increased font size for wpex-icon-large * 1.25 width */
+    vertical-align: initial; }
+
+/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+    readers do not read off random characters that represent icons */
+/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+    readers do not read off random characters that represent icons */
+.wpex-icon-glass:before                { content: "\f000"; }
+.wpex-icon-music:before                { content: "\f001"; }
+.wpex-icon-search:before               { content: "\f002"; }
+.wpex-icon-envelope:before             { content: "\f003"; }
+.wpex-icon-heart:before                { content: "\f004"; }
+.wpex-icon-star:before                 { content: "\f005"; }
+.wpex-icon-star-empty:before           { content: "\f006"; }
+.wpex-icon-user:before                 { content: "\f007"; }
+.wpex-icon-film:before                 { content: "\f008"; }
+.wpex-icon-th-large:before             { content: "\f009"; }
+.wpex-icon-th:before                   { content: "\f00a"; }
+.wpex-icon-th-list:before              { content: "\f00b"; }
+.wpex-icon-ok:before                   { content: "\f00c"; }
+.wpex-icon-remove:before               { content: "\f00d"; }
+.wpex-icon-zoom-in:before              { content: "\f00e"; }
+
+.wpex-icon-zoom-out:before             { content: "\f010"; }
+.wpex-icon-off:before                  { content: "\f011"; }
+.wpex-icon-signal:before               { content: "\f012"; }
+.wpex-icon-cog:before                  { content: "\f013"; }
+.wpex-icon-trash:before                { content: "\f014"; }
+.wpex-icon-home:before                 { content: "\f015"; }
+.wpex-icon-file:before                 { content: "\f016"; }
+.wpex-icon-time:before                 { content: "\f017"; }
+.wpex-icon-road:before                 { content: "\f018"; }
+.wpex-icon-download-alt:before         { content: "\f019"; }
+.wpex-icon-download:before             { content: "\f01a"; }
+.wpex-icon-upload:before               { content: "\f01b"; }
+.wpex-icon-inbox:before                { content: "\f01c"; }
+.wpex-icon-play-circle:before          { content: "\f01d"; }
+.wpex-icon-repeat:before               { content: "\f01e"; }
+
+/* \f020 is not a valid unicode character. all shifted one down */
+.wpex-icon-refresh:before              { content: "\f021"; }
+.wpex-icon-list-alt:before             { content: "\f022"; }
+.wpex-icon-lock:before                 { content: "\f023"; }
+.wpex-icon-flag:before                 { content: "\f024"; }
+.wpex-icon-headphones:before           { content: "\f025"; }
+.wpex-icon-volume-off:before           { content: "\f026"; }
+.wpex-icon-volume-down:before          { content: "\f027"; }
+.wpex-icon-volume-up:before            { content: "\f028"; }
+.wpex-icon-qrcode:before               { content: "\f029"; }
+.wpex-icon-barcode:before              { content: "\f02a"; }
+.wpex-icon-tag:before                  { content: "\f02b"; }
+.wpex-icon-tags:before                 { content: "\f02c"; }
+.wpex-icon-book:before                 { content: "\f02d"; }
+.wpex-icon-bookmark:before             { content: "\f02e"; }
+.wpex-icon-print:before                { content: "\f02f"; }
+
+.wpex-icon-camera:before               { content: "\f030"; }
+.wpex-icon-font:before                 { content: "\f031"; }
+.wpex-icon-bold:before                 { content: "\f032"; }
+.wpex-icon-italic:before               { content: "\f033"; }
+.wpex-icon-text-height:before          { content: "\f034"; }
+.wpex-icon-text-width:before           { content: "\f035"; }
+.wpex-icon-align-left:before           { content: "\f036"; }
+.wpex-icon-align-center:before         { content: "\f037"; }
+.wpex-icon-align-right:before          { content: "\f038"; }
+.wpex-icon-align-justify:before        { content: "\f039"; }
+.wpex-icon-list:before                 { content: "\f03a"; }
+.wpex-icon-indent-left:before          { content: "\f03b"; }
+.wpex-icon-indent-right:before         { content: "\f03c"; }
+.wpex-icon-facetime-video:before       { content: "\f03d"; }
+.wpex-icon-picture:before              { content: "\f03e"; }
+
+.wpex-icon-pencil:before               { content: "\f040"; }
+.wpex-icon-map-marker:before           { content: "\f041"; }
+.wpex-icon-adjust:before               { content: "\f042"; }
+.wpex-icon-tint:before                 { content: "\f043"; }
+.wpex-icon-edit:before                 { content: "\f044"; }
+.wpex-icon-share:before                { content: "\f045"; }
+.wpex-icon-check:before                { content: "\f046"; }
+.wpex-icon-move:before                 { content: "\f047"; }
+.wpex-icon-step-backward:before        { content: "\f048"; }
+.wpex-icon-fast-backward:before        { content: "\f049"; }
+.wpex-icon-backward:before             { content: "\f04a"; }
+.wpex-icon-play:before                 { content: "\f04b"; }
+.wpex-icon-pause:before                { content: "\f04c"; }
+.wpex-icon-stop:before                 { content: "\f04d"; }
+.wpex-icon-forward:before              { content: "\f04e"; }
+
+.wpex-icon-fast-forward:before         { content: "\f050"; }
+.wpex-icon-step-forward:before         { content: "\f051"; }
+.wpex-icon-eject:before                { content: "\f052"; }
+.wpex-icon-chevron-left:before         { content: "\f053"; }
+.wpex-icon-chevron-right:before        { content: "\f054"; }
+.wpex-icon-plus-sign:before            { content: "\f055"; }
+.wpex-icon-minus-sign:before           { content: "\f056"; }
+.wpex-icon-remove-sign:before          { content: "\f057"; }
+.wpex-icon-ok-sign:before              { content: "\f058"; }
+.wpex-icon-question-sign:before        { content: "\f059"; }
+.wpex-icon-info-sign:before            { content: "\f05a"; }
+.wpex-icon-screenshot:before           { content: "\f05b"; }
+.wpex-icon-remove-circle:before        { content: "\f05c"; }
+.wpex-icon-ok-circle:before            { content: "\f05d"; }
+.wpex-icon-ban-circle:before           { content: "\f05e"; }
+
+.wpex-icon-arrow-left:before           { content: "\f060"; }
+.wpex-icon-arrow-right:before          { content: "\f061"; }
+.wpex-icon-arrow-up:before             { content: "\f062"; }
+.wpex-icon-arrow-down:before           { content: "\f063"; }
+.wpex-icon-share-alt:before            { content: "\f064"; }
+.wpex-icon-resize-full:before          { content: "\f065"; }
+.wpex-icon-resize-small:before         { content: "\f066"; }
+.wpex-icon-plus:before                 { content: "\f067"; }
+.wpex-icon-minus:before                { content: "\f068"; }
+.wpex-icon-asterisk:before             { content: "\f069"; }
+.wpex-icon-exclamation-sign:before     { content: "\f06a"; }
+.wpex-icon-gift:before                 { content: "\f06b"; }
+.wpex-icon-leaf:before                 { content: "\f06c"; }
+.wpex-icon-fire:before                 { content: "\f06d"; }
+.wpex-icon-eye-open:before             { content: "\f06e"; }
+
+.wpex-icon-eye-close:before            { content: "\f070"; }
+.wpex-icon-warning-sign:before         { content: "\f071"; }
+.wpex-icon-plane:before                { content: "\f072"; }
+.wpex-icon-calendar:before             { content: "\f073"; }
+.wpex-icon-random:before               { content: "\f074"; }
+.wpex-icon-comment:before              { content: "\f075"; }
+.wpex-icon-magnet:before               { content: "\f076"; }
+.wpex-icon-chevron-up:before           { content: "\f077"; }
+.wpex-icon-chevron-down:before         { content: "\f078"; }
+.wpex-icon-retweet:before              { content: "\f079"; }
+.wpex-icon-shopping-cart:before        { content: "\f07a"; }
+.wpex-icon-folder-close:before         { content: "\f07b"; }
+.wpex-icon-folder-open:before          { content: "\f07c"; }
+.wpex-icon-resize-vertical:before      { content: "\f07d"; }
+.wpex-icon-resize-horizontal:before    { content: "\f07e"; }
+
+.wpex-icon-bar-chart:before            { content: "\f080"; }
+.wpex-icon-twitter-sign:before         { content: "\f081"; }
+.wpex-icon-facebook-sign:before        { content: "\f082"; }
+.wpex-icon-camera-retro:before         { content: "\f083"; }
+.wpex-icon-key:before                  { content: "\f084"; }
+.wpex-icon-cogs:before                 { content: "\f085"; }
+.wpex-icon-comments:before             { content: "\f086"; }
+.wpex-icon-thumbs-up:before            { content: "\f087"; }
+.wpex-icon-thumbs-down:before          { content: "\f088"; }
+.wpex-icon-star-half:before            { content: "\f089"; }
+.wpex-icon-heart-empty:before          { content: "\f08a"; }
+.wpex-icon-signout:before              { content: "\f08b"; }
+.wpex-icon-linkedin-sign:before        { content: "\f08c"; }
+.wpex-icon-pushpin:before              { content: "\f08d"; }
+.wpex-icon-external-link:before        { content: "\f08e"; }
+
+.wpex-icon-signin:before               { content: "\f090"; }
+.wpex-icon-trophy:before               { content: "\f091"; }
+.wpex-icon-github-sign:before          { content: "\f092"; }
+.wpex-icon-upload-alt:before           { content: "\f093"; }
+.wpex-icon-lemon:before                { content: "\f094"; }
+.wpex-icon-phone:before                { content: "\f095"; }
+.wpex-icon-check-empty:before          { content: "\f096"; }
+.wpex-icon-bookmark-empty:before       { content: "\f097"; }
+.wpex-icon-phone-sign:before           { content: "\f098"; }
+.wpex-icon-twitter:before              { content: "\f099"; }
+.wpex-icon-facebook:before             { content: "\f09a"; }
+.wpex-icon-github:before               { content: "\f09b"; }
+.wpex-icon-unlock:before               { content: "\f09c"; }
+.wpex-icon-credit-card:before          { content: "\f09d"; }
+.wpex-icon-rss:before                  { content: "\f09e"; }
+
+.wpex-icon-hdd:before                  { content: "\f0a0"; }
+.wpex-icon-bullhorn:before             { content: "\f0a1"; }
+.wpex-icon-bell:before                 { content: "\f0a2"; }
+.wpex-icon-certificate:before          { content: "\f0a3"; }
+.wpex-icon-hand-right:before           { content: "\f0a4"; }
+.wpex-icon-hand-left:before            { content: "\f0a5"; }
+.wpex-icon-hand-up:before              { content: "\f0a6"; }
+.wpex-icon-hand-down:before            { content: "\f0a7"; }
+.wpex-icon-circle-arrow-left:before    { content: "\f0a8"; }
+.wpex-icon-circle-arrow-right:before   { content: "\f0a9"; }
+.wpex-icon-circle-arrow-up:before      { content: "\f0aa"; }
+.wpex-icon-circle-arrow-down:before    { content: "\f0ab"; }
+.wpex-icon-globe:before                { content: "\f0ac"; }
+.wpex-icon-wrench:before               { content: "\f0ad"; }
+.wpex-icon-tasks:before                { content: "\f0ae"; }
+
+.wpex-icon-filter:before               { content: "\f0b0"; }
+.wpex-icon-briefcase:before            { content: "\f0b1"; }
+.wpex-icon-fullscreen:before           { content: "\f0b2"; }
+
+.wpex-icon-group:before                { content: "\f0c0"; }
+.wpex-icon-link:before                 { content: "\f0c1"; }
+.wpex-icon-cloud:before                { content: "\f0c2"; }
+.wpex-icon-beaker:before               { content: "\f0c3"; }
+.wpex-icon-cut:before                  { content: "\f0c4"; }
+.wpex-icon-copy:before                 { content: "\f0c5"; }
+.wpex-icon-paper-clip:before           { content: "\f0c6"; }
+.wpex-icon-save:before                 { content: "\f0c7"; }
+.wpex-icon-sign-blank:before           { content: "\f0c8"; }
+.wpex-icon-reorder:before              { content: "\f0c9"; }
+.wpex-icon-list-ul:before              { content: "\f0ca"; }
+.wpex-icon-list-ol:before              { content: "\f0cb"; }
+.wpex-icon-strikethrough:before        { content: "\f0cc"; }
+.wpex-icon-underline:before            { content: "\f0cd"; }
+.wpex-icon-table:before                { content: "\f0ce"; }
+
+.wpex-icon-magic:before                { content: "\f0d0"; }
+.wpex-icon-truck:before                { content: "\f0d1"; }
+.wpex-icon-pinterest:before            { content: "\f0d2"; }
+.wpex-icon-pinterest-sign:before       { content: "\f0d3"; }
+.wpex-icon-google-plus-sign:before     { content: "\f0d4"; }
+.wpex-icon-google-plus:before          { content: "\f0d5"; }
+.wpex-icon-money:before                { content: "\f0d6"; }
+.wpex-icon-caret-down:before           { content: "\f0d7"; }
+.wpex-icon-caret-up:before             { content: "\f0d8"; }
+.wpex-icon-caret-left:before           { content: "\f0d9"; }
+.wpex-icon-caret-right:before          { content: "\f0da"; }
+.wpex-icon-columns:before              { content: "\f0db"; }
+.wpex-icon-sort:before                 { content: "\f0dc"; }
+.wpex-icon-sort-down:before            { content: "\f0dd"; }
+.wpex-icon-sort-up:before              { content: "\f0de"; }
+
+.wpex-icon-envelope-alt:before         { content: "\f0e0"; }
+.wpex-icon-linkedin:before             { content: "\f0e1"; }
+.wpex-icon-undo:before                 { content: "\f0e2"; }
+.wpex-icon-legal:before                { content: "\f0e3"; }
+.wpex-icon-dashboard:before            { content: "\f0e4"; }
+.wpex-icon-comment-alt:before          { content: "\f0e5"; }
+.wpex-icon-comments-alt:before         { content: "\f0e6"; }
+.wpex-icon-bolt:before                 { content: "\f0e7"; }
+.wpex-icon-sitemap:before              { content: "\f0e8"; }
+.wpex-icon-umbrella:before             { content: "\f0e9"; }
+.wpex-icon-paste:before                { content: "\f0ea"; }
+
+.wpex-icon-user-md:before              { content: "\f200"; }
