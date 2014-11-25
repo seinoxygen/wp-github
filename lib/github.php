@@ -142,6 +142,23 @@ class Github {
 		}
 		return null;
 	}
+        
+        /**
+        * Return parent repository.
+        */
+       public function get_parent_repository($repository) {
+           $contents = $this->get_response('repos/' . $this->username . '/' . $repository);
+           if ($contents == true) {
+               $contents = json_decode($contents);
+               if ($contents->parent) {
+                   $contents = $this->get_response('repos/' . $contents->parent->owner->login . '/' . $repository);
+                   if($contents == true){
+                       return json_decode($contents);
+                   }
+               }
+           }
+           return null;
+       }
 	
 	/**
 	 * Get username.

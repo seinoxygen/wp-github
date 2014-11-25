@@ -91,3 +91,20 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+//Forked from
+.widget_repos ul li span.forked_from{
+    display: inline-block;
+}
+
+.widget_repos ul li span.forked_from:before{
+    font-family: 'FontAwesome';
+    content: '\f126';
+    margin-right: 4px;
+}
+
+.widget_repos ul li span.forked_from a{
+    font-size: 12px;
+    font-weight: normal;
+    display: inline-block;
+}
