@@ -110,7 +110,6 @@ class Github {
 		$data = '';
 		if(!empty($this->repository)){
 			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases/latest');
-			echo 'repos/' . $this->username . '/' . $this->repository . '/releases/latest';
 			if($contents == true) {
 				$data = json_decode($contents);
 			}
@@ -128,8 +127,6 @@ class Github {
 		$data = array();
 		if(!empty($this->repository)){
 			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases');
-			echo 'repos/' . $this->username . '/' . $this->repository . '/releases<br />';
-			//var_dump($contents);
 			if($contents == true) {
 				$data = array_merge($data, json_decode($contents));
 			}

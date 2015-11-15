@@ -108,3 +108,6 @@
     font-weight: normal;
     display: inline-block;
 }
+
+.wpgithub-btn{}
+.wpgithub-description{font-size:80%;padding:1em 0;color:#ccc;}
