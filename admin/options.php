@@ -27,4 +27,53 @@
     <?php submit_button(); ?>
 
 </form>
+
+
+<h2>Instructions</h2>
+<p>
+Embeed profile:
+<pre>[github-profile username="seinoxygen"]</pre>
+
+
+<p>
+	List last 10 repositories:
+
+<pre>[github-repos username="seinoxygen" limit="10"]</pre>
+</p>
+
+<p>
+	List last 10 commits from all repositories:
+
+<pre>[github-commits username="seinoxygen" limit="10"]</pre>
+</p>
+<p>List last 10 commits from a specific repository:
+
+<pre>[github-commits username="seinoxygen" repository="wp-github" limit="10"]</pre>
+</p>
+<p>List last 10 issues from all repositories:
+
+<pre>[github-issues username="seinoxygen" limit="10"]</pre>
+</p>
+<p>List last 10 issues from a specific repository:
+
+<pre>[github-issues username="seinoxygen" repository="wp-github" limit="10"]</pre>
+
+</p>
+<p>List last 10 gists from a specific user:
+
+<pre>[github-gists username="seinoxygen" limit="10"]</pre>
+</p>
+<p>
+	List releases from a specific repo : 
+	<pre>[github-releases username="yahoo" repository="pure" limit="10"]</pre>
+</p>
+
+<p>
+	List latest release from a specific repo : 
+	<pre>[github-releaseslatest username="yahoo" repository="pure" ]</pre>
+</p>
 </div>
+
+
+
+
