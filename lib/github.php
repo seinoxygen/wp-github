@@ -103,6 +103,57 @@ class Github {
 		
 		return $data;
 	}
+			/**
+	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+	 */
+	public function get_latest_release(){
+		$data = '';
+		if(!empty($this->repository)){
+			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases/latest');
+			echo 'repos/' . $this->username . '/' . $this->repository . '/releases/latest';
+			if($contents == true) {
+				$data = json_decode($contents);
+			}
+		}
+
+		
+		return $data;
+	}
+	
+	
+		/**
+	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+	 */
+	public function get_releases(){
+		$data = array();
+		if(!empty($this->repository)){
+			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases');
+			echo 'repos/' . $this->username . '/' . $this->repository . '/releases<br />';
+			//var_dump($contents);
+			if($contents == true) {
+				$data = array_merge($data, json_decode($contents));
+			}
+		}
+		
+		else{
+			// Fetch all public repositories
+			$repos = $this->get_repositories();
+			if($repos == true) {
+				// Loop through public repos and get all commits
+				foreach($repos as $repo){
+					$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/releases');
+					if($contents == true) {
+						$data = array_merge($data, json_decode($contents));
+					}
+				}
+			}
+		}
+	
+		 //Sort response array
+		 usort($data, array($this, 'order_commits'));
+		
+		return $data;
+	}
 	
 	/**
 	 * Return repository issues. If none is provided will fetch all issues from all public repositories from user.
@@ -142,23 +193,6 @@ class Github {
 		}
 		return null;
 	}
-        
-        /**
-        * Return parent repository.
-        */
-       public function get_parent_repository($repository) {
-           $contents = $this->get_response('repos/' . $this->username . '/' . $repository);
-           if ($contents == true) {
-               $contents = json_decode($contents);
-               if ($contents->parent) {
-                   $contents = $this->get_response('repos/' . $contents->parent->owner->login . '/' . $repository);
-                   if($contents == true){
-                       return json_decode($contents);
-                   }
-               }
-           }
-           return null;
-       }
 	
 	/**
 	 * Get username.

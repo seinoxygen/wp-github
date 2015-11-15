@@ -24,9 +24,6 @@ function wpgithub_style(){
 	}
 }
 
-//Awesome Font
-wp_enqueue_style('awesome-font', plugin_dir_url(__FILE__) . 'css/awesome_font.css', 'style');
-
 // Admin 
 add_action('admin_menu','wpgithub_plugin_menu');
 add_action('admin_init', 'wpgithub_register_settings' );
@@ -120,7 +117,7 @@ class Widget_Profile extends WP_Widget{
 		
 		echo '<div class="wpgithub-profile">';
 		echo '<div class="wpgithub-user">';
-		echo '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="//gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
+		echo '<a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $username . '\'s Github" /></a>';
 		echo '<h3 class="wpgithub-username"><a href="'. $profile->html_url . '" title="View ' . $username . '\'s Github">' . $username . '</a></h3>';
 		echo '<p class="wpgithub-name">' . $profile->name . '</p>';
 		echo '<p class="wpgithub-location">' . $profile->location . '</p>';
@@ -155,7 +152,6 @@ class Widget_Repos extends WP_Widget{
 		$title = $this->get_title($instance);
 		$username = $this->get_username($instance);
 		$project_count = $this->get_project_count($instance);
-                $show_parent = $this->get_show_parent($instance);
 
 		?>
 	    	<p>
@@ -176,12 +172,6 @@ class Widget_Repos extends WP_Widget{
 					name="<?php echo $this->get_field_name('project_count'); ?>" type="text" 
 					value="<?php echo $project_count; ?>" size="3" />
 			</p>
-                        <p>
-                                <label for="<?php echo $this->get_field_id('show_parent'); ?>"><?php _e('Show repo forked from if exists:'); ?> </label>
-                                        <input id="<?php echo $this->get_field_id('show_parent'); ?>"
-                                        name="<?php echo $this->get_field_name('show_parent'); ?>" type="checkbox"
-                                        <?php if ($show_parent) echo "checked"; ?> />
-                        </p>
 	    <?php
 	}
 	
@@ -191,7 +181,6 @@ class Widget_Repos extends WP_Widget{
 		$title = $this->get_title($instance);
 		$username = $this->get_username($instance);
 		$project_count = $this->get_project_count($instance);
-                $show_parent = $this->get_show_parent($instance);
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
@@ -214,23 +203,7 @@ class Widget_Repos extends WP_Widget{
 			$repositories = array_slice($repositories, 0, $project_count);
 			echo '<ul>';
 			foreach($repositories as $repository){
-		 		echo '<li><a href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a>';
-                                if ((int) $repository->fork && $show_parent) {
-                                    $parent_repository = $cache->get($username . '.' . $repository->name . '.repositories.json');
-                                    if ($parent_repository == null) {
-                                        if (!isset($github)) {
-                                            $github = new Github($username);
-                                        }
-                                        $parent_repository = $github->get_parent_repository($repository->name);
-                                        $cache->set($username . '.' . $repository->name . '.repositories.json', array($parent_repository));
-                                    }
-                                    if (is_array($parent_repository))
-                                        $parent_repository = end($parent_repository);
-                                    echo '<span class="forked_from">forked from ';
-                                    echo '<a href="' . $parent_repository->html_url . '">' . $parent_repository->full_name . '</a>';
-                                    echo '</span>';
-                                }
-                                echo '</li>';
+		 		echo '<li><a href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -249,10 +222,6 @@ class Widget_Repos extends WP_Widget{
 	private function get_project_count($instance) {
 		return empty($instance['project_count']) ? 5 : $instance['project_count'];
 	}
-        
-        private function get_show_parent($instance){
-                return empty($instance['show_parent']) ? false : $instance['show_parent'];
-        }
 }
 
 /*
@@ -637,6 +606,75 @@ function ghcommits_shortcode($atts) {
 	return $html;
 }
 add_shortcode('github-commits', 'ghcommits_shortcode');
+
+/*
+ * Releases shortcode.
+ */
+function ghreleases_shortcode($atts) {
+	extract( shortcode_atts(
+		array(
+			'username' => 'seinoxygen',
+			'repository' => '',
+			'limit' => '5'
+		), $atts )
+	);
+	
+	// Init the cache system.
+	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
+		
+	$releases = $cache->get($username . '.' . $repository . '.releases.json');
+	if($releases == null) {
+		$github = new Github($username, $repository);
+		$releases = $github->get_releases();
+		//var_dump($releases);
+		$cache->set($username . '.' . $repository . '.releases.json', $releases);
+	}
+
+	$releases = array_slice($releases, 0, $limit);
+	$html = '<ul>';
+	foreach($releases as $release){
+		$html .=  '<li><a href="' . $release->html_url . '" title="' . $release->name . '">' . $release->tag_name . '</a></li>';
+	}
+	$html .= '</ul>';
+	return $html;
+}
+add_shortcode('github-releases', 'ghreleases_shortcode');
+
+
+/*
+ * Releases shortcode.
+ */
+function ghreleaseslatest_shortcode($atts) {
+	extract( shortcode_atts(
+		array(
+			'username' => 'yahoo',
+			'repository' => 'pure',
+		), $atts )
+	);
+	
+	// Init the cache system.
+	$cache = new Cache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
+		
+	$latest_release = $cache->get($username . '.' . $repository . '.releaseslatest.json');
+	if($latest_release == null) {
+		$github = new Github($username, $repository);
+		$latest_release = $github->get_latest_release();
+		//var_dump($releases);
+		$cache->set($username . '.' . $repository . '.releaseslatest.json', $latest_release);
+	}
+
+	$html = '<ul>';
+	$html .=  '<li><a href="' . $latest_release->html_url . '" title="' . $latest_release->name . '">' . $latest_release->tag_name . '</a></li>';
+
+	$html .= '</ul>';
+	return $html;
+}
+add_shortcode('github-releaseslatest', 'ghreleaseslatest_shortcode');
+
 
 /*
  * Issues shortcode.
