@@ -10,7 +10,7 @@ function ghprofile_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -48,7 +48,7 @@ function ghrepos_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -82,7 +82,7 @@ function ghcommits_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -116,7 +116,7 @@ function ghreleases_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -151,7 +151,7 @@ function ghreleaseslatest_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -193,7 +193,7 @@ function ghissues_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -226,7 +226,7 @@ function ghgists_shortcode($atts) {
 	);
 	
 	// Init the cache system.
-	$cache = new Cache();
+	$cache = new WpGithubCache();
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		

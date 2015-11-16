@@ -52,7 +52,7 @@ class Widget_Profile extends WP_Widget{
 		echo $before_title . $title . $after_title;
 		
 		// Init the cache system.
-		$cache = new Cache();
+		$cache = new WpGithubCache();
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 			
@@ -134,7 +134,7 @@ class Widget_Repos extends WP_Widget{
 		echo $before_title . $title . $after_title;
 		
 		// Init the cache system.
-		$cache = new Cache();
+		$cache = new WpGithubCache();
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -227,7 +227,7 @@ class Widget_Commits extends WP_Widget{
 		echo $before_title . $title . $after_title;
 		
 		// Init the cache system.
-		$cache = new Cache();
+		$cache = new WpGithubCache();
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -324,7 +324,7 @@ class Widget_Issues extends WP_Widget{
 		echo $before_title . $title . $after_title;
 		
 		// Init the cache system.
-		$cache = new Cache();
+		$cache = new WpGithubCache();
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
@@ -413,7 +413,7 @@ class Widget_Gists extends WP_Widget{
 		echo $before_title . $title . $after_title;
 		
 		// Init the cache system.
-		$cache = new Cache();
+		$cache = new WpGithubCache();
 		// Set custom timeout in seconds.
 		$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
