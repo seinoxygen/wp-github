@@ -25,10 +25,18 @@
 		<tr valign="top">
 			<th scope="row">Default Github User</th>
 			<td>
-				<input type="text" placeholder="Github UserName" name="wpgithub_defaultuser" value="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" />
+				<input type="text" placeholder="Github UserName" name="wpgithub_defaultuser" value="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" />
 				<p class="description">If you specifiy a default user, no need to add the value in the shortcodes</p>
 			</td>
 		</tr>
+		<tr valign="top">
+			<th scope="row">Default Github Repo</th>
+			<td>
+				<input type="text" placeholder="Github Repo" name="wpgithub_defaultrepo" value="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" />
+				<p class="description">If you specifiy a default repo, no need to add the value in the shortcodes</p>
+			</td>
+		</tr>
+
 	</table>
 
     <?php submit_button(); ?>
@@ -39,46 +47,54 @@
 <h2>Shortcodes Instructions</h2>
 <p>
 Embeed profile:
-<pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>"]</pre>
+<pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>"]</pre>
 
 
 <p>
-	List last 10 repositories:
+	<strong>List last 10 repositories:</strong>
 
-<pre>[github-repos username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" limit="10"]</pre>
+<pre>[github-repos username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" limit="10"]</pre>
 </p>
 
 <p>
-	List last 10 commits from all repositories:
+	<strong>List last 10 commits from all repositories:</strong>
 
-<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" limit="10"]</pre>
+<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" limit="10"]</pre>
 </p>
-<p>List last 10 commits from a specific repository:
+<p><strong>List last 10 commits from a specific repository:</strong>
 
-<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" repository="wp-github" limit="10"]</pre>
+<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
 </p>
-<p>List last 10 issues from all repositories:
+<p><strong>List last 10 issues from all repositories:</strong>
 
-<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" limit="10"]</pre>
+<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" limit="10"]</pre>
 </p>
-<p>List last 10 issues from a specific repository:
+<p><strong>List last 10 issues from a specific repository:</strong>
 
-<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" repository="wp-github" limit="10"]</pre>
+<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
 
 </p>
-<p>List last 10 gists from a specific user:
+<p><strong>List last 10 gists from a specific user:</strong>
 
-<pre>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'payzen'); ?>" limit="10"]</pre>
+<pre>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" limit="10"]</pre>
 </p>
 <p>
-	List releases from a specific repo : 
-	<pre>[github-releases username="yahoo" repository="pure" limit="10"]</pre>
+	<strong>List releases from a specific repo : </strong>
+	<pre>[github-releases username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
 </p>
 
 <p>
-	List latest release from a specific repo : 
-	<pre>[github-releaseslatest username="yahoo" repository="pure" ]</pre>
+	<strong>List latest release from a specific repo : </strong>
+	<pre>[github-releaseslatest username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" ]</pre>
 </p>
+
+	<p>
+		<strong>Get content from a file or a directory :</strong>
+	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" contents="src/tables/css/tables.css"]</pre>
+	the "contents" is the path of the file you are trying to embed.<br />
+	Eg : src/tables/tests/manual/tables.html
+	</p>
+
 </div>
 
 

@@ -5,7 +5,7 @@
 function ghprofile_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen'
+			'username' => get_option('wpgithub_defaultuser', 'payzen')
 		), $atts )
 	);
 	
@@ -14,7 +14,7 @@ function ghprofile_shortcode($atts) {
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
-	$profile = $cache->get(username . '.json');
+	$profile = $cache->get($username . '.json');
 	if($profile == null) {
 		$github = new Github($username);
 		$profile = $github->get_profile();
@@ -42,7 +42,7 @@ add_shortcode('github-profile', 'ghprofile_shortcode');
 function ghrepos_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen',
+			'username' => get_option('wpgithub_defaultuser', 'payzen'),
 			'limit' => '5'
 		), $atts )
 	);
@@ -52,7 +52,7 @@ function ghrepos_shortcode($atts) {
 	// Set custom timeout in seconds.
 	$cache->timeout = get_option('wpgithub_cache_time', 600);
 		
-	$repositories = $cache->get(username . '.repositories.json');
+	$repositories = $cache->get($username . '.repositories.json');
 	if($repositories == null) {
 		$github = new Github($username);
 		$repositories = $github->get_repositories();
@@ -75,7 +75,7 @@ add_shortcode('github-repos', 'ghrepos_shortcode');
 function ghcommits_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen',
+			'username' => get_option('wpgithub_defaultuser', 'payzen'),
 			'repository' => '',
 			'limit' => '5'
 		), $atts )
@@ -109,7 +109,7 @@ add_shortcode('github-commits', 'ghcommits_shortcode');
 function ghreleases_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen',
+			'username' => get_option('wpgithub_defaultuser', 'payzen'),
 			'repository' => '',
 			'limit' => '5'
 		), $atts )
@@ -181,12 +181,51 @@ add_shortcode('github-releaseslatest', 'ghreleaseslatest_shortcode');
 
 
 /*
+ * Contents shortcode.
+ * @param username & repository & path
+ */
+function ghcontents_shortcode($atts) {
+	extract( shortcode_atts(
+					array(
+							'username' => 'yahoo',
+							'repository' => 'pure',
+							'contents'	=> 'README.md'
+					), $atts )
+	);
+	//$contents = json_encode($contents);
+	$file_name =  str_replace('/','.',$contents);
+	// Init the cache system.
+	$cache = new WpGithubCache();
+	// Set custom timeout in seconds.
+	$cache->timeout = get_option('wpgithub_cache_time', 600);
+
+	$data_cache = $cache->get($username . '.' . $repository . '.'.$file_name.'.contents.json');
+	if($data_cache == null) {
+		$github = new Github($username, $repository, $contents);
+		$contents = $github->get_contents();
+		$cache->set($username . '.' . $repository . '.'.$file_name.'.contents.json', $contents);
+	}
+
+	$html = '<pre><code>';
+		if(isset($contents)):
+			//var_dump($contents);
+			$html .= base64_decode($contents->content);
+		else:
+			$html .= __('File not found, please check your path','wp-github');
+		endif;
+	//echo $username . '.' . $repository . '.'.$file_name.'.contents.json';
+	$html .= '</code></pre>';
+	return $html;
+}
+add_shortcode('github-contents', 'ghcontents_shortcode');
+
+/*
  * Issues shortcode.
  */
 function ghissues_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen',
+			'username' => get_option('wpgithub_defaultuser', 'payzen'),
 			'repository' => '',
 			'limit' => '5'
 		), $atts )
@@ -220,7 +259,7 @@ add_shortcode('github-issues', 'ghissues_shortcode');
 function ghgists_shortcode($atts) {
 	extract( shortcode_atts(
 		array(
-			'username' => 'seinoxygen',
+			'username' => get_option('wpgithub_defaultuser', 'payzen'),
 			'limit' => '5'
 		), $atts )
 	);

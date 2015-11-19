@@ -9,14 +9,15 @@ class Github {
 	private $api_url = 'https://api.github.com/';
 	private $username = null;
 	private $repository = null;
+	private $contents = null;
 	
-	public function Github($username = 'seinoxygen', $repository = 'wp-github') {
+	public function Github($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
 		$this->username = $username;
 		$this->repository = $repository;
+		$this->contents = $contents;
 		
 		/**
 		 * Increase execution time.
-		 * 
 		 * Sometimes long queries like fetch all issues from all repositories can kill php.
 		 */
 		set_time_limit(90);
@@ -87,7 +88,8 @@ class Github {
 		else{
 			// Fetch all public repositories
 			$repos = $this->get_repositories();
-			if($repos == true) {
+
+			if($repos == true ) {
 				// Loop through public repos and get all commits
 				foreach($repos as $repo){
 					$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/commits');
@@ -95,6 +97,8 @@ class Github {
 						$data = array_merge($data, json_decode($contents));
 					}
 				}
+			}else{
+
 			}
 		}
 		
@@ -114,8 +118,6 @@ class Github {
 				$data = json_decode($contents);
 			}
 		}
-
-		
 		return $data;
 	}
 	
@@ -151,7 +153,24 @@ class Github {
 		
 		return $data;
 	}
-	
+
+	/*
+	 * returns the contents of a file or directory in a repo
+	 * */
+	public function get_contents(){
+		$data = '';
+		//GET /repos/:owner/:repo/contents/:path
+
+		if(!empty($this->repository)){
+			$data_content = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents);
+			if($data_content == true) {
+				$data = json_decode($data_content);
+			}
+		}
+		//echo '<br />repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents.'<br />';
+
+		return $data;
+	}
 	/**
 	 * Return repository issues. If none is provided will fetch all issues from all public repositories from user.
 	 */

@@ -47,6 +47,7 @@ function wpgithub_register_settings() {
 	register_setting('wp-github', 'wpgithub_cache_time', 'wpgithub_validate_int');
 	register_setting('wp-github', 'wpgithub_clear_cache', 'wpgithub_clearcache' );
 	register_setting('wp-github', 'wpgithub_defaultuser', 'wpgithub_sanitizeUserName' );
+	register_setting('wp-github', 'wpgithub_defaultrepo', 'wpgithub_sanitizeUserName' );
 } 
 
 /*
@@ -67,6 +68,9 @@ function wpgithub_clearcache($input){
 	}
 }
 
+/*
+ * Sanitize functions for admin options
+ * */
 function wpgithub_validate_int($input) {
 	return intval($input); // return validated input
 }
