@@ -60,7 +60,7 @@ function ghrepos_shortcode($atts) {
 	}
 
 	$repositories = array_slice($repositories, 0, $limit);
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	foreach($repositories as $repository){
 		$html .=  '<li><a target="_blank" href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a></li>';
 	}
@@ -94,7 +94,7 @@ function ghcommits_shortcode($atts) {
 	}
 
 	$commits = array_slice($commits, 0, $limit);
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	foreach($commits as $commit){
 		$html .=  '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
 	}
@@ -129,7 +129,7 @@ function ghreleases_shortcode($atts) {
 	}
 
 	$releases = array_slice($releases, 0, $limit);
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	foreach($releases as $release){
 		$html .=  '<li><a target="_blank" href="' . $release->zipball_url . '" title="' . $release->name . '">'.__('Download','wp-github').' ' . $release->tag_name . '</a></li>';
 	}
@@ -163,7 +163,7 @@ function ghreleaseslatest_shortcode($atts) {
 		$cache->set($username . '.' . $repository . '.releaseslatest.json', $latest_release);
 	}
 
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	$html .= '<li>';
 	$html .= '<a class="wpgithub-btn" target="_blank" href="' . $latest_release->zipball_url . '" title="' . $latest_release->tag_name . '">'.__('Download','wp-github').' ' . $latest_release->tag_name . '</a>';
 	$html .= ' - <a target="_blank" href="' . $latest_release->html_url . '" title="' . $latest_release->tag_name . '">'.__('Show on Github','wp-github').'</a>';
@@ -207,7 +207,7 @@ function ghcontents_shortcode($atts) {
 		$cache->set($username . '.' . $repository . '.'.$file_name.'.contents.json', $contents);
 	}
 
-	$html = '<pre class="line-numbers language-'.$language.'"><code class="language-'.$language.'">';
+	$html = '<pre class="wp-github line-numbers language-'.$language.'"><code class="language-'.$language.'">';
 		if(!isset($contents->message) ):
 			//var_dump($contents);
 			$html .= base64_decode($contents->content);
@@ -246,7 +246,7 @@ function ghissues_shortcode($atts) {
 	}
 
 	$issues = array_slice($issues, 0, $limit);
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	foreach($issues as $issue){
 		$html .=  '<li><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
 	}
@@ -279,7 +279,7 @@ function ghgists_shortcode($atts) {
 	}
 
 	$gists = array_slice($gists, 0, $limit);
-	$html = '<ul>';
+	$html = '<ul class="wp-github">';
 	foreach($gists as $gist){
 		$html .=  '<li><a target="_blank" href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
 	}
