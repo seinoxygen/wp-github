@@ -11,6 +11,8 @@ You also can use shortcodes to display github content on your posts and pages.
 
 ## Shortcodes
 
+Admin option will let you add a default usernamme and repository so you don't have to add it in the shortcode eachtime.
+
 #### Profile
 ```html
 [github-profile]
