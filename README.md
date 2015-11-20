@@ -82,7 +82,7 @@ username | `[github-releases username="seinoxygen"]` |Add username (except if fi
 repository | `[github-releases username="seinoxygen" repository="wp-github"]` | pick up a repository from the user seinoxygen.
 limit | `[github-releases username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 releases.
  
- #### Latest release
+#### Latest release
  ```html
  [github-releaseslatest ]
  ```
