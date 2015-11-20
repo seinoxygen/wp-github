@@ -2,27 +2,40 @@
 /*
 	Add widget capabilities
 	goal : less widgets !
-*/	
-add_action('widgets_init', 'register_git_widgets');
+*/
 
-function register_git_widgets(){
-	register_widget('Widget_Profile');
-	register_widget('Widget_Repos');
-	register_widget('Widget_Commits');
-	register_widget('Widget_Issues');
-	register_widget('Widget_Gists');
+function wpgithub_register_widgets() {
+	register_widget( 'Widget_Profile' );
+	register_widget( 'Widget_Repos' );
+	register_widget( 'Widget_Commits' );
+	register_widget( 'Widget_Issues' );
+	register_widget( 'Widget_Gists' );
 }
+
+add_action( 'widgets_init', 'wpgithub_register_widgets' );
 
 /*
  * Profile widget.
  */
 class Widget_Profile extends WP_Widget{
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+				'Widget_Profile', // Base ID
+				__( 'WP Github Profile', 'twentyfifteen' ), // Name
+				array( 'description' => __( 'Github Profile', 'twentyfifteen' ), ) // Args
+		);
+	}
+
 	function Widget_Profile() {
 		$widget_ops = array('description' => __('Displays the Github user profile.'));           
         $this->WP_Widget(false, __('Github Profile'), $widget_ops);
 	}
 	
-	function form($instance) {
+	public function form($instance) {
 		$title = $this->get_title($instance);
 		$username = $this->get_username($instance);
 		
@@ -42,7 +55,7 @@ class Widget_Profile extends WP_Widget{
 	    <?php
 	}
 	
-	function widget($args, $instance) {
+	public function widget($args, $instance) {
 		extract($args);	
 		
 		$title = $this->get_title($instance);
@@ -83,7 +96,7 @@ class Widget_Profile extends WP_Widget{
 	}
 	
 	private function get_username($instance) {
-		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+		return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
 	}
 }
 
@@ -91,6 +104,14 @@ class Widget_Profile extends WP_Widget{
  * Repositories widget.
  */
 class Widget_Repos extends WP_Widget{
+	function __construct() {
+		parent::__construct(
+				'Widget_Repos', // Base ID
+				__( 'WP Github repos', 'twentyfifteen' ), // Name
+				array( 'description' => __( 'Github Repositories', 'twentyfifteen' ), ) // Args
+		);
+	}
+
 	function Widget_Repos() {
 		$widget_ops = array('description' => __('Displays the repositories from a specific user.'));           
         $this->WP_Widget(false, __('Github Repositories'), $widget_ops);
@@ -151,7 +172,7 @@ class Widget_Repos extends WP_Widget{
 			$repositories = array_slice($repositories, 0, $project_count);
 			echo '<ul>';
 			foreach($repositories as $repository){
-		 		echo '<li><a href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a></li>';
+		 		echo '<li><a target="_blank" href="'. $repository->html_url . '" title="'.$repository->description.'">' . $repository->name . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -164,7 +185,7 @@ class Widget_Repos extends WP_Widget{
 	}
 	
 	private function get_username($instance) {
-		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+		return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
 	}
 	
 	private function get_project_count($instance) {
@@ -176,6 +197,15 @@ class Widget_Repos extends WP_Widget{
  * Commits widget.
  */
 class Widget_Commits extends WP_Widget{
+
+	function __construct() {
+		parent::__construct(
+				'Widget_Commits', // Base ID
+				__( 'WP Github commits', 'twentyfifteen' ), // Name
+				array( 'description' => __( 'Github Commits', 'twentyfifteen' ), ) // Args
+		);
+	}
+
 	function Widget_Commits() {
 		$widget_ops = array('description' => __('Displays latests commits from a Github repository.'));           
         $this->WP_Widget(false, __('Github Commits'), $widget_ops);
@@ -244,7 +274,7 @@ class Widget_Commits extends WP_Widget{
 			$commits = array_slice($commits, 0, $commit_count);
 			echo '<ul>';
 			foreach($commits as $commit){
-		 		echo '<li><a href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
+		 		echo '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -257,11 +287,11 @@ class Widget_Commits extends WP_Widget{
 	}
 	
 	private function get_username($instance) {
-		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+		return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
 	}
 	
 	private function get_repository($instance) {
-		return $instance['repository'];
+		return empty($instance['repository']) ? get_option('wpgithub_defaultrepo', 'payzen') : $instance['repository'];
 	}
 	
 	private function get_commit_count($instance) {
@@ -273,6 +303,14 @@ class Widget_Commits extends WP_Widget{
  * Issues widget.
  */
 class Widget_Issues extends WP_Widget{
+	function __construct() {
+		parent::__construct(
+				'Widget_Issues', // Base ID
+				__( 'WP Github issues', 'twentyfifteen' ), // Name
+				array( 'description' => __( 'Github Issues', 'twentyfifteen' ), ) // Args
+		);
+	}
+
 	function Widget_Issues() {
 		$widget_ops = array('description' => __('Displays latests issues from a Github repository.'));           
         $this->WP_Widget(false, __('Github Issues'), $widget_ops);
@@ -341,7 +379,7 @@ class Widget_Issues extends WP_Widget{
 			$issues = array_slice($issues, 0, $issue_count);
 			echo '<ul>';
 			foreach($issues as $issue){
-		 		echo '<li><a href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
+		 		echo '<li><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -354,11 +392,11 @@ class Widget_Issues extends WP_Widget{
 	}
 	
 	private function get_username($instance) {
-		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+		return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
 	}
 	
 	private function get_repository($instance) {
-		return $instance['repository'];
+		return empty($instance['repository']) ? get_option('wpgithub_defaultrepo', 'payzen') : $instance['repository'];
 	}
 	
 	private function get_issue_count($instance) {
@@ -370,6 +408,15 @@ class Widget_Issues extends WP_Widget{
  * Gists widget.
  */
 class Widget_Gists extends WP_Widget{
+
+	function __construct() {
+		parent::__construct(
+				'Widget_Gists', // Base ID
+				__( 'WP Github gists', 'twentyfifteen' ), // Name
+				array( 'description' => __( 'Github Gists', 'twentyfifteen' ), ) // Args
+		);
+	}
+
 	function Widget_Gists() {
 		$widget_ops = array('description' => __('Displays latests gists from a Github user.'));           
         $this->WP_Widget(false, __('Github Gists'), $widget_ops);
@@ -430,7 +477,7 @@ class Widget_Gists extends WP_Widget{
 			$gists = array_slice($gists, 0, $gists_count);
 			echo '<ul>';
 			foreach($gists as $gist){
-		 		echo '<li><a href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
+		 		echo '<li><a target="_blank" href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -443,7 +490,7 @@ class Widget_Gists extends WP_Widget{
 	}
 	
 	private function get_username($instance) {
-		return empty($instance['username']) ? 'seinoxygen' : $instance['username'];
+		return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
 	}
 		
 	private function get_gists_count($instance) {

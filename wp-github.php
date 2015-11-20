@@ -12,7 +12,7 @@
 require dirname(__FILE__) . '/lib/wpGithubCache.php';
 require(dirname(__FILE__) . '/lib/github.php');
 require(dirname(__FILE__) . '/inc/shortcodes.php');
-//require(dirname(__FILE__) . '/inc/widgets.php');
+require(dirname(__FILE__) . '/inc/widgets.php');
 
 /*
  * Init FRONT END General Style
@@ -48,6 +48,9 @@ function wpgithub_register_settings() {
 	register_setting('wp-github', 'wpgithub_clear_cache', 'wpgithub_clearcache' );
 	register_setting('wp-github', 'wpgithub_defaultuser', 'wpgithub_sanitizeUserName' );
 	register_setting('wp-github', 'wpgithub_defaultrepo', 'wpgithub_sanitizeUserName' );
+	//Authentification
+	register_setting('wp-github', 'wpgithub_clientID', 'wpgithub_sanitizeUserName' );
+	register_setting('wp-github', 'wpgithub_clientSecret', 'wpgithub_sanitizeUserName' );
 } 
 
 /*

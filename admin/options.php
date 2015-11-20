@@ -36,6 +36,27 @@
 				<p class="description">If you specifiy a default repo, no need to add the value in the shortcodes</p>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<h3><?php _e('User Authentification','wp-github'); ?></h3>
+				<p>If not specified, you can get a rate limit from GITHUB.Get yours at : https://github.com/settings/developers</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<th scope="row">Client ID</th>
+			<td>
+				<input type="text" placeholder="Client ID" name="wpgithub_clientID" value="<?php echo get_option('wpgithub_clientID', ''); ?>" />
+
+			</td>
+		</tr>
+		<tr valign="top">
+			<th scope="row">Client Secret</th>
+			<td>
+				<input type="password" placeholder="Client SECRET" name="wpgithub_clientSecret" value="<?php echo get_option('wpgithub_clientSecret', ''); ?>" />
+
+			</td>
+		</tr>
+
 
 	</table>
 

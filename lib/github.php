@@ -10,11 +10,23 @@ class Github {
 	private $username = null;
 	private $repository = null;
 	private $contents = null;
+
 	
-	public function Github($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
+	public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
 		$this->username = $username;
 		$this->repository = $repository;
 		$this->contents = $contents;
+		//OAuth2 Key/Secret
+		//https://developer.github.com/v3/#authentication
+		$ci = get_option('wpgithub_clientID', '');
+		$cs = get_option('wpgithub_clientSecret', '');
+		if(!empty($ci) && !empty($cs)){
+			$url_append = '?client_id='.$ci.'&client_secret='.$cs;
+		} else {
+			$url_append = '';
+		}
+
+		$this->oauth2 = $url_append;
 		
 		/**
 		 * Increase execution time.
@@ -30,7 +42,7 @@ class Github {
 	 */
 	public function get_response($path){
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->api_url . $path);
+		curl_setopt($ch, CURLOPT_URL, $this->api_url . $path. $this->oauth2);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'wp-github');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -160,15 +172,12 @@ class Github {
 	public function get_contents(){
 		$data = '';
 		//GET /repos/:owner/:repo/contents/:path
-
 		if(!empty($this->repository)){
 			$data_content = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents);
 			if($data_content == true) {
 				$data = json_decode($data_content);
 			}
 		}
-		//echo '<br />repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents.'<br />';
-
 		return $data;
 	}
 	/**
