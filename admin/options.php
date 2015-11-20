@@ -4,7 +4,7 @@
 <form method="post" action="options.php">
     <?php settings_fields('wp-github'); ?>
     <?php do_settings_sections('wp-github'); ?>
-    <table class="form-table">
+    <table class="form-table fixed">
         <tr valign="top">
 			<th scope="row">Cache Time</th>
 			<td>
@@ -36,6 +36,15 @@
 				<p class="description">If you specifiy a default repo, no need to add the value in the shortcodes</p>
 			</td>
 		</tr>
+		<tr valign="top">
+			<th scope="row">Syntax highlighter</th>
+			<td>
+				<label>
+					<input type="checkbox" name="wpgithub_addPrismJs" <?php echo get_option('wpgithub_addPrismJs', 'checked'); ?> value="<?php echo get_option('wpgithub_addPrismJs', 'checked'); ?>" /> Include necessary files.<a href="http://prismjs.com" target="_blank"> Visit PrismJs website</a>
+				</label>
+			</td>
+		</tr>
+
 		<tr>
 			<td>
 				<h3><?php _e('User Authentification','wp-github'); ?></h3>
@@ -56,7 +65,6 @@
 
 			</td>
 		</tr>
-
 
 	</table>
 
