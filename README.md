@@ -58,3 +58,14 @@ Argument | Example | Description
 --- | --- | ---
 username | `[github-gists username="seinoxygen"]` | Lists up to 5 gists from the user seinoxygen.
 limit | `[github-gists username="seinoxygen" limit="10"]` | Lists up to 10 gists from the user seinoxygen.
+
+#### File content
+```html
+[github-contents]
+```
+Argument | Example | Description
+--- | --- | ---
+username | `[github-contents username="seinoxygen"]` | Lists up to 5 gists from the user seinoxygen.
+repository | `[github-contents username="seinoxygen" repository="wp-github"]` | pick up a repository from the user seinoxygen.
+filepath | `[github-contents username="seinoxygen" repository="wp-github" filepath="wp-github.css"]` | Select a file with full path in the repository.
+language | `[github-contents username="seinoxygen" repository="wp-github" filepath="wp-github.css" language="css"]` | Help JsHighlighter if exists, will generate code inside <pre><code> tags.

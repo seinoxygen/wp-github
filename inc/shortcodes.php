@@ -189,7 +189,8 @@ function ghcontents_shortcode($atts) {
 					array(
 							'username' => get_option('wpgithub_defaultuser', 'yahoo'),
 							'repository' => get_option('wpgithub_defaultrepo', 'pure'),
-							'filepath'	=> ''
+							'filepath'	=> '',
+							'language'	=> 'markup',
 					), $atts )
 	);
 	//$contents = json_encode($contents);
@@ -206,7 +207,7 @@ function ghcontents_shortcode($atts) {
 		$cache->set($username . '.' . $repository . '.'.$file_name.'.contents.json', $contents);
 	}
 
-	$html = '<pre class="line-numbers"><code class="language-Markup">';
+	$html = '<pre class="line-numbers language-'.$language.'"><code class="language-'.$language.'">';
 		if(!isset($contents->message) ):
 			//var_dump($contents);
 			$html .= base64_decode($contents->content);

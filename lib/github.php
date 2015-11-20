@@ -175,6 +175,7 @@ class Github {
 		if(!empty($this->repository)){
 			$data_content = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents);
 			if($data_content == true) {
+				//Wordpress strip php tags -- what's the solution ?
 				$data = json_decode($data_content);
 			}
 		}

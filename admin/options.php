@@ -64,8 +64,9 @@
 
 </form>
 
-
-<h2>Shortcodes Instructions</h2>
+<div class="postbox ">
+<h3>Shortcodes Instructions</h3>
+	<div class="inside">
 <p>
 Embeed profile:
 <pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>"]</pre>
@@ -111,11 +112,19 @@ Embeed profile:
 
 	<p>
 		<strong>Get content from a file or a directory :</strong>
-	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" contents="src/tables/css/tables.css"]</pre>
-	the "contents" is the path of the file you are trying to embed.<br />
-	Eg : src/tables/tests/manual/tables.html
-	</p>
+	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'wp-github'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" filepath="src/tables/css/tables.css" language="css"]</pre>
+		<em>
+			<ul>
+				<li>the "filepath" is the path of the file you are trying to embed.<br />
+					Eg : src/tables/tests/manual/tables.html</li>
+				<li>language : lowerCase if intergrated with <a target="_blank" href="http://prismjs.com"> PrimJs</a></li>
+			</ul>
 
+
+		</em>
+	</p>
+</div>
+</div>
 </div>
 
 
