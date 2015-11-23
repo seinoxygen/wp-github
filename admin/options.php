@@ -40,7 +40,7 @@
 			<th scope="row">Syntax highlighter</th>
 			<td>
 				<label>
-					<input type="checkbox" name="wpgithub_addPrismJs" <?php echo get_option('wpgithub_addPrismJs', 'checked'); ?> value="<?php echo get_option('wpgithub_addPrismJs', 'checked'); ?>" /> Include necessary files.<a href="http://prismjs.com" target="_blank"> Visit PrismJs website</a>
+					<input type="checkbox" name="wpgithub_addPrismJs" <?php echo get_option('wpgithub_addPrismJs', 'checked'); ?> value="<?php echo get_option('wpgithub_addPrismJs', 'checked'); ?>" /> Include necessary files.<a href="http://prismjs.com" target="_blank"> Visit PrismJs website</a>, ( markup,css,clike, javascript, c,csharp, java, markdown, objectivec, php, python, sql )
 				</label>
 			</td>
 		</tr>
