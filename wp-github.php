@@ -84,14 +84,20 @@ function wpgithub_addPrismJs($input){
 	}
 	return $input;
 }
+/*
+ * loadCodeHighLightAssets
+ * Load js && css assets for highlighting
+ * */
 function loadCodeHighLightAssets() {
 	// enqueue scripts
 	wp_enqueue_script('highlight',  plugin_dir_url( __FILE__ ).'/js/prism.js', array('jquery'), '1.0', true);
 	wp_enqueue_style( 'style-hightlight',  plugin_dir_url( __FILE__ ).'css/prism.css' );
 }
-
+/*
+ * initCodeHighLightJs
+ * init Js code if PrismJs is activated
+ * */
 function initCodeHighLightJs() {
-	// echo '<script>hljs.initHighlightingOnLoad();</script>';
 	$initPrism =  "<script>jQuery(function(){
 		var form = jQuery('form'),
 			code = jQuery('code', form),
@@ -99,16 +105,19 @@ function initCodeHighLightJs() {
 			highlightCode = function() { Prism.highlightElement(code); };
 		});
 	</script>";
-
 	echo $initPrism;
-
 }
+
+/*
+ * Check if user wants to have a syntax highlighter
+ * */
 if(get_option('wpgithub_addPrismJs', '') == 'checked'){
 	add_action('wp_enqueue_scripts', 'loadCodeHighLightAssets');
 	add_action('wp_footer', 'initCodeHighLightJs', 2000);
 }
 
 /*
+ * wpgithub_validate_int && wpgithub_sanitizeUserName
  * Sanitize functions for admin options
  * */
 function wpgithub_validate_int($input) {
