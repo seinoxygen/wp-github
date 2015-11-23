@@ -92,9 +92,15 @@ function loadCodeHighLightAssets() {
 
 function initCodeHighLightJs() {
 	// echo '<script>hljs.initHighlightingOnLoad();</script>';
-	echo "<script>var form = $('form'), code = $('code', form),
-    languages = components.languages,
-    highlightCode = function() { Prism.highlightElement(code); };</script>";
+	$initPrism =  "<script>jQuery(function(){
+		var form = jQuery('form'),
+			code = jQuery('code', form),
+			languages = components.languages,
+			highlightCode = function() { Prism.highlightElement(code); };
+		});
+	</script>";
+
+	echo $initPrism;
 
 }
 if(get_option('wpgithub_addPrismJs', '') == 'checked'){

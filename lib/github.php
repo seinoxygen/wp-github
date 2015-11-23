@@ -105,8 +105,10 @@ class Github {
 				// Loop through public repos and get all commits
 				foreach($repos as $repo){
 					$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/commits');
-					if($contents == true) {
+					if($contents == true && is_array($contents)) {
 						$data = array_merge($data, json_decode($contents));
+					} else if($contents == true && !is_array($contents)){
+						$data = json_decode($contents);
 					}
 				}
 			}else{
@@ -115,7 +117,10 @@ class Github {
 		}
 		
 		// Sort response array
-		usort($data, array($this, 'order_commits'));
+		if(is_array($data)){
+			usort($data, array($this, 'order_commits'));
+		}
+
 		
 		return $data;
 	}
@@ -176,7 +181,12 @@ class Github {
 			$data_content = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents);
 			if($data_content == true) {
 				//Wordpress strip php tags -- what's the solution ?
-				$data = json_decode($data_content);
+              $data = json_decode($data_content);
+              //trim php tags
+              $data_code = str_replace('<?php','',base64_decode( $data->content));
+              $data_code = str_replace('?>','',$data_code);
+              $data_code = base64_encode($data_code);
+              $data->content = $data_code;
 			}
 		}
 		return $data;
@@ -268,4 +278,3 @@ class Github {
 		}
 	}
 }
-?>
