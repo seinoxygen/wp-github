@@ -2,8 +2,8 @@
 Contributors: seinoxygen
 Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
-Requires at least: 3.0.1
-Tested up to: 3.9
+Requires at least: 3.9
+Tested up to: 4.3.1
 Stable tag: 1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT

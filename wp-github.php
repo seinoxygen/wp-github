@@ -19,7 +19,7 @@ require(dirname(__FILE__) . '/inc/widgets.php');
  * */
 add_action('wp_enqueue_scripts', 'wpgithub_style', 20);
 function wpgithub_style(){
-	wp_enqueue_style('wp-github', plugin_dir_url(__FILE__).'wp-github.css');
+	wp_enqueue_style('wp-github', plugin_dir_url(__FILE__).'css/wp-github.css');
 	
 	// If custom stylesheet exists load it.
 	$custom = plugin_dir_path( __FILE__ ).'custom.css';
@@ -87,7 +87,7 @@ function wpgithub_addPrismJs($input){
 function loadCodeHighLightAssets() {
 	// enqueue scripts
 	wp_enqueue_script('highlight',  plugin_dir_url( __FILE__ ).'/js/prism.js', array('jquery'), '1.0', true);
-	wp_enqueue_style( 'style-hightlight',  plugin_dir_url( __FILE__ ).'/css/prism.css' );
+	wp_enqueue_style( 'style-hightlight',  plugin_dir_url( __FILE__ ).'css/prism.css' );
 }
 
 function initCodeHighLightJs() {
