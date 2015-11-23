@@ -9,14 +9,27 @@ class Github {
 	private $api_url = 'https://api.github.com/';
 	private $username = null;
 	private $repository = null;
+	private $contents = null;
+
 	
-	public function Github($username = 'seinoxygen', $repository = 'wp-github') {
+	public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
 		$this->username = $username;
 		$this->repository = $repository;
+		$this->contents = $contents;
+		//OAuth2 Key/Secret
+		//https://developer.github.com/v3/#authentication
+		$ci = get_option('wpgithub_clientID', '');
+		$cs = get_option('wpgithub_clientSecret', '');
+		if(!empty($ci) && !empty($cs)){
+			$url_append = '?client_id='.$ci.'&client_secret='.$cs;
+		} else {
+			$url_append = '';
+		}
+
+		$this->oauth2 = $url_append;
 		
 		/**
 		 * Increase execution time.
-		 * 
 		 * Sometimes long queries like fetch all issues from all repositories can kill php.
 		 */
 		set_time_limit(90);
@@ -29,7 +42,7 @@ class Github {
 	 */
 	public function get_response($path){
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->api_url . $path);
+		curl_setopt($ch, CURLOPT_URL, $this->api_url . $path. $this->oauth2);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'wp-github');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -87,23 +100,97 @@ class Github {
 		else{
 			// Fetch all public repositories
 			$repos = $this->get_repositories();
-			if($repos == true) {
+
+			if($repos == true ) {
 				// Loop through public repos and get all commits
 				foreach($repos as $repo){
 					$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/commits');
+					if($contents == true && is_array($contents)) {
+						$data = array_merge($data, json_decode($contents));
+					} else if($contents == true && !is_array($contents)){
+						$data = json_decode($contents);
+					}
+				}
+			}else{
+
+			}
+		}
+		
+		// Sort response array
+		if(is_array($data)){
+			usort($data, array($this, 'order_commits'));
+		}
+
+		
+		return $data;
+	}
+			/**
+	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+	 */
+	public function get_latest_release(){
+		$data = '';
+		if(!empty($this->repository)){
+			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases/latest');
+			if($contents == true) {
+				$data = json_decode($contents);
+			}
+		}
+		return $data;
+	}
+	
+	
+		/**
+	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+	 */
+	public function get_releases(){
+		$data = array();
+		if(!empty($this->repository)){
+			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/releases');
+			if($contents == true) {
+				$data = array_merge($data, json_decode($contents));
+			}
+		}
+		
+		else{
+			// Fetch all public repositories
+			$repos = $this->get_repositories();
+			if($repos == true) {
+				// Loop through public repos and get all commits
+				foreach($repos as $repo){
+					$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/releases');
 					if($contents == true) {
 						$data = array_merge($data, json_decode($contents));
 					}
 				}
 			}
 		}
-		
-		// Sort response array
-		usort($data, array($this, 'order_commits'));
+	
+		 //Sort response array
+		 usort($data, array($this, 'order_commits'));
 		
 		return $data;
 	}
-	
+
+	/*
+	 * returns the contents of a file or directory in a repo
+	 * */
+	public function get_contents(){
+		$data = '';
+		//GET /repos/:owner/:repo/contents/:path
+		if(!empty($this->repository)){
+			$data_content = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/contents/'.$this->contents);
+			if($data_content == true) {
+				//Wordpress strip php tags -- what's the solution ?
+              $data = json_decode($data_content);
+              //trim php tags
+              $data_code = str_replace('<?php','',base64_decode( $data->content));
+              $data_code = str_replace('?>','',$data_code);
+              $data_code = base64_encode($data_code);
+              $data->content = $data_code;
+			}
+		}
+		return $data;
+	}
 	/**
 	 * Return repository issues. If none is provided will fetch all issues from all public repositories from user.
 	 */
@@ -142,23 +229,6 @@ class Github {
 		}
 		return null;
 	}
-        
-        /**
-        * Return parent repository.
-        */
-       public function get_parent_repository($repository) {
-           $contents = $this->get_response('repos/' . $this->username . '/' . $repository);
-           if ($contents == true) {
-               $contents = json_decode($contents);
-               if ($contents->parent) {
-                   $contents = $this->get_response('repos/' . $contents->parent->owner->login . '/' . $repository);
-                   if($contents == true){
-                       return json_decode($contents);
-                   }
-               }
-           }
-           return null;
-       }
 	
 	/**
 	 * Get username.
@@ -208,4 +278,3 @@ class Github {
 		}
 	}
 }
-?>

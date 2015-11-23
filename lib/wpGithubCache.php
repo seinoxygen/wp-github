@@ -1,15 +1,15 @@
 <?php
 /**
- * Cache
+ * WpGithubCache
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
  * Version: 1.0
  */
-class Cache {
+class WpGithubCache {
 	private $path = null;
 	public $timeout = 600;
 	
-	public function Cache(){
+	public function WpGithubCache(){
 		$this->path = dirname(__FILE__) . "/../cache/";
 	}
 	
@@ -47,4 +47,3 @@ class Cache {
 		}
 	}
 }
-?>
