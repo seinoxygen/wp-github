@@ -48,7 +48,7 @@
 		<tr>
 			<td>
 				<h3><?php _e('User Authentification','wp-github'); ?></h3>
-				<p><?php _e('If not specified, you can get a rate limit from GITHUB.Get yours at : https://github.com/settings/developers','wp-github'); ?></p>
+				<p><?php _e('If not specified, you can get a rate limit from GITHUB.Get yours at : <a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/developers</a>','wp-github'); ?></p>
 			</td>
 		</tr>
 		<tr valign="top">

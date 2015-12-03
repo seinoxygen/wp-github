@@ -3,15 +3,24 @@
  * Github
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
+ * Github : https://github.com/seinoxygen/wp-github
  * Version: 1.1
  */
 class Github {
+
+
 	private $api_url = 'https://api.github.com/';
 	private $username = null;
 	private $repository = null;
 	private $contents = null;
 
-	
+
+	/**
+	 * Github constructor.
+	 * @param string $username
+	 * @param string $repository
+	 * @param string $contents
+	 */
 	public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
 		$this->username = $username;
 		$this->repository = $repository;
@@ -35,10 +44,11 @@ class Github {
 		set_time_limit(90);
 	}
 	
+
 	/**
 	 * Get response content from url.
-	 * 
-	 * @param	$path String
+	 * @param $path string
+	 * @return mixed
 	 */
 	public function get_response($path){
 		$ch = curl_init();
@@ -52,9 +62,10 @@ class Github {
 		curl_close($ch);
 		return $response;
 	}
-	
+
 	/**
 	 * Return user profile.
+	 * @return array|mixed|null|object
 	 */
 	public function get_profile(){
 		$contents = $this->get_response('users/' . $this->username);
@@ -64,8 +75,10 @@ class Github {
 		return null;
 	}
 	
+
 	/**
 	 * Return user events.
+	 * @return array|mixed|null|object
 	 */
 	public function get_events(){
 		$contents = $this->get_response('users/' . $this->username . '/events');
@@ -74,9 +87,10 @@ class Github {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return user repositories.
+	 * @return array|mixed|null|object
 	 */
 	public function get_repositories(){
 		$contents = $this->get_response('users/' . $this->username . '/repos');
@@ -85,9 +99,11 @@ class Github {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Return repository commits. If none is provided will fetch all commits from all public repositories from user.
+	 * Return repository commits.
+	 * If none is provided will fetch all commits from all public repositories from user.
+	 * @return array|mixed|object
 	 */
 	public function get_commits(){
 		$data = array();
@@ -124,8 +140,11 @@ class Github {
 		
 		return $data;
 	}
-			/**
-	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+
+	/**
+	 * Return repository releases.
+	 * If none is provided will fetch all commits from all public repositories from user.
+	 * @return array|mixed|object|string
 	 */
 	public function get_latest_release(){
 		$data = '';
@@ -137,10 +156,42 @@ class Github {
 		}
 		return $data;
 	}
-	
-	
-		/**
-	 * Return repository releases. If none is provided will fetch all commits from all public repositories from user.
+
+	/**
+	 * get_clone
+	 * Return repository clone options.
+	 * GET /repos/:owner/:repo
+	 * If none is provided will fetch all commits from all public repositories from user.
+	 * @return array
+	 */
+	public function get_clone(){
+		$data = array();
+		if(!empty($this->repository)){
+			$contents = $this->get_response('repos/' . $this->username . '/' . $this->repository );
+			if($contents == true) {
+				$data = json_decode($contents);
+			}
+		}
+
+		else{
+			// Fetch all public repositories
+			$repo = $this->get_repository();
+			if($repo == true) {
+				$contents = $this->get_response('repos/' . $this->username . '/' . $repo->name);
+				if($contents == true) {
+					$data =  json_decode($contents);
+				}
+
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Return repository releases.
+	 * If none is provided will fetch all commits from all public repositories from user.
+	 * @return array
 	 */
 	public function get_releases(){
 		$data = array();
@@ -171,9 +222,11 @@ class Github {
 		return $data;
 	}
 
-	/*
+
+	/**
 	 * returns the contents of a file or directory in a repo
-	 * */
+	 * @return array|mixed|object|string
+	 */
 	public function get_contents(){
 		$data = '';
 		//GET /repos/:owner/:repo/contents/:path
@@ -191,8 +244,11 @@ class Github {
 		}
 		return $data;
 	}
+
 	/**
-	 * Return repository issues. If none is provided will fetch all issues from all public repositories from user.
+	 * Get repository issues.
+	 * If none is provided will fetch all issues from all public repositories from user.
+	 * @return array|mixed|object
 	 */
 	public function get_issues(){
 		$data = array();
@@ -221,7 +277,10 @@ class Github {
 		
 		return $data;
 	}
-	
+
+	/**
+	 * @return array|mixed|null|object
+	 */
 	public function get_gists(){
 		$contents = $this->get_response('users/' . $this->username . '/gists');
 		if($contents == true) {
@@ -244,8 +303,12 @@ class Github {
 		return $this->repository;
 	}
 		
+
 	/**
 	 * Sort commits from newer to older.
+	 * @param $a
+	 * @param $b
+	 * @return int
 	 */
 	public function order_commits($a, $b){
 		$a = strtotime($a->commit->author->date);
@@ -261,8 +324,12 @@ class Github {
 		}
 	}
 	
+
 	/**
 	 * Sort issues from newer to older.
+	 * @param $a
+	 * @param $b
+	 * @return int
 	 */
 	public function order_issues($a, $b){
 		$a = strtotime($a->created_at);

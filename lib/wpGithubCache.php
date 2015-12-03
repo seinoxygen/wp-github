@@ -3,47 +3,61 @@
  * WpGithubCache
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
+ * Github : https://github.com/seinoxygen/wp-github
  * Version: 1.0
  */
 class WpGithubCache {
-	private $path = null;
-	public $timeout = 600;
-	
-	public function WpGithubCache(){
-		$this->path = dirname(__FILE__) . "/../cache/";
-	}
-	
-	/*
-	 * Get cache file.
-	 */
-	public function get($file){
-		$file = $this->path . $file;
-		if (file_exists($file) && filemtime($file) + $this->timeout > time()) {
-			$content = json_decode(file_get_contents($file));
 
-			if(is_array($content)){
-				return $content;
-			}
-		}
-		return null;
-	}
-	
-	/*
-	 * Set cache file.
-	 */
-	public function set($file, $content){
-		@file_put_contents($this->path . $file, json_encode($content));
-	}
-	
-	/*
-	 * Delete cache files.
-	 */
-	public function clear(){
-		$files = glob($this->path . '*.json');
-		foreach($files as $file){
-			if(is_file($file)){
-				@unlink($file);
-			}
-		}
-	}
+
+  private $path = NULL;
+  public $timeout = 600;
+
+  /**
+   * WpGithubCache constructor.
+   */
+  public function __construct() {
+    $this->path = dirname(__FILE__) . "/../cache/";
+  }
+
+
+  /**
+   * Get cache file.
+   * @param $file
+   * @return array|mixed|null|object
+   */
+  public function get($file) {
+    $file = $this->path . $file;
+    if (file_exists($file) && filemtime($file) + $this->timeout > time()) {
+      $content = json_decode(file_get_contents($file));
+      if (is_array($content)) {
+        return $content;
+      }
+    }
+    return NULL;
+  }
+
+
+  /**
+   * Set cache file.
+   * create static file
+   * @param $file
+   * @param $content
+   */
+  public function set($file, $content) {
+    @file_put_contents($this->path . $file, json_encode($content));
+  }
+
+
+  /**
+   * clear
+   * delete all files
+   */
+  public function clear() {
+    $files = glob($this->path . '*.json');
+    foreach ($files as $file) {
+      if (is_file($file)) {
+        @unlink($file);
+      }
+    }
+  }
 }
