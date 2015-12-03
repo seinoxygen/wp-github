@@ -183,7 +183,7 @@ class Github {
       // Fetch all public repositories
       $repo = $this->get_repository();
       if ($repo == TRUE) {
-        $contents = $this->get_response('repos/' . $this->username . '/' . $repo->name);
+        $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository);
         if ($contents == TRUE) {
           $data = json_decode($contents);
         }
