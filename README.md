@@ -21,6 +21,15 @@ Argument | Example | Description
 --- | --- | ---
 username | `[github-profile username="seinoxygen"]` | Displays the profile box for the user seinoxygen.
 
+#### Repository clone urls
+```html
+[github-clone]
+```
+Argument | Example | Description
+--- | --- | ---
+username | `[github-clone username="seinoxygen"]` | Show ssh & https url.
+limit | `[github-clone username="seinoxygen" repository="wp-github"]` | From a selected repo.
+
 #### Repositories
 ```html
 [github-repos]
