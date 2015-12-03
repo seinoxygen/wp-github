@@ -14,3 +14,5 @@
 .widget_repos ul li span.forked_from:before{font-family:'FontAwesome';content:'\f126';margin-right:4px}
 .widget_repos ul li span.forked_from a{font-size:12px;font-weight:400;display:inline-block}
 .wpgithub-description{font-size:80%;padding:1em 0;color:#ccc}
+.wp-github.wpg-repo li{}
+.wp-github.wpg-repo li span{float: left; padding: 0 0 1em 0;  clear: left;}

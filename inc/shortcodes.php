@@ -79,8 +79,11 @@ function ghrepos_shortcode($atts) {
 
 add_shortcode('github-repos', 'ghrepos_shortcode');
 
-/*
- * Commits shortcode.
+
+/**
+ * List Commits shortcode.
+ * @param $atts
+ * @return string
  */
 function ghcommits_shortcode($atts) {
    $a = shortcode_atts(
@@ -154,7 +157,7 @@ add_shortcode('github-releases', 'ghreleases_shortcode');
 
 
 /**
- * Clone shortcode.
+ * Repository presentation shortcode.
  * GET /repos/:owner/:repo
  * @param $atts
  * @return string
@@ -179,9 +182,12 @@ function ghclone_shortcode($atts) {
     $cache->set($a['username'] . '.' . $a['repository'] . '.clone.json', $clone);
   }
 
-  $html = '<ul class="wp-github">';
-    $html .= 'SSH URL <input readonly type="text" value="'.$clone->ssh_url.'" />';
-    $html .= 'Clone URL <input readonly type="text" value="'.$clone->clone_url.'" />';
+  $html = '<ul class="wp-github wpg-repo">';
+    $html .= '<li>';
+    $html .= '<span>SSH URL</span> <input readonly type="text" value="'.$clone->ssh_url.'" />';
+  $html .= '</li><li>';
+    $html .= '<span>Clone URL</span> <input readonly type="text" value="'.$clone->clone_url.'" />';
+  $html .= '</li>';
   $html .= '</ul>';
   return $html;
 }

@@ -74,12 +74,19 @@
 
 <div class="postbox ">
 <h3><?php _e('Shortcodes Instructions','wp-github'); ?></h3>
-	<div class="inside">
+
+  <div class="inside">
 <p>
-<?php _e('Embeed profile:','wp-github'); ?>
+  <strong>
+<?php _e('Embeed profile:','wp-github'); ?></strong>
 <pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>"]</pre>
 
-
+</p>
+    <p>
+      <strong><?php _e('Embed Clone utilities for a repository','wp-github'); ?></strong>
+      <pre>[github-clone username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>"]
+    </pre>
+    </p>
 <p>
 	<strong><?php _e('List last 10 repositories:','wp-github'); ?></strong>
 
@@ -120,12 +127,13 @@
 
 	<p>
 		<strong><?php _e('Get content from a file or a directory :','wp-github'); ?></strong>
-	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" filepath="src/tables/css/tables.css" language="css"]</pre>
+	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" filepath="README.md" language="markdown"]</pre>
 		<em>
 			<ul>
 				<li><?php _e('the "filepath" is the path of the file you are trying to embed.','wp-github'); ?><br />
 <?php _e('Eg : src/tables/tests/manual/tables.html','wp-github'); ?></li>
 				<li><?php _e('language : lowerCase if intergrated with <a target="_blank" href="http://prismjs.com"> PrimJs</a>','wp-github'); ?>
+                  <br /> Languages supported = markup+css+clike+javascript+c+csharp+java+markdown+objectivec+php+python+sql
 				</li>
 			</ul>
 
