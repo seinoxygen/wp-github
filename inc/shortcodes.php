@@ -139,17 +139,26 @@ function ghreleases_shortcode($atts) {
   $releases = $cache->get($a['username'] . '.' . $a['repository'] . '.releases.json');
   if ($releases == NULL) {
     $github = new Github($a['username'], $a['repository']);
-    $releases = $github->get_releases();
-    //var_dump($releases);
-    $cache->set($a['username'] . '.' . $a['repository'] . '.releases.json', $releases);
+    $data = $github->get_releases();
+    $cache->set($a['username'] . '.' . $a['repository'] . '.releases.json', $data);
   }
 
-  $releases = array_slice($releases, 0, $a['limit']);
-  $html = '<ul class="wp-github">';
-  foreach ($releases as $release) {
-    $html .= '<li><a target="_blank" href="' . $release->zipball_url . '" title="' . $release->name . '">' . __('Download', 'wp-github') . ' ' . $release->tag_name . '</a></li>';
+  $releases = $cache->get($a['username'] . '.' . $a['repository'] . '.releases.json');
+
+  if(is_array($releases)){
+    $releases = array_slice($releases, 0, $a['limit']);
+
+    $html = '<ul class="wp-github">';
+    foreach ($releases as $release) {
+      $html .= '<li><a target="_blank" href="' . $release->zipball_url . '" title="' . $release->name . '">' . __('Download', 'wp-github') . ' ' . $release->tag_name . '</a></li>';
+    }
+    $html .= '</ul>';
+  } else {
+
+    $html = 'Please refresh';
   }
-  $html .= '</ul>';
+
+
   return $html;
 }
 
@@ -181,14 +190,17 @@ function ghclone_shortcode($atts) {
     //var_dump($clone);
     $cache->set($a['username'] . '.' . $a['repository'] . '.clone.json', $clone);
   }
-
-  $html = '<ul class="wp-github wpg-repo">';
+  if(is_object($clone)) {
+    $html = '<ul class="wp-github wpg-repo">';
     $html .= '<li>';
-    $html .= '<span>SSH URL</span> <input readonly type="text" value="'.$clone->ssh_url.'" />';
-  $html .= '</li><li>';
-    $html .= '<span>Clone URL</span> <input readonly type="text" value="'.$clone->clone_url.'" />';
-  $html .= '</li>';
-  $html .= '</ul>';
+    $html .= '<span>SSH URL</span> <input readonly type="text" value="' . $clone->ssh_url . '" />';
+    $html .= '</li><li>';
+    $html .= '<span>Clone URL</span> <input readonly type="text" value="' . $clone->clone_url . '" />';
+    $html .= '</li>';
+    $html .= '</ul>';
+  } else {
+    $html = $clone;
+  }
   return $html;
 }
 
@@ -220,18 +232,27 @@ function ghreleaseslatest_shortcode($atts) {
     $cache->set($a['username'] . '.' . $a['repository'] . '.releaseslatest.json', $latest_release);
   }
 
-  $html = '<ul class="wp-github">';
-  $html .= '<li>';
-  $html .= '<a class="wpgithub-btn" target="_blank" href="' . $latest_release->zipball_url . '" title="' . $latest_release->tag_name . '">' . __('Download', 'wp-github') . ' ' . $latest_release->tag_name . '</a>';
-  $html .= ' - <a target="_blank" href="' . $latest_release->html_url . '" title="' . $latest_release->tag_name . '">' . __('Show on Github', 'wp-github') . '</a>';
-  if (!empty($latest_release->body)):
-    $html .= '<div class="wpgithub-description"><p>Description:';
-    $html .= $latest_release->body;
-    $html .= '</p></div>';
-  endif;
-  $html .= '</li>';
+  if(is_object($latest_release)){
+    $html = '<ul class="wp-github">';
+    $html .= '<li>';
+    $html .= '<a class="wpgithub-btn" target="_blank" href="' . $latest_release->zipball_url . '" title="' . $latest_release->tag_name . '">' . __('Download', 'wp-github') . ' ' . $latest_release->tag_name . '</a>';
+    $html .= ' - <a target="_blank" href="' . $latest_release->html_url . '" title="' . $latest_release->tag_name . '">' . __('Show on Github', 'wp-github') . '</a>';
+    if (!empty($latest_release->body)):
+      $html .= '<div class="wpgithub-description"><p>'.__('Description','wp-github').':';
+      $html .= $latest_release->body;
+      $html .= '</p></div>';
+    endif;
+    $html .= '</li>';
 
-  $html .= '</ul>';
+    $html .= '</ul>';
+  } else {
+    if($latest_release == '404'){
+      $html = 'Releases not found';
+    } else{
+      $html = $latest_release;
+    }
+
+  }
   return $html;
 }
 

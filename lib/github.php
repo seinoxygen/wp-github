@@ -143,7 +143,6 @@ class Github {
       usort($data, array($this, 'order_commits'));
     }
 
-
     return $data;
   }
 
@@ -223,7 +222,7 @@ class Github {
     }
 
     //Sort response array
-    usort($data, array($this, 'order_commits'));
+    usort($data, array($this, 'order_releases'));
 
     return $data;
   }
@@ -317,8 +316,12 @@ class Github {
    * @return int
    */
   public function order_commits($a, $b) {
-    $a = strtotime($a->commit->author->date);
-    $b = strtotime($b->commit->author->date);
+    if(is_object($a) && is_object($b)){
+
+      $a = strtotime($a->commit->author->date);
+      $b = strtotime($b->commit->author->date);
+    }
+
     if ($a == $b) {
       return 0;
     }
@@ -332,6 +335,29 @@ class Github {
     }
   }
 
+  /**
+   * Sort commits from newer to older.
+   * @param $a
+   * @param $b
+   * @return int
+   */
+  public function order_releases($a, $b) {
+
+      $a = strtotime($a->created_at);
+      $b = strtotime($b->created_at);
+
+    if ($a == $b) {
+      return 0;
+    }
+    else {
+      if ($a > $b) {
+        return -1;
+      }
+      else {
+        return 1;
+      }
+    }
+  }
 
   /**
    * Sort issues from newer to older.
