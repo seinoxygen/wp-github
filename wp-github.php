@@ -34,14 +34,26 @@ function wpgithub_style() {
  * */
 add_action('admin_menu', 'wpgithub_plugin_menu');
 add_action('admin_init', 'wpgithub_register_settings');
-
+add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'my_plugin_action_links' );
 /**
  * Add option page
  */
 function wpgithub_plugin_menu() {
   add_options_page('WP Github Options', 'WP Github', 'manage_options', 'wp-github', 'wpgithub_plugin_options');
 }
+/*
+ * Add Admin page
+ * */
+function wpgithub_plugin_options() {
+  include('admin/options.php');
+}
 
+
+function my_plugin_action_links( $links ) {
+  $links[] = '<a href="'. esc_url( get_admin_url(null, 'options-general.php?page=wp-github') ) .'">'. __('Configure','wp-github').'</a>';
+  $links[] = '<a target="_blank" href="https://github.com/seinoxygen/wp-github" target="_blank">'. __('Github','wp-github').'</a>';
+  return $links;
+}
 /*
  * Register Option page Settings
  * */
@@ -57,12 +69,7 @@ function wpgithub_register_settings() {
   register_setting('wp-github', 'wpgithub_clientSecret', 'wpgithub_sanitizeUserName');
 }
 
-/*
- * Add Admin page
- * */
-function wpgithub_plugin_options() {
-  include('admin/options.php');
-}
+
 
 
 /**

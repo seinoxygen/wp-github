@@ -1,5 +1,5 @@
 <div class="wrap">
-<h2>WP Github</h2>
+<h1>WP Github<a target="_blank" href="https://github.com/seinoxygen/wp-github" class="page-title-action">Fork this on Github</a></h1>
 
 <form method="post" action="options.php">
     <?php settings_fields('wp-github'); ?>
