@@ -1,0 +1,249 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-github\n"
+"POT-Creation-Date: 2015-11-23 13:54+0100\n"
+"PO-Revision-Date: 2015-03-05 11:15+1000\n"
+"Language: en_EN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Textdomain-Support: yes\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: css\n"
+"X-Poedit-SearchPathExcluded-2: fonts\n"
+"X-Poedit-SearchPathExcluded-3: cache\n"
+
+#: admin/options.php:9
+msgid "Cache Time"
+msgstr ""
+
+#: admin/options.php:12
+msgid ""
+"This value goes in seconds. For example: 600 seconds is 10 minutes."
+msgstr ""
+
+#: admin/options.php:17
+msgid "Clear Cache"
+msgstr ""
+
+#: admin/options.php:20
+msgid "Delete all data retrieved and saved from Github."
+msgstr ""
+
+#: admin/options.php:26
+msgid "Default Github User"
+msgstr ""
+
+#: admin/options.php:29
+msgid ""
+"If you specifiy a default user, no need to add the value in the "
+"shortcodes"
+msgstr ""
+
+#: admin/options.php:33
+msgid "Default Github Repo"
+msgstr ""
+
+#: admin/options.php:36
+msgid ""
+"If you specifiy a default repo, no need to add the value in the "
+"shortcodes"
+msgstr ""
+
+#: admin/options.php:40
+msgid "Syntax highlighter"
+msgstr ""
+
+#: admin/options.php:43
+msgid "Include necessary files."
+msgstr ""
+
+#: admin/options.php:50
+msgid "User Authentification"
+msgstr ""
+
+#: admin/options.php:51
+msgid ""
+"If not specified, you can get a rate limit from GITHUB.Get yours at : "
+"https://github.com/settings/developers"
+msgstr ""
+
+#: admin/options.php:55
+msgid "Client ID"
+msgstr ""
+
+#: admin/options.php:62
+msgid "Client Secret"
+msgstr ""
+
+#: admin/options.php:76
+msgid "Shortcodes Instructions"
+msgstr ""
+
+#: admin/options.php:79
+msgid "Embeed profile:"
+msgstr ""
+
+#: admin/options.php:84
+msgid "List last 10 repositories:"
+msgstr ""
+
+#: admin/options.php:90
+msgid "List last 10 commits from all repositories:"
+msgstr ""
+
+#: admin/options.php:94
+msgid "List last 10 commits from a specific repository:"
+msgstr ""
+
+#: admin/options.php:98
+msgid "List last 10 issues from all repositories:"
+msgstr ""
+
+#: admin/options.php:102
+msgid "List last 10 issues from a specific repository:"
+msgstr ""
+
+#: admin/options.php:107
+msgid "List last 10 gists from a specific user:"
+msgstr ""
+
+#: admin/options.php:112
+msgid "List releases from a specific repo :"
+msgstr ""
+
+#: admin/options.php:117
+msgid "List latest release from a specific repo :"
+msgstr ""
+
+#: admin/options.php:122
+msgid "Get content from a file or a directory :"
+msgstr ""
+
+#: admin/options.php:126
+msgid "the \"filepath\" is the path of the file you are trying to embed."
+msgstr ""
+
+#: admin/options.php:127
+msgid "Eg : src/tables/tests/manual/tables.html"
+msgstr ""
+
+#: admin/options.php:128
+msgid ""
+"language : lowerCase if intergrated with <a target=\"_blank\" href="
+"\"http://prismjs.com\"> PrimJs</a>"
+msgstr ""
+
+#: inc/shortcodes.php:134 inc/shortcodes.php:168
+msgid "Download"
+msgstr ""
+
+#: inc/shortcodes.php:169
+msgid "Show on Github"
+msgstr ""
+
+#: inc/shortcodes.php:215
+msgid "Error : "
+msgstr ""
+
+#: inc/widgets.php:28
+msgid "WP Github Profile"
+msgstr ""
+
+#: inc/widgets.php:29 inc/widgets.php:35
+msgid "Github Profile"
+msgstr ""
+
+#: inc/widgets.php:34
+msgid "Displays the Github user profile."
+msgstr ""
+
+#: inc/widgets.php:44 inc/widgets.php:127 inc/widgets.php:222
+#: inc/widgets.php:327 inc/widgets.php:432
+msgid "Title:"
+msgstr ""
+
+#: inc/widgets.php:50 inc/widgets.php:133 inc/widgets.php:228
+#: inc/widgets.php:333 inc/widgets.php:438
+msgid "Github Username:"
+msgstr ""
+
+#: inc/widgets.php:110
+msgid "WP Github repos"
+msgstr ""
+
+#: inc/widgets.php:111 inc/widgets.php:117
+msgid "Github Repositories"
+msgstr ""
+
+#: inc/widgets.php:116
+msgid "Displays the repositories from a specific user."
+msgstr ""
+
+#: inc/widgets.php:139
+msgid "Number of projects to show:"
+msgstr ""
+
+#: inc/widgets.php:204
+msgid "WP Github commits"
+msgstr ""
+
+#: inc/widgets.php:205 inc/widgets.php:211
+msgid "Github Commits"
+msgstr ""
+
+#: inc/widgets.php:210
+msgid "Displays latests commits from a Github repository."
+msgstr ""
+
+#: inc/widgets.php:234 inc/widgets.php:339
+msgid "Github Repository:"
+msgstr ""
+
+#: inc/widgets.php:240
+msgid "Number of commits to show:"
+msgstr ""
+
+#: inc/widgets.php:309
+msgid "WP Github issues"
+msgstr ""
+
+#: inc/widgets.php:310 inc/widgets.php:316
+msgid "Github Issues"
+msgstr ""
+
+#: inc/widgets.php:315
+msgid "Displays latests issues from a Github repository."
+msgstr ""
+
+#: inc/widgets.php:345
+msgid "Number of issues to show:"
+msgstr ""
+
+#: inc/widgets.php:415
+msgid "WP Github gists"
+msgstr ""
+
+#: inc/widgets.php:416 inc/widgets.php:422
+msgid "Github Gists"
+msgstr ""
+
+#: inc/widgets.php:421
+msgid "Displays latests gists from a Github user."
+msgstr ""
+
+#: inc/widgets.php:444
+msgid "Number of gists to show:"
+msgstr ""
