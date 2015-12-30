@@ -67,8 +67,10 @@ function ghrepos_shortcode($atts) {
     $repositories = $github->get_repositories();
     $cache->set($a['username'] . '.repositories.json', $repositories);
   }
+  if(is_array($repositories)){
+    $repositories = array_slice($repositories, 0, $a['limit']);
+  }
 
-  $repositories = array_slice($repositories, 0, $a['limit']);
   $html = '<ul class="wp-github">';
   foreach ($repositories as $repo) {
     $html .= '<li><a target="_blank" href="' . $repo->html_url . '" title="' . $repo->description . '">' . $repo->name . '</a></li>';
@@ -104,8 +106,9 @@ function ghcommits_shortcode($atts) {
     $commits = $github->get_commits();
     $cache->set($a['username'] . '.' . $a['repository'] . '.commits.json', $commits);
   }
-
-  $commits = array_slice($commits, 0, $a['limit']);
+  if(is_array($commits)){
+    $commits = array_slice($commits, 0, $a['limit']);
+  }
   $html = '<ul class="wp-github">';
   foreach ($commits as $commit) {
     $html .= '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
@@ -328,8 +331,10 @@ function ghissues_shortcode($atts) {
     $issues = $github->get_issues();
     $cache->set($a['username'] . '.' . $a['repository'] . '.issues.json', $issues);
   }
+  if(is_array($issues)){
+    $issues = array_slice($issues, 0, $a['limit']);
+  }
 
-  $issues = array_slice($issues, 0, $a['limit']);
   $html = '<ul class="wp-github">';
   foreach ($issues as $issue) {
     $html .= '<li><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
@@ -364,8 +369,10 @@ function ghgists_shortcode($atts) {
     $gists = $github->get_gists();
     $cache->set($a['username'] . '.gists.json', $gists);
   }
+  if(is_array($gists)){
+    $gists = array_slice($gists, 0, $a['limit']);
+  }
 
-  $gists = array_slice($gists, 0, $a['limit']);
   $html = '<ul class="wp-github">';
   foreach ($gists as $gist) {
     $html .= '<li><a target="_blank" href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';

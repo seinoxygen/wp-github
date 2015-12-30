@@ -48,7 +48,12 @@ function wpgithub_plugin_options() {
   include('admin/options.php');
 }
 
-
+/**
+ * Add links to wp BO plugin
+ *
+ * @param $links
+ * @return array
+ */
 function my_plugin_action_links( $links ) {
   $links[] = '<a href="'. esc_url( get_admin_url(null, 'options-general.php?page=wp-github') ) .'">'. __('Configure','wp-github').'</a>';
   $links[] = '<a target="_blank" href="https://github.com/seinoxygen/wp-github" target="_blank">'. __('Github','wp-github').'</a>';
@@ -74,14 +79,26 @@ function wpgithub_register_settings() {
 
 /**
  * Clear cache on request
+ * Check chmod
+ *
  * @param $input
+ * @return message for wp admin
  */
 function wpgithub_clearcache($input) {
-  if ($input == 1) {
-    foreach (glob(plugin_dir_path(__FILE__) . "cache/*.json") as $file) {
-      unlink($file);
+
+  //if $input clear cache
+  if ($input == 1 ) {
+    if(is_writable(plugin_dir_path(__FILE__) . "cache/")){
+      foreach (glob(plugin_dir_path(__FILE__) . "cache/*.json") as $file) {
+        unlink($file);
+      }
+      add_settings_error('wpgithub_clear_cache', esc_attr('settings_updated'), 'Cache has been cleared.', 'updated');
+    }else{
+      add_settings_error('wpgithub_clear_cache', esc_attr('settings_updated'), 'there was an issue clearing Cache.Please check permissions or input.');
     }
-    add_settings_error('wpgithub_clear_cache', esc_attr('settings_updated'), 'Cache has been cleared.', 'updated');
+
+  } else {
+    add_settings_error('wpgithub_clear_cache', esc_attr('settings_updated'), 'Settings updated');
   }
 }
 
