@@ -309,6 +309,8 @@ add_shortcode('github-contents', 'ghcontents_shortcode');
 
 /**
  * Issues shortcode.
+ * GET /repos/:owner/:repo/issues
+ *
  * @param $atts
  * @return string
  */
@@ -333,13 +335,14 @@ function ghissues_shortcode($atts) {
   }
   if(is_array($issues)){
     $issues = array_slice($issues, 0, $a['limit']);
+    $html = '<ul class="wp-github">';
+    foreach ($issues as $issue) {
+      $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
+    }
+    $html .= '</ul>';
+  } else {
+    $html = 'error : '.$issues;
   }
-
-  $html = '<ul class="wp-github">';
-  foreach ($issues as $issue) {
-    $html .= '<li><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
-  }
-  $html .= '</ul>';
   return $html;
 }
 
