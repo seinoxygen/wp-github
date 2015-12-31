@@ -5,7 +5,7 @@
  * Description: Display users Github public repositories, commits, issues and gists.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
- * Version: 1.2.5
+ * Version: 1.2.6
  *
  * Licensed under the MIT License
  */
