@@ -13,6 +13,7 @@ class Github {
   private $api_url = 'https://api.github.com/';
   private $username = NULL;
   private $repository = NULL;
+  private $number = NULL;
   private $contents = NULL;
 
 
@@ -22,9 +23,10 @@ class Github {
    * @param string $repository
    * @param string $contents
    */
-  public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
+  public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md',$number = NULL) {
     $this->username = $username;
     $this->repository = $repository;
+    $this->number = $number;
     $this->contents = $contents;
     //OAuth2 Key/Secret
     //https://developer.github.com/v3/#authentication
@@ -284,6 +286,28 @@ class Github {
     // Sort response array
     if(is_array($data)){
       usort($data, array($this, 'order_issues'));
+    }
+
+    return $data;
+  }
+
+  /**
+   * Get repository single issue.
+   * GET /repos/:owner/:repo/issues/:number
+   * If none is provided will return error
+   *
+   * @return array|mixed|object
+   */
+  public function get_issue() {
+    $data = array();
+    if (!empty($this->number)) {
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues/'.$this->number);
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+
+    } else {
+      $data = 'issue not found';
     }
 
     return $data;

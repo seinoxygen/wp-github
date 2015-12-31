@@ -61,6 +61,17 @@ limit | `[github-issues username="seinoxygen" repository="wp-github" limit="10"]
 
 For correct listing username and repository **_are_** required.
 
+#### Issue
+```html
+[github-issue]
+```
+Argument | Example | Description
+--- | --- | ---
+repository | `[github-issue username="seinoxygen" repository="wp-github"]` | selected repo
+number | `[github-issue username="seinoxygen" repository="wp-github" number="14"]` | issue number
+
+For correct listing username and repository **_are_** required.
+
 #### Gists
 ```html
 [github-gists]

@@ -293,7 +293,6 @@ function ghcontents_shortcode($atts) {
 
   $html = '<pre class="wp-github line-numbers language-' . $a['language'] . '"><code class="language-' . $a['language'] . '">';
   if (!isset($contents->message)):
-    //var_dump($contents);
     $html .= base64_decode($contents->content);
   else:
     $html .= __('Error : ' . $contents->message, 'wp-github') . '<br />';
@@ -306,6 +305,45 @@ function ghcontents_shortcode($atts) {
 
 add_shortcode('github-contents', 'ghcontents_shortcode');
 
+/**
+ * Single Issue shortcode.
+ * GET /repos/:owner/:repo/issues/:number
+ *
+ * @param $atts
+ * @return string
+ */
+function ghissue_shortcode($atts) {
+  $a = shortcode_atts(
+    array(
+      'username' => get_option('wpgithub_defaultuser', 'seinoxygen'),
+      'repository' => get_option('wpgithub_defaultrepo', 'wp-github'),
+      'number' => ''
+    ), $atts);
+
+  // Init the cache system.
+  $cache = new WpGithubCache();
+  // Set custom timeout in seconds.
+  $cache->timeout = get_option('wpgithub_cache_time', 600);
+
+  $issue = $cache->get($a['username'] . '.' . $a['repository'] . '.issue.'.$a['number'].'.json');
+  if ($issue == NULL) {
+    $github = new Github($a['username'], $a['repository'], null, $a['number']);
+    $issue = $github->get_issue();
+    $cache->set($a['username'] . '.' . $a['repository'] . '.issue.'.$a['number'].'.json', $issue);
+  }
+  if(is_object($issue)){
+    $html = '<ul class="wp-github">';
+    $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
+    $html .= '</ul>';
+  } else {
+    $html = $issue;
+  }
+
+
+  return $html;
+}
+
+add_shortcode('github-issue', 'ghissue_shortcode');
 
 /**
  * Issues shortcode.
@@ -337,7 +375,7 @@ function ghissues_shortcode($atts) {
     $issues = array_slice($issues, 0, $a['limit']);
     $html = '<ul class="wp-github">';
     foreach ($issues as $issue) {
-      $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
+      $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
     }
     $html .= '</ul>';
   } else {
