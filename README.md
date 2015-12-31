@@ -45,8 +45,9 @@ limit | `[github-repos username="seinoxygen" limit="10"]` | Lists up to 10 repos
 ```
 Argument | Example | Description
 --- | --- | ---
+username | `[github-commits username="seinoxygen"]` | main username
 repository | `[github-commits username="seinoxygen" repository="wp-github"]` | Lists up to 5 commits from the repository wp-github.
-limit | `[github-commits username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 commits from the repository wp-github.
+limit | `[github-commits username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 commits.
 
 For correct listing username and repository **_are_** required.
 
@@ -56,6 +57,7 @@ For correct listing username and repository **_are_** required.
 ```
 Argument | Example | Description
 --- | --- | ---
+username | `[github-issues username="seinoxygen"]` | main username
 repository | `[github-issues username="seinoxygen" repository="wp-github"]` | Lists up to 5 issues from the repository wp-github.
 limit | `[github-issues username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 issues from the repository wp-github.
 
@@ -66,7 +68,7 @@ limit | `[github-issues username="seinoxygen" repository="wp-github" limit="10"]
 ```
 Argument | Example | Description
 --- | --- | ---
-username | `[github-gists username="seinoxygen"]` | main username
+username | `[github-issue username="seinoxygen"]` | main username
 repository | `[github-issue username="seinoxygen" repository="wp-github"]` | selected repo
 number | `[github-issue username="seinoxygen" repository="wp-github" number="14"]` | issue number
 
@@ -76,7 +78,8 @@ number | `[github-issue username="seinoxygen" repository="wp-github" number="14"
 ```
 Argument | Example | Description
 --- | --- | ---
-repository | `[github-pulls username="seinoxygen" repository="wp-github"]` | Lists up to 5 pull request from the repository wp-github.
+username | `[github-pulls username="seinoxygen"]` | main username
+repository | `[github-pulls username="seinoxygen" repository="wp-github"]` | from the repository wp-github.
 limit | `[github-pulls username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 pull request from the repository wp-github.
 
 #### Gists
