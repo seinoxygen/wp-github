@@ -13,6 +13,7 @@ class Github {
   private $api_url = 'https://api.github.com/';
   private $username = NULL;
   private $repository = NULL;
+  private $number = NULL;
   private $contents = NULL;
 
 
@@ -22,16 +23,17 @@ class Github {
    * @param string $repository
    * @param string $contents
    */
-  public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md') {
+  public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md',$number = NULL) {
     $this->username = $username;
     $this->repository = $repository;
+    $this->number = $number;
     $this->contents = $contents;
     //OAuth2 Key/Secret
     //https://developer.github.com/v3/#authentication
     $ci = get_option('wpgithub_clientID', '');
     $cs = get_option('wpgithub_clientSecret', '');
     if (!empty($ci) && !empty($cs)) {
-      $url_append = '?client_id=' . $ci . '&client_secret=' . $cs;
+      $url_append = 'client_id=' . $ci . '&client_secret=' . $cs;
     }
     else {
       $url_append = '';
@@ -49,13 +51,19 @@ class Github {
 
   /**
    * Get response content from url.
+   * use wp http api
+   *
    * @param $path string
    * @return mixed
    */
   public function get_response($path) {
 
     //build URL
-    $url = $this->api_url . $path . $this->oauth2;
+    if (strpos($path,'?') !== false) {
+      $url = $this->api_url . $path .'&'. $this->oauth2;
+    } else{
+      $url = $this->api_url . $path . '?'.$this->oauth2;
+    }
     $response = wp_remote_get( $url );
     if ( 200 == $response['response']['code'] ){
       return $response['body'];
@@ -252,38 +260,95 @@ class Github {
 
   /**
    * Get repository issues.
+   * GET /repos/:owner/:repo/issues
    * If none is provided will fetch all issues from all public repositories from user.
+   * GET /user/issues
+   *
    * @return array|mixed|object
    */
   public function get_issues() {
     $data = array();
     if (!empty($this->repository)) {
-      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues');
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues?state=all');
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+
+    } else {
+      // Fetch all issues
+      //GET /user/issues
+      $contents = $this->get_response($this->username . '/issues?state=all');
       if ($contents == TRUE) {
         $data = json_decode($contents);
       }
     }
-    else {
-      // Fetch all public repositories
-      $repos = $this->get_repositories();
-      if ($repos == TRUE) {
-        // Loop through public repos and get all issues
-        foreach ($repos as $repo) {
-          $contents = $this->get_response('repos/' . $this->username . '/' . $repo->name . '/issues');
-          if ($contents == TRUE) {
-            $data = array_merge($data, json_decode($contents));
-          }
-        }
-      }
-    }
 
     // Sort response array
-    usort($data, array($this, 'order_issues'));
+    if(is_array($data)){
+      usort($data, array($this, 'order_issues'));
+    }
 
     return $data;
   }
 
   /**
+   * Get repository single issue.
+   * GET /repos/:owner/:repo/issues/:number
+   * If none is provided will return error
+   *
+   * @return array|mixed|object
+   */
+  public function get_issue() {
+    $data = array();
+    if (!empty($this->number)) {
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues/'.$this->number);
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+
+    } else {
+      $data = 'issue not found';
+    }
+
+    return $data;
+  }
+
+
+  /**
+   * Get pull request
+   * GET /repos/:owner/:repo/pulls
+   *
+   * @return array|mixed|object
+   */
+  public function get_pulls() {
+    $data = array();
+    if (!empty($this->repository)) {
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/pulls');
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+
+    } else {
+      // Fetch all issues
+      //GET /user/issues
+      $contents = $this->get_response($this->username . '/pulls');
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+    }
+
+    // Sort response array
+    if(is_array($data)){
+      usort($data, array($this, 'order_issues'));
+    }
+
+    return $data;
+  }
+
+  /**
+   * get_gists
+   * GET users/:owner/gists
+   *
    * @return array|mixed|null|object
    */
   public function get_gists() {

@@ -67,8 +67,10 @@ function ghrepos_shortcode($atts) {
     $repositories = $github->get_repositories();
     $cache->set($a['username'] . '.repositories.json', $repositories);
   }
+  if(is_array($repositories)){
+    $repositories = array_slice($repositories, 0, $a['limit']);
+  }
 
-  $repositories = array_slice($repositories, 0, $a['limit']);
   $html = '<ul class="wp-github">';
   foreach ($repositories as $repo) {
     $html .= '<li><a target="_blank" href="' . $repo->html_url . '" title="' . $repo->description . '">' . $repo->name . '</a></li>';
@@ -104,8 +106,9 @@ function ghcommits_shortcode($atts) {
     $commits = $github->get_commits();
     $cache->set($a['username'] . '.' . $a['repository'] . '.commits.json', $commits);
   }
-
-  $commits = array_slice($commits, 0, $a['limit']);
+  if(is_array($commits)){
+    $commits = array_slice($commits, 0, $a['limit']);
+  }
   $html = '<ul class="wp-github">';
   foreach ($commits as $commit) {
     $html .= '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
@@ -290,7 +293,6 @@ function ghcontents_shortcode($atts) {
 
   $html = '<pre class="wp-github line-numbers language-' . $a['language'] . '"><code class="language-' . $a['language'] . '">';
   if (!isset($contents->message)):
-    //var_dump($contents);
     $html .= base64_decode($contents->content);
   else:
     $html .= __('Error : ' . $contents->message, 'wp-github') . '<br />';
@@ -303,9 +305,50 @@ function ghcontents_shortcode($atts) {
 
 add_shortcode('github-contents', 'ghcontents_shortcode');
 
+/**
+ * Single Issue shortcode.
+ * GET /repos/:owner/:repo/issues/:number
+ *
+ * @param $atts
+ * @return string
+ */
+function ghissue_shortcode($atts) {
+  $a = shortcode_atts(
+    array(
+      'username' => get_option('wpgithub_defaultuser', 'seinoxygen'),
+      'repository' => get_option('wpgithub_defaultrepo', 'wp-github'),
+      'number' => ''
+    ), $atts);
+
+  // Init the cache system.
+  $cache = new WpGithubCache();
+  // Set custom timeout in seconds.
+  $cache->timeout = get_option('wpgithub_cache_time', 600);
+
+  $issue = $cache->get($a['username'] . '.' . $a['repository'] . '.issue.'.$a['number'].'.json');
+  if ($issue == NULL) {
+    $github = new Github($a['username'], $a['repository'], null, $a['number']);
+    $issue = $github->get_issue();
+    $cache->set($a['username'] . '.' . $a['repository'] . '.issue.'.$a['number'].'.json', $issue);
+  }
+  if(is_object($issue)){
+    $html = '<ul class="wp-github">';
+    $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
+    $html .= '</ul>';
+  } else {
+    $html = $issue;
+  }
+
+
+  return $html;
+}
+
+add_shortcode('github-issue', 'ghissue_shortcode');
 
 /**
  * Issues shortcode.
+ * GET /repos/:owner/:repo/issues
+ *
  * @param $atts
  * @return string
  */
@@ -328,17 +371,62 @@ function ghissues_shortcode($atts) {
     $issues = $github->get_issues();
     $cache->set($a['username'] . '.' . $a['repository'] . '.issues.json', $issues);
   }
-
-  $issues = array_slice($issues, 0, $a['limit']);
-  $html = '<ul class="wp-github">';
-  foreach ($issues as $issue) {
-    $html .= '<li><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '">' . $issue->title . '</a></li>';
+  if(is_array($issues)){
+    $issues = array_slice($issues, 0, $a['limit']);
+    $html = '<ul class="wp-github">';
+    foreach ($issues as $issue) {
+      $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
+    }
+    $html .= '</ul>';
+  } else {
+    $html = 'error : '.$issues;
   }
-  $html .= '</ul>';
   return $html;
 }
 
 add_shortcode('github-issues', 'ghissues_shortcode');
+
+
+/**
+ * Issues shortcode.
+ * GET /repos/:owner/:repo/issues
+ *
+ * @param $atts
+ * @return string
+ */
+function ghpulls_shortcode($atts) {
+  $a = shortcode_atts(
+    array(
+      'username' => get_option('wpgithub_defaultuser', 'seinoxygen'),
+      'repository' => get_option('wpgithub_defaultrepo', 'wp-github'),
+      'limit' => '5'
+    ), $atts);
+
+  // Init the cache system.
+  $cache = new WpGithubCache();
+  // Set custom timeout in seconds.
+  $cache->timeout = get_option('wpgithub_cache_time', 600);
+
+  $pulls = $cache->get($a['username'] . '.' . $a['repository'] . '.pulls.json');
+  if ($pulls == NULL) {
+    $github = new Github($a['username'], $a['repository']);
+    $pulls = $github->get_pulls();
+    $cache->set($a['username'] . '.' . $a['repository'] . '.pulls.json', $pulls);
+  }
+  if(is_array($pulls)){
+    $pulls = array_slice($pulls, 0, $a['limit']);
+    $html = '<ul class="wp-github">';
+    foreach ($pulls as $pull) {
+      $html .= '<li><span class="wp-github-state ' . $pull->state . '">' . $pull->state . '</span><span class="wp-github-nb">#' . $pull->number . '</span><a target="_blank" href="' . $pull->html_url . '" title="' . $pull->title . '"> ' . $pull->title . '</a></li>';
+    }
+    $html .= '</ul>';
+  } else {
+    $html = 'error : '.$pulls;
+  }
+  return $html;
+}
+
+add_shortcode('github-pulls', 'ghpulls_shortcode');
 
 
 /**
@@ -364,8 +452,10 @@ function ghgists_shortcode($atts) {
     $gists = $github->get_gists();
     $cache->set($a['username'] . '.gists.json', $gists);
   }
+  if(is_array($gists)){
+    $gists = array_slice($gists, 0, $a['limit']);
+  }
 
-  $gists = array_slice($gists, 0, $a['limit']);
   $html = '<ul class="wp-github">';
   foreach ($gists as $gist) {
     $html .= '<li><a target="_blank" href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';

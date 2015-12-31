@@ -13,6 +13,9 @@
 .widget_repos ul li span.forked_from{display:inline-block}
 .widget_repos ul li span.forked_from:before{font-family:'FontAwesome';content:'\f126';margin-right:4px}
 .widget_repos ul li span.forked_from a{font-size:12px;font-weight:400;display:inline-block}
-.wpgithub-description{font-size:80%;padding:1em 0;color:#ccc}
+.wpgithub-description{font-size:80%;padding:1em 0;color:#5C5C5C;}
 .wp-github.wpg-repo li{}
 .wp-github.wpg-repo li span{float: left; padding: 0 0 1em 0;  clear: left;}
+.wp-github-state{margin-right:1em;padding: 0 1em; background: #ededed;border-radius: 2px;}
+.wp-github-state.open{background-color:rgba(135, 217, 98, 0.69);}
+.wp-github-state.closed{background-color:#ededed;}
