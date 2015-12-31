@@ -67,10 +67,11 @@ For correct listing username and repository **_are_** required.
 ```
 Argument | Example | Description
 --- | --- | ---
+username | `[github-gists username="seinoxygen"]` | main username
 repository | `[github-issue username="seinoxygen" repository="wp-github"]` | selected repo
 number | `[github-issue username="seinoxygen" repository="wp-github" number="14"]` | issue number
 
-For correct listing username and repository **_are_** required.
+
 
 #### Gists
 ```html
