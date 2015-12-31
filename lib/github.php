@@ -313,6 +313,38 @@ class Github {
     return $data;
   }
 
+
+  /**
+   * Get pull request
+   * GET /repos/:owner/:repo/pulls
+   *
+   * @return array|mixed|object
+   */
+  public function get_pulls() {
+    $data = array();
+    if (!empty($this->repository)) {
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/pulls');
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+
+    } else {
+      // Fetch all issues
+      //GET /user/issues
+      $contents = $this->get_response($this->username . '/pulls');
+      if ($contents == TRUE) {
+        $data = json_decode($contents);
+      }
+    }
+
+    // Sort response array
+    if(is_array($data)){
+      usort($data, array($this, 'order_issues'));
+    }
+
+    return $data;
+  }
+
   /**
    * get_gists
    * GET users/:owner/gists

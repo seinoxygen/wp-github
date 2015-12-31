@@ -119,6 +119,12 @@
 
 	  </p>
 
+	  <p><strong><?php _e('List last 10 pull request from a specific repository:','wp-github'); ?></strong>
+
+	  <pre>[github-pulls username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
+
+	  </p>
+
 <p><strong><?php _e('List last 10 gists from a specific user:','wp-github'); ?></strong>
 
 <pre>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>

@@ -59,7 +59,6 @@ Argument | Example | Description
 repository | `[github-issues username="seinoxygen" repository="wp-github"]` | Lists up to 5 issues from the repository wp-github.
 limit | `[github-issues username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 issues from the repository wp-github.
 
-For correct listing username and repository **_are_** required.
 
 #### Issue
 ```html
@@ -71,7 +70,14 @@ username | `[github-gists username="seinoxygen"]` | main username
 repository | `[github-issue username="seinoxygen" repository="wp-github"]` | selected repo
 number | `[github-issue username="seinoxygen" repository="wp-github" number="14"]` | issue number
 
-
+#### Pull request
+```html
+[github-pulls]
+```
+Argument | Example | Description
+--- | --- | ---
+repository | `[github-pulls username="seinoxygen" repository="wp-github"]` | Lists up to 5 pull request from the repository wp-github.
+limit | `[github-pulls username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 pull request from the repository wp-github.
 
 #### Gists
 ```html
