@@ -111,6 +111,14 @@
 <pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
 
 </p>
+
+
+	  <p><strong><?php _e('single issue from a specific repository:','wp-github'); ?></strong>
+
+	  <pre>[github-issue username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" number="14"]</pre>
+
+	  </p>
+
 <p><strong><?php _e('List last 10 gists from a specific user:','wp-github'); ?></strong>
 
 <pre>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>
