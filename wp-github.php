@@ -5,13 +5,14 @@
  * Description: Display users Github public repositories, commits, issues and gists.
  * Author: Pablo Cornehl
  * Author URI: http://www.seinoxygen.com
- * Version: 1.2.7
+ * Version: 1.3
  *
  * Licensed under the MIT License
  */
 require dirname(__FILE__) . '/lib/wpGithubCache.php';
 require(dirname(__FILE__) . '/lib/github.php');
 require(dirname(__FILE__) . '/inc/shortcodes.php');
+require(dirname(__FILE__) . '/admin/shortcode-btn.php');
 require(dirname(__FILE__) . '/inc/widgets.php');
 
 /*
@@ -56,7 +57,7 @@ function wpgithub_plugin_options() {
  */
 function my_plugin_action_links( $links ) {
   $links[] = '<a href="'. esc_url( get_admin_url(null, 'options-general.php?page=wp-github') ) .'">'. __('Configure','wp-github').'</a>';
-  $links[] = '<a target="_blank" href="https://github.com/seinoxygen/wp-github" target="_blank">'. __('Github','wp-github').'</a>';
+  $links[] = '<a  href="https://github.com/seinoxygen/wp-github" target="_blank">'. __('Github','wp-github').'</a>';
   return $links;
 }
 /*

@@ -1,9 +1,9 @@
 === WP Github ===
-Contributors: seinoxygen
+Contributors: seinoxygen,moabi
 Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
 Requires at least: 3.9
-Tested up to: 4.3.1
+Tested up to: 4.4
 Stable tag: 1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -21,6 +21,9 @@ Currently the plugin can list:
 *   Commits
 *   Issues
 *   Gists
+*   Pull request
+*   Single Issue
+*   Embed File content (with highlighter)
 
 ### Using CSS
 
@@ -33,6 +36,8 @@ You can apply a customized style to the plugin simply uploading a file called `c
 The plugin caches all the data retrieved from Github every 10 minutes to avoid exceed the limit of api calls.
 
 Since version 1.1 you can clear the cache from the plugin settings page located in the Wordpress settings menu.
+
+Since version 1.2.6 you can add your github credentials
 
 ### Support
 
@@ -74,6 +79,24 @@ List last 10 gists from a specific user:
 5. Profile widget.
 
 == Changelog ==
+
+= 1.3 =
+* New: Added shortcode button in tinyMce
+* New: Added documentation in setting page
+
+
+= 1.2.7 =
+* New: Embed file content.
+* Default username and repository, no need to add them eachtime.
+* Added i18n
+
+
+= 1.2.6 =
+* New: Several fixes.
+* New: Language support.
+* New: Added shortcodes to link to issues and pull-requests.
+* New: Display single issue.
+
 
 = 1.2 =
 * New: Custom styles.
