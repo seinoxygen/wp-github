@@ -80,6 +80,9 @@ List last 10 gists from a specific user:
 
 == Changelog ==
 
+= 1.3.1 =
+* Fix: gravatar profile
+
 = 1.3 =
 * New: Added shortcode button in tinyMce
 * New: Added documentation in setting page
