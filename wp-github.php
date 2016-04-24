@@ -70,8 +70,7 @@ function wpgithub_register_settings() {
   register_setting('wp-github', 'wpgithub_defaultuser', 'wpgithub_sanitizeUserName');
   register_setting('wp-github', 'wpgithub_defaultrepo', 'wpgithub_sanitizeUserName');
   //Authentification
-  register_setting('wp-github', 'wpgithub_clientID', 'wpgithub_sanitizeUserName');
-  register_setting('wp-github', 'wpgithub_clientSecret', 'wpgithub_sanitizeUserName');
+  register_setting('wp-github', 'wpgithub_accessToken', 'wpgithub_sanitizeUserName');
 }
 
 
@@ -169,4 +168,3 @@ function wpgithub_sanitizeUserName($input) {
   $newstr = filter_var($input, FILTER_SANITIZE_STRING);
   return $newstr;
 }
-
