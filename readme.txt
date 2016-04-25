@@ -3,8 +3,13 @@ Contributors: seinoxygen,moabi
 Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
 Requires at least: 3.9
+<<<<<<< HEAD
 Tested up to: 4.4
 Stable tag: 1.2
+=======
+Tested up to: 4.3.1
+Stable tag: 1.2.6
+>>>>>>> refs/remotes/origin/master
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -69,6 +74,8 @@ List last 10 issues from a specific repository:
 `[github-issues username="seinoxygen" repository="wp-github" limit="10"]`
 List last 10 gists from a specific user:
 `[github-gists username="seinoxygen" limit="10"]`
+List issue:
+`[github-issue username="yahoo" repository="pure" number="14"]`
 
 == Screenshots ==
 
@@ -80,6 +87,7 @@ List last 10 gists from a specific user:
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 1.3.1 =
 * Fix: gravatar profile
 
@@ -94,16 +102,21 @@ List last 10 gists from a specific user:
 * Added i18n
 
 
+=======
+>>>>>>> refs/remotes/origin/master
 = 1.2.6 =
 * New: Several fixes.
 * New: Language support.
 * New: Added shortcodes to link to issues and pull-requests.
 * New: Display single issue.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 = 1.2 =
 * New: Custom styles.
-* New: List all issues and commits from all public repositories
+* New: List all issues and commits from all public repositories.
 
 = 1.1 =
 * New: Added "clear cache" and "cache time" functionality in settings page.
