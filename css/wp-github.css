@@ -1,9 +1,10 @@
 .wpgithub-profile{background-color:#EEE;border:1px solid #D5D5D5;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;padding:5px;display:inline-block}
 .wpgithub-user{display:inline-block;margin-right:5px}
 .wpgithub-user img{vertical-align:top;padding:5px;float:left}
-.wpgithub-user h3{margin-left:70px;font-size:15px;line-height:20px;font-weight:600;margin-bottom:0}
+.wpgithub-user h3{margin:10px 0 0;font-size:15px;line-height:20px;font-weight:600;padding:0}
 .wpgithub-user h3 a{color:#333}
-.wpgithub-user p{margin-left:70px;font-size:14px;line-height:20px;margin-bottom:0}
+.wp-github-gravatar, .wp-github-usr {  display: inline-block;  margin: 0;  padding: 0; float: left; }
+.wpgithub-user p{margin:0px;font-size:14px;line-height:20px;padding:0}
 .wpgithub-bblock{display:inline-block;font-size:90%;width:100px;text-align:center;padding:5px;vertical-align:top}
 .wpgithub-bblock > .wpgithub-count{background-color:#FFF;border:1px solid #D5D5D5;-webkit-border-radius:6px 6px 0 0;-moz-border-radius:6px 6px 0 0;border-radius:6px 6px 0 0;color:#333;display:block;font-weight:700}
 .wpgithub-bblock > .wpgithub-text{background-color:#EEE;background-image:linear-gradient(#FCFCFC,#EEE);border-width:0 1px 1px;border-color:#D5D5D5;border-style:solid;-webkit-border-radius:0 0 6px 6px;-moz-border-radius:0 0 6px 6px;border-radius:0 0 6px 6px;color:#333;display:block;font-size:13px;font-weight:700;line-height:24px;text-shadow:0 1px 0 #FFF}
