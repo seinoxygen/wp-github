@@ -28,12 +28,11 @@ class Github {
     $this->repository = $repository;
     $this->number = $number;
     $this->contents = $contents;
-    //OAuth2 Key/Secret
+    //OAuth2 Access Token
     //https://developer.github.com/v3/#authentication
-    $ci = get_option('wpgithub_clientID', '');
-    $cs = get_option('wpgithub_clientSecret', '');
-    if (!empty($ci) && !empty($cs)) {
-      $url_append = 'client_id=' . $ci . '&client_secret=' . $cs;
+    $at = get_option('wpgithub_accessToken', '');
+    if (!empty($at)) {
+        $url_append = 'access_token=' . $at;
     }
     else {
       $url_append = '';
@@ -277,7 +276,7 @@ class Github {
     } else {
       // Fetch all issues
       //GET /user/issues
-      $contents = $this->get_response($this->username . '/issues?state=all');
+      $contents = $this->get_response('user/issues?state=all&filter=all');
       if ($contents == TRUE) {
         $data = json_decode($contents);
       }

@@ -48,24 +48,16 @@
 		<tr>
 			<td>
 				<h3><?php _e('User Authentification','wp-github'); ?></h3>
-				<p><?php _e('If not specified, you can get a rate limit from GITHUB.Get yours at : <a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/developers</a>','wp-github'); ?></p>
+				<p><?php _e('If not specified, you can get a rate limit from GITHUB.Get yours at : <a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/tokens</a>','wp-github'); ?></p>
 			</td>
 		</tr>
-		<tr valign="top">
-			<th scope="row"><?php _e('Client ID', 'wp-github'); ?></th>
-			<td>
-				<input type="text" placeholder="Client ID" name="wpgithub_clientID" value="<?php echo get_option('wpgithub_clientID', ''); ?>" />
+        <tr valign="top">
+            <th scope="row"><?php _e('Access Token', 'wp-github'); ?></th>
+            <td>
+                <input type="text" placeholder="Access Token" name="wpgithub_accessToken" value="<?php echo get_option('wpgithub_accessToken', ''); ?>" />
 
-			</td>
-		</tr>
-		<tr valign="top">
-			<th scope="row"><?php _e('Client Secret','wp-github'); ?></th>
-			<td>
-				<input type="password" placeholder="Client SECRET" name="wpgithub_clientSecret" value="<?php echo get_option('wpgithub_clientSecret', ''); ?>" />
-
-			</td>
-		</tr>
-
+            </td>
+        </tr>
 	</table>
 
     <?php submit_button(); ?>
@@ -157,7 +149,3 @@
 </div>
 </div>
 </div>
-
-
-
-
