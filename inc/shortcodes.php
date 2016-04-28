@@ -28,11 +28,12 @@ function ghprofile_shortcode($atts) {
 
   $html = '<div class="wpgithub-profile">';
   $html .= '<div class="wpgithub-user">';
-  $html .= '<a target="_blank" href="' . $profile->html_url . '" title="View ' . $a['username'] . '\'s Github"><img src="http://gravatar.com/avatar/' . $profile->gravatar_id . '?s=56" alt="View ' . $a['username'] . '\'s Github" /></a>';
+  $html .= '<a class="wp-github-gravatar" target="_blank" href="' . $profile->html_url . '" title="View ' . $a['username'] . '\'s Github"><img width="80" src="' . $profile->avatar_url . '" alt="View ' . $a['username'] . '\'s Github" /></a>';
+  $html .= '<div class="wp-github-usr">';
   $html .= '<h3 class="wpgithub-username"><a href="' . $profile->html_url . '" title="View ' . $a['username'] . '\'s Github">' . $a['username'] . '</a></h3>';
   $html .= '<p class="wpgithub-name">' . $profile->name . '</p>';
   $html .= '<p class="wpgithub-location">' . $profile->location . '</p>';
-  $html .= '</div>';
+  $html .= '</div></div>';
   $html .= '<a target="_blank" class="wpgithub-bblock" href="https://github.com/' . $a['username'] . '?tab=repositories"><span class="wpgithub-count">' . $profile->public_repos . '</span><span class="wpgithub-text">Public Repos</span></a>';
   $html .= '<a target="_blank" class="wpgithub-bblock" href="https://gist.github.com/' . $a['username'] . '"><span class="wpgithub-count">' . $profile->public_gists . '</span><span class="wpgithub-text">Public Gists</span></a>';
   $html .= '<a target="_blank" class="wpgithub-bblock" href="https://github.com/' . $a['username'] . '/followers"><span class="wpgithub-count">' . $profile->followers . '</span><span class="wpgithub-text">Followers</span></a>';
@@ -46,6 +47,7 @@ add_shortcode('github-profile', 'ghprofile_shortcode');
 /**
  * Repositories shortcode.
  * List repositories as a simple li
+ *
  * @param $atts
  * @return string
  */
@@ -71,7 +73,7 @@ function ghrepos_shortcode($atts) {
     $repositories = array_slice($repositories, 0, $a['limit']);
   }
 
-  $html = '<ul class="wp-github">';
+  $html = '<ul class="wp-github wpg-repos">';
   foreach ($repositories as $repo) {
     $html .= '<li><a target="_blank" href="' . $repo->html_url . '" title="' . $repo->description . '">' . $repo->name . '</a></li>';
   }
@@ -84,6 +86,7 @@ add_shortcode('github-repos', 'ghrepos_shortcode');
 
 /**
  * List Commits shortcode.
+ *
  * @param $atts
  * @return string
  */
@@ -109,7 +112,7 @@ function ghcommits_shortcode($atts) {
   if(is_array($commits)){
     $commits = array_slice($commits, 0, $a['limit']);
   }
-  $html = '<ul class="wp-github">';
+  $html = '<ul class="wp-github wpg-commits">';
   foreach ($commits as $commit) {
     $html .= '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
   }
@@ -151,7 +154,7 @@ function ghreleases_shortcode($atts) {
   if(is_array($releases)){
     $releases = array_slice($releases, 0, $a['limit']);
 
-    $html = '<ul class="wp-github">';
+    $html = '<ul class="wp-github wpg-releases">';
     foreach ($releases as $release) {
       $html .= '<li><a target="_blank" href="' . $release->zipball_url . '" title="' . $release->name . '">' . __('Download', 'wp-github') . ' ' . $release->tag_name . '</a></li>';
     }
@@ -211,7 +214,8 @@ add_shortcode('github-clone', 'ghclone_shortcode');
 
 
 /**
- * Releases shortcode.
+ * Latest Release shortcode.
+ *
  * @param $atts
  * @return string
  */
@@ -236,8 +240,7 @@ function ghreleaseslatest_shortcode($atts) {
   }
 
   if(is_object($latest_release)){
-    $html = '<ul class="wp-github">';
-    $html .= '<li>';
+    $html = '<div class="wp-github wpg-releaselatest">';
     $html .= '<a class="wpgithub-btn" target="_blank" href="' . $latest_release->zipball_url . '" title="' . $latest_release->tag_name . '">' . __('Download', 'wp-github') . ' ' . $latest_release->tag_name . '</a>';
     $html .= ' - <a target="_blank" href="' . $latest_release->html_url . '" title="' . $latest_release->tag_name . '">' . __('Show on Github', 'wp-github') . '</a>';
     if (!empty($latest_release->body)):
@@ -245,12 +248,10 @@ function ghreleaseslatest_shortcode($atts) {
       $html .= $latest_release->body;
       $html .= '</p></div>';
     endif;
-    $html .= '</li>';
-
-    $html .= '</ul>';
+    $html .= '</div>';
   } else {
     if($latest_release == '404'){
-      $html = 'Releases not found';
+      $html = 'Release not found';
     } else{
       $html = $latest_release;
     }
@@ -332,9 +333,11 @@ function ghissue_shortcode($atts) {
     $cache->set($a['username'] . '.' . $a['repository'] . '.issue.'.$a['number'].'.json', $issue);
   }
   if(is_object($issue)){
-    $html = '<ul class="wp-github">';
-    $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
-    $html .= '</ul>';
+    $html = '<div class="wp-github wpg-issue">';
+    $html .= '<span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span>';
+    $html .= '<span class="wp-github-nb">#' . $issue->number . '</span>';
+    $html .= '<a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a>';
+    $html .= '</div>';
   } else {
     $html = $issue;
   }
@@ -373,7 +376,7 @@ function ghissues_shortcode($atts) {
   }
   if(is_array($issues)){
     $issues = array_slice($issues, 0, $a['limit']);
-    $html = '<ul class="wp-github">';
+    $html = '<ul class="wp-github wpg-issues">';
     foreach ($issues as $issue) {
       $html .= '<li><span class="wp-github-state ' . $issue->state . '">' . $issue->state . '</span><span class="wp-github-nb">#' . $issue->number . '</span><a target="_blank" href="' . $issue->html_url . '" title="' . $issue->title . '"> ' . $issue->title . '</a></li>';
     }
@@ -415,7 +418,7 @@ function ghpulls_shortcode($atts) {
   }
   if(is_array($pulls)){
     $pulls = array_slice($pulls, 0, $a['limit']);
-    $html = '<ul class="wp-github">';
+    $html = '<ul class="wp-github wpg-pulls">';
     foreach ($pulls as $pull) {
       $html .= '<li><span class="wp-github-state ' . $pull->state . '">' . $pull->state . '</span><span class="wp-github-nb">#' . $pull->number . '</span><a target="_blank" href="' . $pull->html_url . '" title="' . $pull->title . '"> ' . $pull->title . '</a></li>';
     }
@@ -456,7 +459,7 @@ function ghgists_shortcode($atts) {
     $gists = array_slice($gists, 0, $a['limit']);
   }
 
-  $html = '<ul class="wp-github">';
+  $html = '<ul class="wp-github wpg-gists">';
   foreach ($gists as $gist) {
     $html .= '<li><a target="_blank" href="' . $gist->html_url . '" title="' . $gist->description . '">' . $gist->description . '</a></li>';
   }
