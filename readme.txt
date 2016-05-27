@@ -80,6 +80,10 @@ List last 10 gists from a specific user:
 
 == Changelog ==
 
+= 1.3.2 =
+add access token
+fix widget commits "all" repo option
+
 = 1.3.1 =
 * Fix: gravatar profile
 

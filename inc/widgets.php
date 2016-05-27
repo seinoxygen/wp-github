@@ -255,7 +255,7 @@ class Widget_Commits extends WP_Widget {
     </p>
     <p>
       <label
-        for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?> </label>
+        for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?> (leave empty for all) </label>
       <input class="widefat"
              id="<?php echo $this->get_field_id('repository'); ?>"
              name="<?php echo $this->get_field_name('repository'); ?>"
@@ -369,7 +369,7 @@ class Widget_Issues extends WP_Widget {
     </p>
     <p>
       <label
-        for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?> </label>
+        for="<?php echo $this->get_field_id('repository'); ?>"><?php _e('Github Repository:'); ?></label>
       <input class="widefat"
              id="<?php echo $this->get_field_id('repository'); ?>"
              name="<?php echo $this->get_field_name('repository'); ?>"
