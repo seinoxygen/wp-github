@@ -73,6 +73,7 @@ function wpgithub_register_settings() {
   //Authentification
   register_setting('wp-github', 'wpgithub_clientID', 'wpgithub_sanitizeUserName');
   register_setting('wp-github', 'wpgithub_clientSecret', 'wpgithub_sanitizeUserName');
+  register_setting('wp-github', 'wpgithub_access_token', 'wpgithub_sanitizeUserName');
 }
 
 

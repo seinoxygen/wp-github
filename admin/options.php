@@ -6,9 +6,9 @@
     <?php do_settings_sections('wp-github'); ?>
     <table class="form-table fixed">
         <tr valign="top">
-			<th scope="row"><?php _e('Cache Time','wp-github'); ?></th>
+			<th scope="row"><label for="wpgithub_cache_time"><?php _e('Cache Time','wp-github'); ?></label></th>
 			<td>
-				<input type="number" name="wpgithub_cache_time" value="<?php echo get_option('wpgithub_cache_time', 600); ?>" />
+				<input id="wpgithub_cache_time" type="number" name="wpgithub_cache_time" value="<?php echo get_option('wpgithub_cache_time', 600); ?>" />
 				<p class="description"><?php _e('This value goes in seconds. For example: 600 seconds is 10 minutes.','wp-github'); ?></p>
 			</td>
         </tr>
@@ -45,12 +45,28 @@
 			</td>
 		</tr>
 
-		<tr>
+</table>
+
+	<h3><?php _e('User Authentification','wp-github'); ?></h3>
+	<p>
+		<?php _e('you can overpass the rate limit from GITHUB with an authentification, prefer an access token, get one here :','wp-github'); ?>
+		<a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/tokens</a>
+	</p>
+
+	<p>
+		<?php _e('You can also use a client ID and Client Secret , get yours at : ','wp-github'); ?>
+		<a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/developers</a>
+	</p>
+	<table>
+
+		<tr valign="top">
+			<th scope="row"><?php _e('Personal access tokens','wp-github'); ?></th>
 			<td>
-				<h3><?php _e('User Authentification','wp-github'); ?></h3>
-				<p><?php _e('If not specified, you can get a rate limit from GITHUB.Get yours at : <a href="https://github.com/settings/developers" target="_blank">https://github.com/settings/developers</a>','wp-github'); ?></p>
+				<input type="password" placeholder="XXXXXXX" name="wpgithub_access_token" value="<?php echo get_option('wpgithub_access_token', ''); ?>" />
+
 			</td>
 		</tr>
+
 		<tr valign="top">
 			<th scope="row"><?php _e('Client ID', 'wp-github'); ?></th>
 			<td>
@@ -66,6 +82,7 @@
 			</td>
 		</tr>
 
+
 	</table>
 
     <?php submit_button(); ?>
@@ -77,11 +94,10 @@
 
   <div class="inside">
 <p>
-  <strong>
-<?php _e('Embeed profile:','wp-github'); ?></strong>
+  <strong><?php _e('Embeed profile:','wp-github'); ?></strong>
 <pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>"]</pre>
-
 </p>
+
     <p>
       <strong><?php _e('Embed Clone utilities for a repository','wp-github'); ?></strong>
       <pre>[github-clone username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>"]

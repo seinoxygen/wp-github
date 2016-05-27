@@ -30,16 +30,16 @@ class Github {
     $this->contents = $contents;
     //OAuth2 Key/Secret
     //https://developer.github.com/v3/#authentication
+    //Grab auth elements
     $ci = get_option('wpgithub_clientID', '');
     $cs = get_option('wpgithub_clientSecret', '');
-    if (!empty($ci) && !empty($cs)) {
-      $url_append = 'client_id=' . $ci . '&client_secret=' . $cs;
-    }
-    else {
-      $url_append = '';
-    }
+    $ct = get_option('wpgithub_access_token', '');
+    $token =  (!empty($ct)) ?'access_token='.$ct : '';
+    $url_append = (!empty($ci) && !empty($cs)) ?'client_id=' . $ci . '&client_secret=' . $cs : '';
+    //prefer the Client ID & Secret if both are filled
+    $auth_param = (!empty($url_append)) ? $url_append : $token;
 
-    $this->oauth2 = $url_append;
+    $this->oauth2 = $auth_param;
 
     /**
      * Increase execution time.
@@ -269,7 +269,7 @@ class Github {
   public function get_issues() {
     $data = array();
     if (!empty($this->repository)) {
-      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues?state=all');
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues?state=all&filter=all');
       if ($contents == TRUE) {
         $data = json_decode($contents);
       }
