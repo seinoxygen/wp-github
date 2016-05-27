@@ -26,8 +26,8 @@ class Widget_Profile extends WP_Widget {
   function __construct() {
     parent::__construct(
       'Widget_Profile', // Base ID
-      __('WP Github Profile', 'twentyfifteen'), // Name
-      array('description' => __('Github Profile', 'twentyfifteen'),) // Args
+      __('WP Github Profile', 'wp-github'), // Name
+      array('description' => __('Github Profile', 'wp-github'),) // Args
     );
   }
 
@@ -63,7 +63,7 @@ class Widget_Profile extends WP_Widget {
   }
 
   private function get_username($instance) {
-    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
+    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'seinoxygen') : $instance['username'];
   }
 
   /**
@@ -122,8 +122,8 @@ class Widget_Repos extends WP_Widget {
   function __construct() {
     parent::__construct(
       'Widget_Repos', // Base ID
-      __('WP Github repos', 'twentyfifteen'), // Name
-      array('description' => __('Github Repositories', 'twentyfifteen'),) // Args
+      __('WP Github repos', 'wp-github'), // Name
+      array('description' => __('Github Repositories', 'wp-github'),) // Args
     );
   }
 
@@ -168,7 +168,7 @@ class Widget_Repos extends WP_Widget {
   }
 
   private function get_username($instance) {
-    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
+    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'seinoxygen') : $instance['username'];
   }
 
   private function get_project_count($instance) {
@@ -222,13 +222,13 @@ class Widget_Commits extends WP_Widget {
   function __construct() {
     parent::__construct(
       'Widget_Commits', // Base ID
-      __('WP Github commits', 'twentyfifteen'), // Name
-      array('description' => __('Github Commits', 'twentyfifteen'),) // Args
+      __('WP Github commits', 'wp-github'), // Name
+      array('description' => __('Github Commits', 'wp-github'),) // Args
     );
   }
 
   function Widget_Commits() {
-    $widget_ops = array('description' => __('Displays latests commits from a Github repository.'));
+    $widget_ops = array('description' => __('Displays latests commits from a Github repository.','wp-github'));
     $this->WP_Widget(FALSE, __('Github Commits'), $widget_ops);
   }
 
@@ -241,7 +241,7 @@ class Widget_Commits extends WP_Widget {
     ?>
     <p>
       <label
-        for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> </label>
+        for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:','wp-github'); ?> </label>
       <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
              name="<?php echo $this->get_field_name('title'); ?>" type="text"
              value="<?php echo $title; ?>"/>
@@ -264,7 +264,7 @@ class Widget_Commits extends WP_Widget {
     </p>
     <p>
       <label
-        for="<?php echo $this->get_field_id('commit_count'); ?>"><?php _e('Number of commits to show:'); ?> </label>
+        for="<?php echo $this->get_field_id('commit_count'); ?>"><?php _e('Number of commits to show:','wp-github'); ?> </label>
       <input id="<?php echo $this->get_field_id('commit_count'); ?>"
              name="<?php echo $this->get_field_name('commit_count'); ?>"
              type="text"
@@ -278,11 +278,11 @@ class Widget_Commits extends WP_Widget {
   }
 
   private function get_username($instance) {
-    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
+    return empty($instance['username']) ? get_option('wpgithub_defaultuser', '') : $instance['username'];
   }
 
   private function get_repository($instance) {
-    return empty($instance['repository']) ? get_option('wpgithub_defaultrepo', 'payzen') : $instance['repository'];
+    return empty($instance['repository']) ? '' : $instance['repository'];
   }
 
   private function get_commit_count($instance) {
@@ -336,8 +336,8 @@ class Widget_Issues extends WP_Widget {
   function __construct() {
     parent::__construct(
       'Widget_Issues', // Base ID
-      __('WP Github issues', 'twentyfifteen'), // Name
-      array('description' => __('Github Issues', 'twentyfifteen'),) // Args
+      __('WP Github issues', 'wp-github'), // Name
+      array('description' => __('Github Issues', 'wp-github'),) // Args
     );
   }
 
@@ -392,11 +392,11 @@ class Widget_Issues extends WP_Widget {
   }
 
   private function get_username($instance) {
-    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
+    return empty($instance['username']) ? get_option('wpgithub_defaultuser', '') : $instance['username'];
   }
 
   private function get_repository($instance) {
-    return empty($instance['repository']) ? get_option('wpgithub_defaultrepo', 'payzen') : $instance['repository'];
+    return empty($instance['repository']) ? get_option('wpgithub_defaultrepo', '') : $instance['repository'];
   }
 
   private function get_issue_count($instance) {
@@ -451,8 +451,8 @@ class Widget_Gists extends WP_Widget {
   function __construct() {
     parent::__construct(
       'Widget_Gists', // Base ID
-      __('WP Github gists', 'twentyfifteen'), // Name
-      array('description' => __('Github Gists', 'twentyfifteen'),) // Args
+      __('WP Github gists', 'wp-github'), // Name
+      array('description' => __('Github Gists', 'wp-github'),) // Args
     );
   }
 
@@ -497,7 +497,7 @@ class Widget_Gists extends WP_Widget {
   }
 
   private function get_username($instance) {
-    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'payzen') : $instance['username'];
+    return empty($instance['username']) ? get_option('wpgithub_defaultuser', 'seinoxygen') : $instance['username'];
   }
 
   private function get_gists_count($instance) {
