@@ -23,7 +23,7 @@ class Github {
    * @param string $repository
    * @param string $contents
    */
-  public function __construct($username = 'seinoxygen', $repository = 'wp-github', $contents = 'README.md',$number = NULL) {
+  public function __construct($username = 'seinoxygen', $repository = '', $contents = 'README.md',$number = NULL) {
     $this->username = $username;
     $this->repository = $repository;
     $this->number = $number;
@@ -48,7 +48,6 @@ class Github {
     set_time_limit(90);
   }
 
-
   /**
    * Get response content from url.
    * use wp http api
@@ -69,6 +68,22 @@ class Github {
       return $response['body'];
     } else {
       return $response['response']['code'];
+    }
+
+  }
+
+  /**
+   * is_authenticated
+   * check if user has filled credentials
+   * @return bool
+   */
+  public function is_authenticated(){
+    $contents = $this->get_response('user');
+    if(is_integer($contents)){
+      //user is not authenticated
+      return false;
+    } else {
+      return true;
     }
 
   }
@@ -202,8 +217,10 @@ class Github {
   }
 
   /**
+   * get_releases
    * Return repository releases.
    * If none is provided will fetch all commits from all public repositories from user.
+   *
    * @return array
    */
   public function get_releases() {
@@ -237,7 +254,9 @@ class Github {
 
 
   /**
+   * get_contents
    * returns the contents of a file or directory in a repo
+   *
    * @return array|mixed|object|string
    */
   public function get_contents() {
@@ -268,19 +287,27 @@ class Github {
    */
   public function get_issues() {
     $data = array();
+
     if (!empty($this->repository)) {
+
       $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/issues?state=all&filter=all');
       if ($contents == TRUE) {
         $data = json_decode($contents);
       }
 
     } else {
-      // Fetch all issues
+
+      // Fetch all issues from the authenticated user
       //GET /user/issues
-      $contents = $this->get_response($this->username . '/issues?state=all');
-      if ($contents == TRUE) {
-        $data = json_decode($contents);
+      if($this->is_authenticated()){
+        $contents = $this->get_response('user/issues?state=all&filter=all');
+        if ($contents == TRUE) {
+          $data = json_decode($contents);
+        }
+      } else {
+        $data = 'Please authenticate in wp-github settings';
       }
+
     }
 
     // Sort response array

@@ -102,12 +102,23 @@ function ghcommits_shortcode($atts) {
   $cache = new WpGithubCache();
   // Set custom timeout in seconds.
   $cache->timeout = get_option('wpgithub_cache_time', 600);
+  if(empty($a['repository'])){
+    $commits = $cache->get($a['username'] . '.commits.json');
+  }else{
+    $commits = $cache->get($a['username'] . '.' . $a['repository'] . '.commits.json');
+  }
 
-  $commits = $cache->get($a['username'] . '.' . $a['repository'] . '.commits.json');
+
   if ($commits == NULL) {
     $github = new Github($a['username'], $a['repository']);
     $commits = $github->get_commits();
-    $cache->set($a['username'] . '.' . $a['repository'] . '.commits.json', $commits);
+    if(empty($a['repository'])){
+      $cache->set($a['username'] . '.commits.json', $commits);
+    }else{
+      $cache->set($a['username'] . '.' . $a['repository'] . '.commits.json', $commits);
+    }
+
+
   }
   if(is_array($commits)){
     $commits = array_slice($commits, 0, $a['limit']);
@@ -362,17 +373,27 @@ function ghissues_shortcode($atts) {
         'repository' => get_option('wpgithub_defaultrepo', 'wp-github'),
         'limit' => '5'
       ), $atts);
-
+  
   // Init the cache system.
   $cache = new WpGithubCache();
   // Set custom timeout in seconds.
   $cache->timeout = get_option('wpgithub_cache_time', 600);
 
-  $issues = $cache->get($a['username'] . '.' . $a['repository'] . '.issues.json');
+  //if no repository
+  if(empty($a['repository'])){
+    $issues = $cache->get($a['username'] .'.issues.json');
+  } else {
+    $issues = $cache->get($a['username'] . '.' . $a['repository'] . '.issues.json');
+  }
+
   if ($issues == NULL) {
     $github = new Github($a['username'], $a['repository']);
     $issues = $github->get_issues();
-    $cache->set($a['username'] . '.' . $a['repository'] . '.issues.json', $issues);
+    if(empty($a['repository'])) {
+      $cache->set($a['username'] . '.issues.json', $issues);
+    }else {
+      $cache->set($a['username'] . '.' . $a['repository'] . '.issues.json', $issues);
+    }
   }
   if(is_array($issues)){
     $issues = array_slice($issues, 0, $a['limit']);

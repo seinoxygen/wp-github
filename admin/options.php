@@ -112,7 +112,7 @@
 <p>
 	<strong><?php _e('List last 10 commits from all repositories:','wp-github'); ?></strong>
 
-<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>
+<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10"]</pre>
 </p>
 <p><strong><?php _e('List last 10 commits from a specific repository:','wp-github'); ?></strong>
 
@@ -120,7 +120,7 @@
 </p>
 <p><strong><?php _e('List last 10 issues from all repositories:','wp-github'); ?></strong>
 
-<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>
+<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10"]</pre>
 </p>
 <p><strong><?php _e('List last 10 issues from a specific repository:','wp-github'); ?></strong>
 
