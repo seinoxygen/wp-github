@@ -27,7 +27,9 @@ class WpGithubCache {
    */
   public function get($file) {
     $file = $this->path . $file;
-    if (file_exists($file) && filemtime($file) + $this->timeout > time()) {
+    $file_age = filemtime($file) + $this->timeout;
+    $file_timed_out = intval($file_age - time());
+    if (file_exists($file) && $file_timed_out > 0) {
       $content = json_decode(file_get_contents($file));
       if (is_array($content)) {
         return $content;
