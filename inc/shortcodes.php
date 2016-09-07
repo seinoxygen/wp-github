@@ -95,20 +95,27 @@ function ghcommits_shortcode($atts) {
       array(
         'username' => get_option('wpgithub_defaultuser', 'seinoxygen'),
         'repository' => get_option('wpgithub_defaultrepo', 'wp-github'),
-        'limit' => '5'
+        'limit' => '5',
+        'xtended' => '' //provide a custom output $a['xtended'] || convert to array
       ), $atts);
 
+    if(!empty($a['xtended'])){
+        $endpoints = array();
+        $xtended = explode(',',$a['xtended']);
+    } else {
+        $xtended = array();
+    }
   // Init the cache system.
   $cache = new WpGithubCache();
   // Set custom timeout in seconds.
   $cache->timeout = get_option('wpgithub_cache_time', 600);
+    //retrieve endpoint
   if(empty($a['repository'])){
     $commits = $cache->get($a['username'] . '.commits.json');
   }else{
     $commits = $cache->get($a['username'] . '.' . $a['repository'] . '.commits.json');
   }
-
-
+    //handle cache
   if ($commits == NULL) {
     $github = new Github($a['username'], $a['repository']);
     $commits = $github->get_commits();
@@ -117,23 +124,79 @@ function ghcommits_shortcode($atts) {
     }else{
       $cache->set($a['username'] . '.' . $a['repository'] . '.commits.json', $commits);
     }
-
-
   }
+
   if(is_array($commits)){
     $commits = array_slice($commits, 0, $a['limit']);
   }
-  $html = '<ul class="wp-github wpg-commits">';
-  foreach ($commits as $commit) {
-    $html .= '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
-  }
-  $html .= '</ul>';
-  return $html;
+    return commits_output($commits,$xtended);
+
+    //return false;
 }
 
 add_shortcode('github-commits', 'ghcommits_shortcode');
 
+/**
+ * @param $commits
+ * @param $options array
+ *
+ * @return string
+ */
+function commits_output($commits,$options){
 
+    if( empty($options) ){
+        //simple output
+        $html = '<ul class="wp-github wpg-commits">';
+        foreach ($commits as $commit) {
+            $html .= '<li><a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a></li>';
+        }
+        $html .= '</ul>';
+    } else {
+        //simple output
+        $html = '<ul class="wp-github wpg-commits">';
+        foreach ($commits as $commit) {
+            //var_dump($commit);
+            $html .= '<li>';
+            foreach($options as $option){
+                if(strpos($option,'->')){
+                    $option_arr = explode('->',$option);
+                    $count = count($option_arr);
+                    if($count == 0){
+                        $commit_obj_x =  '';
+                    } elseif($count == 1){
+                        $commit_obj_x =  $commit->$option_arr[0];
+                    } elseif($count == 2) {
+                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1];
+                    } elseif($count == 3) {
+                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
+                    } elseif($count == 4) {
+                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
+                    } elseif($count == 5) {
+                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2]->$option_arr[3];
+                    } else {
+                        $commit_obj_x = $commit->$option;
+                    }
+                    if($commit_obj_x){
+                        $commit_obj = $commit_obj_x;
+                    } else {
+                        $commit_obj = '';
+                    }
+
+                } else {
+                    $commit_obj = $commit->$option;
+                }
+                $option_name = str_replace('->','-',$option);
+                $html .= '<span class="wp-github-'.$option_name.'">'.$commit_obj.'</span> ';
+            }
+
+            //$html .= '<a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a>';
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+    }
+
+    return $html;
+}
 /**
  * Repository Releases shortcode.
  * List releases as a li
