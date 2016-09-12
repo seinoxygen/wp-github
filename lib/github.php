@@ -139,7 +139,8 @@ class Github {
           if(is_array($content_array)){
               $data = array_merge($data,$content_array );
           } else {
-              $data = _('error data format');
+              $data_error = array(_('error data format'));
+              $data = array_merge($data,$data_error );
           }
 
       }
@@ -477,5 +478,7 @@ class Github {
         return 1;
       }
     }
-  }
+  }//order_issues
+
+
 }

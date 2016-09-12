@@ -144,6 +144,8 @@ add_shortcode('github-commits', 'ghcommits_shortcode');
  */
 function commits_output($commits,$options){
 
+    $github_class = new Github();
+
     if( empty($options) ){
         //simple output
         $html = '<ul class="wp-github wpg-commits">';
@@ -152,15 +154,17 @@ function commits_output($commits,$options){
         }
         $html .= '</ul>';
     } else {
-        //simple output
+        //extended output
         $html = '<ul class="wp-github wpg-commits">';
         if(is_array($commits)){
+
             foreach ($commits as $commit) {
                 //var_dump($commit);
                 $html .= '<li>';
                 foreach($options as $option){
-                    if(strpos($option,'->')){
-                        $option_arr = explode('->',$option);
+                    $delimiter = ':';
+                    if(strpos($option,$delimiter)){
+                        $option_arr = explode($delimiter,$option);
                         $count = count($option_arr);
                         if($count == 0){
                             $commit_obj_x =  '';
@@ -184,9 +188,12 @@ function commits_output($commits,$options){
                         }
 
                     } else {
-                        $commit_obj = $commit->$option;
+                        $commit_obj = (isset($commit->$option)) ? $commit->$option: 'undefined';
                     }
-                    $option_name = str_replace('->','-',$option);
+
+
+                    $option_name = str_replace($delimiter,'-',$option);
+
                     if (strpos($option_name, '-') !== false) {
                         $option_name_end = substr($option_name, strrpos($option_name, '-') + 1);
                     } else {
@@ -198,7 +205,12 @@ function commits_output($commits,$options){
                         $commit_obj = $date->format('Y-m-d H:i:s');
                     } elseif ( $option_name_end == 'url'){
                         $commit_obj = '<a target="_blank" href="'.$commit_obj.'">'._("Commit link").'</a>';
+                    } elseif ( $option_name_end == 'avatar_url'){
+                        $commit_obj = '<img src="'.$commit_obj.'" />';
                     }
+
+
+                    //var_dump($commit_obj);
                     $html .= '<span class="wp-github-'.$option_name.'">'.$commit_obj.'</span> ';
                 }
 
