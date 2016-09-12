@@ -154,43 +154,57 @@ function commits_output($commits,$options){
     } else {
         //simple output
         $html = '<ul class="wp-github wpg-commits">';
-        foreach ($commits as $commit) {
-            //var_dump($commit);
-            $html .= '<li>';
-            foreach($options as $option){
-                if(strpos($option,'->')){
-                    $option_arr = explode('->',$option);
-                    $count = count($option_arr);
-                    if($count == 0){
-                        $commit_obj_x =  '';
-                    } elseif($count == 1){
-                        $commit_obj_x =  $commit->$option_arr[0];
-                    } elseif($count == 2) {
-                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1];
-                    } elseif($count == 3) {
-                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
-                    } elseif($count == 4) {
-                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
-                    } elseif($count == 5) {
-                        $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2]->$option_arr[3];
+        if(is_array($commits)){
+            foreach ($commits as $commit) {
+                //var_dump($commit);
+                $html .= '<li>';
+                foreach($options as $option){
+                    if(strpos($option,'->')){
+                        $option_arr = explode('->',$option);
+                        $count = count($option_arr);
+                        if($count == 0){
+                            $commit_obj_x =  '';
+                        } elseif($count == 1){
+                            $commit_obj_x =  $commit->$option_arr[0];
+                        } elseif($count == 2) {
+                            $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1];
+                        } elseif($count == 3) {
+                            $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
+                        } elseif($count == 4) {
+                            $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2];
+                        } elseif($count == 5) {
+                            $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1]->$option_arr[2]->$option_arr[3];
+                        } else {
+                            $commit_obj_x = $commit->$option;
+                        }
+                        if($commit_obj_x){
+                            $commit_obj = $commit_obj_x;
+                        } else {
+                            $commit_obj = '';
+                        }
+
                     } else {
-                        $commit_obj_x = $commit->$option;
+                        $commit_obj = $commit->$option;
                     }
-                    if($commit_obj_x){
-                        $commit_obj = $commit_obj_x;
+                    $option_name = str_replace('->','-',$option);
+                    if (strpos($option_name, '-') !== false) {
+                        $option_name_end = substr($option_name, strrpos($option_name, '-') + 1);
                     } else {
-                        $commit_obj = '';
+                        $option_name_end = $option_name;
                     }
 
-                } else {
-                    $commit_obj = $commit->$option;
+                    if( $option_name_end == 'date'){
+                        $date = new DateTime($commit_obj);
+                        $commit_obj = $date->format('Y-m-d H:i:s');
+                    } elseif ( $option_name_end == 'url'){
+                        $commit_obj = '<a target="_blank" href="'.$commit_obj.'">'._("Commit link").'</a>';
+                    }
+                    $html .= '<span class="wp-github-'.$option_name.'">'.$commit_obj.'</span> ';
                 }
-                $option_name = str_replace('->','-',$option);
-                $html .= '<span class="wp-github-'.$option_name.'">'.$commit_obj.'</span> ';
-            }
 
-            //$html .= '<a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a>';
-            $html .= '</li>';
+                //$html .= '<a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a>';
+                $html .= '</li>';
+            }
         }
         $html .= '</ul>';
     }

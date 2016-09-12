@@ -135,7 +135,13 @@ class Github {
     if (!empty($this->repository)) {
       $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/commits');
       if ($contents == TRUE) {
-        $data = array_merge($data, json_decode($contents));
+          $content_array = json_decode($contents);
+          if(is_array($content_array)){
+              $data = array_merge($data,$content_array );
+          } else {
+              $data = _('error data format');
+          }
+
       }
     }
     else {
