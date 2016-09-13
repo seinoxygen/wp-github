@@ -99,12 +99,7 @@ function ghcommits_shortcode($atts) {
         'xtended' => '' //provide a custom output $a['xtended'] || convert to array
       ), $atts);
 
-    if(!empty($a['xtended'])){
-        $endpoints = array();
-        $xtended = explode(',',$a['xtended']);
-    } else {
-        $xtended = array();
-    }
+    $xtended = (isset($a['xtended'])) ? $a['xtended'] : '';
   // Init the cache system.
   $cache = new WpGithubCache();
   // Set custom timeout in seconds.
@@ -161,7 +156,11 @@ function commits_output($commits,$options){
             foreach ($commits as $commit) {
                 //var_dump($commit);
                 $html .= '<li>';
-                foreach($options as $option){
+                $options_obj = json_decode($options);
+                $options_array = json_decode(json_encode($options_obj), True);
+
+
+                foreach($options_array as $key => $option){
                     $delimiter = ':';
                     if(strpos($option,$delimiter)){
                         $option_arr = explode($delimiter,$option);
@@ -169,6 +168,7 @@ function commits_output($commits,$options){
                         if($count == 0){
                             $commit_obj_x =  '';
                         } elseif($count == 1){
+                            $firstoption = str_replace('(*)','',$option_arr[0]);
                             $commit_obj_x =  $commit->$option_arr[0];
                         } elseif($count == 2) {
                             $commit_obj_x =  $commit->$option_arr[0]->$option_arr[1];
@@ -204,14 +204,16 @@ function commits_output($commits,$options){
                         $date = new DateTime($commit_obj);
                         $commit_obj = $date->format('Y-m-d H:i:s');
                     } elseif ( $option_name_end == 'url'){
-                        $commit_obj = '<a target="_blank" href="'.$commit_obj.'">'._("Commit link").'</a>';
+                        $commit_obj = '<a target="_blank" href="'.$commit_obj.'">'.$key.'</a>';
                     } elseif ( $option_name_end == 'avatar_url'){
                         $commit_obj = '<img src="'.$commit_obj.'" />';
                     }
 
-
                     //var_dump($commit_obj);
-                    $html .= '<span class="wp-github-'.$option_name.'">'.$commit_obj.'</span> ';
+                    $html .= '<span class="wp-github-endpoint wp-github-'.$option_name.'">';
+                    $html .= '<span class="wp-github-label">'.$key.'</span>';
+                    $html .= $commit_obj;
+                    $html .= '</span> ';
                 }
 
                 //$html .= '<a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a>';
