@@ -210,10 +210,10 @@ function commits_output($commits,$options){
                     }
 
                     //var_dump($commit_obj);
-                    $html .= '<span class="wp-github-endpoint wp-github-'.$option_name.'">';
+                    $html .= '<div class="wp-github-endpoint wp-github-'.$option_name.'">';
                     $html .= '<span class="wp-github-label">'.$key.'</span>';
-                    $html .= $commit_obj;
-                    $html .= '</span> ';
+                    $html .= '<span class="wp-github-term">'.$commit_obj.'</span>';
+                    $html .= '</div> ';
                 }
 
                 //$html .= '<a target="_blank" href="' . $commit->html_url . '" title="' . $commit->commit->message . '">' . $commit->commit->message . '</a>';
