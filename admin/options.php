@@ -1,3 +1,7 @@
+
+<style>
+	.code-snippet{clear: both;display: block;width: 100%;max-width: 80%;}
+</style>
 <div class="wrap">
 <h1>WP Github<a target="_blank" href="https://github.com/seinoxygen/wp-github" class="page-title-action">Fork this on Github</a></h1>
 
@@ -95,69 +99,68 @@
   <div class="inside">
 <p>
   <strong><?php _e('Embeed profile:','wp-github'); ?></strong>
-<pre>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>"]</pre>
+<textarea class="code-snippet" readonly>[github-profile username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>"]</textarea>
 </p>
 
     <p>
       <strong><?php _e('Embed Clone utilities for a repository','wp-github'); ?></strong>
-      <pre>[github-clone username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>"]
-    </pre>
+      <textarea class="code-snippet" readonly>[github-clone username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>"]</textarea>
     </p>
 <p>
 	<strong><?php _e('List last 10 repositories:','wp-github'); ?></strong>
 
-<pre>[github-repos username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-repos username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</textarea>
 </p>
 
 <p>
 	<strong><?php _e('List last 10 commits from all repositories:','wp-github'); ?></strong>
 
-<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10" xtended='{"Date de commit": "commit:committer:date","Email committer": "commit:committer:email","Url de commit": "url"}']</textarea>
 </p>
 <p><strong><?php _e('List last 10 commits from a specific repository:','wp-github'); ?></strong>
 
-<pre>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-commits username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</textarea>
 </p>
 <p><strong><?php _e('List last 10 issues from all repositories:','wp-github'); ?></strong>
 
-<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="" limit="10"]</textarea>
 </p>
 <p><strong><?php _e('List last 10 issues from a specific repository:','wp-github'); ?></strong>
 
-<pre>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-issues username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</textarea>
 
 </p>
 
 
 	  <p><strong><?php _e('single issue from a specific repository:','wp-github'); ?></strong>
 
-	  <pre>[github-issue username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" number="14"]</pre>
+	  <textarea class="code-snippet" readonly>[github-issue username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" number="14"]</textarea>
 
 	  </p>
 
 	  <p><strong><?php _e('List last 10 pull request from a specific repository:','wp-github'); ?></strong>
 
-	  <pre>[github-pulls username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
+	  <textarea class="code-snippet" readonly>[github-pulls username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</textarea>
 
 	  </p>
 
 <p><strong><?php _e('List last 10 gists from a specific user:','wp-github'); ?></strong>
 
-<pre>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</pre>
+<textarea class="code-snippet" readonly>[github-gists username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" limit="10"]</textarea>
 </p>
 <p>
 	<strong><?php _e('List releases from a specific repo :','wp-github'); ?> </strong>
-	<pre>[github-releases username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</pre>
+	<textarea class="code-snippet" readonly>[github-releases username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" limit="10"]</textarea>
 </p>
 
 <p>
 	<strong><?php _e('List latest release from a specific repo :', 'wp-github'); ?> </strong>
-	<pre>[github-releaseslatest username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" ]</pre>
+	<textarea class="code-snippet" readonly>[github-releaseslatest username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" ]</textarea>
 </p>
 
 	<p>
 		<strong><?php _e('Get content from a file or a directory :','wp-github'); ?></strong>
-	<pre>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" filepath="README.md" language="markdown"]</pre>
+	<textarea class="code-snippet" readonly>[github-contents username="<?php echo get_option('wpgithub_defaultuser', 'seinoxygen'); ?>" repository="<?php echo get_option('wpgithub_defaultrepo', 'wp-github'); ?>" filepath="README.md" language="markdown"]</textarea>
 		<em>
 			<ul>
 				<li><?php _e('the "filepath" is the path of the file you are trying to embed.','wp-github'); ?><br />
