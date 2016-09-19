@@ -2,8 +2,8 @@
 Contributors: seinoxygen,moabi
 Donate link: http://www.seinoxygen.com/projects/wp-github
 Tags: github, profile, repositories, commits, issues, gists, widget, shortcode
-Requires at least: 3.9
-Tested up to: 4.4
+Requires at least: 4.1
+Tested up to: 4.6
 Stable tag: 1.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -62,7 +62,7 @@ List last 10 repositories:
 List last 10 commits from all repositories:
 `[github-commits username="seinoxygen" limit="10"]`
 List last 10 commits from a specific repository:
-`[github-commits username="seinoxygen" repository="wp-github" limit="10"]`
+`[github-commits username="seinoxygen" repository="wp-github" limit="45" xtended='{"Date de commit": "commit:committer:date","Email committer": "commit:committer:email","Url de commit": "url"}']`
 List last 10 issues from all repositories:
 `[github-issues username="seinoxygen" limit="10"]`
 List last 10 issues from a specific repository:

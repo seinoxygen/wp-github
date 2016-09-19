@@ -48,7 +48,7 @@ Argument | Example | Description
 username | `[github-commits username="seinoxygen"]` | main username
 repository | `[github-commits username="seinoxygen" repository="wp-github"]` | Lists up to 5 commits from the repository wp-github.
 limit | `[github-commits username="seinoxygen" repository="wp-github" limit="10"]` | Lists up to 10 commits.
-xtended | [github-commits username="seinoxygen" repository="wp-github" limit="30" xtended="commit->committer->email,url,commit->committer->name"] | allow to add endpoints, Caution XPERIMENTAL!
+xtended | [github-commits username="seinoxygen" repository="wp-github" limit="30" xtended='{"Date de commit": "commit:committer:date","Email committer": "commit:committer:email","Url de commit": "url"}'] | allow to get custom data, Caution XPERIMENTAL! json format, rely on github api endpoints
 
 For correct listing username and repository **_are_** required.
 
