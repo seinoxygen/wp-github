@@ -133,7 +133,7 @@ class Github {
   public function get_commits() {
     $data = array();
     if (!empty($this->repository)) {
-      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/commits');
+      $contents = $this->get_response('repos/' . $this->username . '/' . $this->repository . '/commits?per_page=100');
       if ($contents == TRUE) {
           $content_array = json_decode($contents);
           if(is_array($content_array)){

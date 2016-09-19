@@ -86,7 +86,7 @@ add_shortcode('github-repos', 'ghrepos_shortcode');
 
 /**
  * List Commits shortcode.
- *
+ * GET /repos/:owner/:repo/commits
  * @param $atts
  * @return string
  */
@@ -211,7 +211,9 @@ function commits_output($commits,$options){
 
                     //var_dump($commit_obj);
                     $html .= '<div class="wp-github-endpoint wp-github-'.$option_name.'">';
-                    $html .= '<span class="wp-github-label">'.$key.'</span>';
+                    if ( $option_name_end != 'url') {
+                        $html .= '<span class="wp-github-label">' . $key . '</span>';
+                    }
                     $html .= '<span class="wp-github-term">'.$commit_obj.'</span>';
                     $html .= '</div> ';
                 }
